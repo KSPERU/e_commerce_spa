@@ -27,7 +27,7 @@
         </tbody>
     </table>
 
-    <EditarComponent :mostrarFormularioEdicion="mostrarFormularioEdicion" :producto="productoEnEdicion" />
+    <EditarComponent :mostrarFormularioEdicion="mostrarFormularioEdicion" :datos="datos" :producto="productoEnEdicion" />
 
 </template>
 

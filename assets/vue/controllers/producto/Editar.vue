@@ -13,7 +13,7 @@
 <script setup>
 import { ref, defineProps, defineEmits } from 'vue';
 
-const { producto } = defineProps(['producto', 'mostrarFormularioEdicion']);
+const { producto, mostrarFormularioEdicion } = defineProps(['producto', 'mostrarFormularioEdicion']);
 const { emit } = defineEmits(['list-prod', 'id-prod']);
 const id = ref(0);
 const edNombre = ref('');
@@ -42,7 +42,7 @@ const guardarEdicion = () => {
     // const productoEditado = { ...listProd.value };
 
     // Realizar la solicitud PUT al endpoint de Symfony para actualizar el producto
-    console.log('Datos a enviar:', ...producto);
+    console.log('Datos a enviar:', producto);
     // axios.put(`/prueba-list/edit/${producto.id}`, prod)
     //     .then(response => {
     //         // Aquí puedes manejar la respuesta si es necesario
