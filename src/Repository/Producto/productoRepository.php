@@ -21,6 +21,26 @@ class productoRepository extends ServiceEntityRepository
         parent::__construct($registry, producto::class);
     }
 
+    /**
+     * @return producto[]
+     */
+    public function buscarProducto($busqueda): array
+    {
+        $aux = $busqueda;
+        $qb = $this->createQueryBuilder('p');
+        $qb->add('where', $qb->expr()->orX(
+            $qb->expr()->like('p.id', ':busqueda'),
+            $qb->expr()->like('p.pr_nombre', ':busqueda'),
+            $qb->expr()->like('p.pr_categoria', ':busqueda'),
+            $qb->expr()->like('p.pr_precio', ':busqueda')
+        ))
+        ->setParameter('busqueda', '%'.$busqueda.'%');
+        return $qb
+            ->getQuery()
+            ->getResult()
+        ;
+    }
+
 //    /**
 //     * @return producto[] Returns an array of producto objects
 //     */

@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}API Productos - TiendaKS!{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <p class="fs-2 fw-bold text-uppercase">API de productos</p>
+        <ul class="list-group">
+            <li class="list-group-item">
+                <span class="text-secondary">Listado: </span><a href="{{ path('app_api_producto_listado') }}" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">/api/producto/listado</a>
+            </li>
+            <li class="list-group-item">
+                <span class="text-secondary">Paginación: </span><a href="{{ path('app_api_producto_listado_paginados', {'pagina': '1', 'cantidad': '5'}) }}" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">/api/producto/listado/{pagina}/total/{cantidad}</a>
+            </li>
+            <li class="list-group-item">
+                <span class="text-secondary">Categorias: </span><a href="{{ path('app_api_producto_listado_categorizados', {'categoria': 'skincare'}) }}" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">/api/producto/listado/{categoria}</a>
+            </li>
+            <li class="list-group-item">
+                <span class="text-secondary">Precios: </span><a href="{{ path('app_api_producto_listado_precios', {'inicio': '500', 'fin': '1000'}) }}" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">/api/producto/listado/costo/{inicio}/entre/{fin}</a>
+            </li>
+            <li class="list-group-item">
+                <span class="text-secondary">Ordenado: </span><a href="{{ path('app_api_producto_listado_ordenado', {'categoria': 'precio', 'modo': 'menor'}) }}" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">/api/producto/listado/{categoria}/ordenado/{modo}</a>
+            </li>
+            <li class="list-group-item">
+                <span class="text-secondary">Ver: </span><a href="{{ path('app_api_producto_ver', {'id': '200'}) }}" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">/api/producto/ver/{id}</a>
+            </li>
+            <li class="list-group-item">
+                <span class="text-secondary">Busqueda: </span><a href="{{ path('app_api_producto_buscar', {'busqueda': 'iPhone'}) }}" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">/api/producto/buscar/{busqueda}</a>
+            </li>
+        </ul>
+    </div>
+{% endblock %}

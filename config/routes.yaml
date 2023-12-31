@@ -3,3 +3,9 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
+
+funciones:
+    resource:
+        path: ../src/Funciones/
+        namespace: App\Funciones
+    type: attribute
