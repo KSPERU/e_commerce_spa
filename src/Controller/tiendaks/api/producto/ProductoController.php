@@ -46,10 +46,10 @@ class ProductoController extends AbstractController
         return $this->json($productos, Response::HTTP_OK,[], [ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER=>function ($articulo){ return $articulo->getId(); }]);
     }
 
-    #[Route('/api/producto/listado/{categoria}/ordenado/{modo}', name: 'app_api_producto_listado_ordenado', methods: ['GET'])]
-    public function listarProductosOrdenado(string $categoria, string $modo, ProductoFunciones $productoFunciones): JsonResponse
+    #[Route('/api/producto/listado/{atributo}/ordenado/{modo}', name: 'app_api_producto_listado_ordenado', methods: ['GET'])]
+    public function listarProductosOrdenado(string $atributo, string $modo, ProductoFunciones $productoFunciones): JsonResponse
     {
-        $productos = $productoFunciones->obtenerProductosFiltradosOrdenados($categoria, $modo);
+        $productos = $productoFunciones->obtenerProductosFiltradosOrdenados($atributo, $modo);
         return $this->json($productos, Response::HTTP_OK,[], [ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER=>function ($articulo){ return $articulo->getId(); }]);
     }
 
@@ -64,6 +64,14 @@ class ProductoController extends AbstractController
     public function buscarProducto(string $busqueda, ProductoFunciones $productoFunciones): JsonResponse
     {
         $productos = $productoFunciones->buscarProducto($busqueda);
+        return $this->json($productos, Response::HTTP_OK,[], [ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER=>function ($articulo){ return $articulo->getId(); }]);
+    }
+
+    # Metodo compuesto
+    #[Route('/api/producto/listado/{categoria}/por/{atributo}/ordenado/{modo}/de/{inicio}/entre/{fin}', name: 'app_api_producto_clasificar', methods: ['GET'])]
+    public function clasificaciónProducto(string $categoria, string $atributo, string $modo, float $inicio, float $fin, ProductoFunciones $productoFunciones): JsonResponse
+    {
+        $productos = $productoFunciones->obtenerProductosClasificados($categoria, $atributo, $modo, $inicio, $fin);
         return $this->json($productos, Response::HTTP_OK,[], [ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER=>function ($articulo){ return $articulo->getId(); }]);
     }
 }
