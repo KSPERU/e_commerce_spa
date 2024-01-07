@@ -19,11 +19,22 @@ class CarritoController extends AbstractController
         ]);
     }
 
-    #[Route('/api/carrito/agregar/{idproducto}/{cantidad}', name: 'app_api_carrito_agregar', methods:['GET'])]
-    public function agregarProducto(int $idproducto, int $cantidad, Request $request, CarritoFunciones $carritoFunciones): JsonResponse
+    #[Route('/api/carrito/agregar', name: 'app_api_carrito_agregar', methods:['POST'])]
+    public function agregarProducto(Request $request, CarritoFunciones $carritoFunciones): JsonResponse
     {
-        
+        $data = json_decode($request->getContent(),true);
+        $idproducto = $data['id_producto'];
+        $cantidad = $data['cantidad'];
         $respuesta = $carritoFunciones->agregarProducto($idproducto, $cantidad);
         return new JsonResponse($respuesta, Response::HTTP_OK, []);
     }
+
+    //método get para agregar producto a carrito
+    // #[Route('/api/carrito/agregar/{idproducto}/{cantidad}', name: 'app_api_carrito_agregar', methods:['GET'])]
+    // public function agregarProducto(int $idproducto, int $cantidad, Request $request, CarritoFunciones $carritoFunciones): JsonResponse
+    // {
+        
+    //     $respuesta = $carritoFunciones->agregarProducto($idproducto, $cantidad);
+    //     return new JsonResponse($respuesta, Response::HTTP_OK, []);
+    // }
 }
