@@ -29,30 +29,29 @@ class CarritoController extends AbstractController
         return new JsonResponse($respuesta, Response::HTTP_OK, []);
     }
 
-    #[Route('/api/carrito/quitar', name: 'app_api_carrito_quitar', methods:['POST'])]
-    public function quitarProducto(Request $request, CarritoFunciones $carritoFunciones): JsonResponse
+    #[Route('/api/carrito/eliminar', name: 'app_api_carrito_eliminar', methods:['POST'])]
+    public function eliminarProducto(Request $request, CarritoFunciones $carritoFunciones): JsonResponse
     {
         $data = json_decode($request->getContent(),true);
-        $idproducto = $data['id_producto'];
-        $cantidad = $data['cantidad'];
-        $respuesta = $carritoFunciones->eliminarProducto($idproducto, $cantidad);
+        $iddetallecarrito = $data['id_detalle_carrito'];
+        $respuesta = $carritoFunciones->eliminarProducto($iddetallecarrito);
         return new JsonResponse($respuesta, Response::HTTP_OK, []);
     }
 
-    #[Route('/api/carrito/modificar/{idproducto}/{cantidad}', name: 'app_api_carrito_modificar', methods:['GET'])]
-    public function modificarProducto(int $idproducto, int $cantidad, Request $request, CarritoFunciones $carritoFunciones): JsonResponse
+    #[Route('/api/carrito/modificar', name: 'app_api_carrito_modificar', methods:['POST'])]
+    public function modificarProducto(Request $request, CarritoFunciones $carritoFunciones): JsonResponse
     {
-        //$data = json_decode($request->getContent(),true);
-        //$idproducto = $data['id_producto'];
-        //$cantidad = $data['cantidad'];
-        $respuesta = $carritoFunciones->modificarCarrito($idproducto, $cantidad);
+        $data = json_decode($request->getContent(),true);
+        $iddetallecarrito = $data['id_detalle_carrito'];
+        $cantidad = $data['cantidad'];
+        $respuesta = $carritoFunciones->modificarProducto($iddetallecarrito, $cantidad);
         return new JsonResponse($respuesta, Response::HTTP_OK, []);
     }
 
     #[Route('/api/carrito/visualizar', name: 'app_api_carrito_visualizar', methods:['POST'])]
     public function visualizarProducto(CarritoFunciones $carritoFunciones): JsonResponse
     {
-        $respuesta = $carritoFunciones->obtenerResumenCarrito();
+        $respuesta = $carritoFunciones->visualizarCarrito();
         return new JsonResponse($respuesta, Response::HTTP_OK, []);
     }
 
