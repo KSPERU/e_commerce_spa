@@ -135,12 +135,142 @@ class CarritoFunciones
         return ['success' => true, 'message' => 'Producto agregado al carrito exitosamente.'];
     }
 
-    public function modificarCarrito(){
-
+    public function modificarCarrito(int $idProducto, int $nuevaCantidad){
+        $usuario = $this->usuarioRepository->findOneBy([
+            'id' => 2
+        ]);
+    
+        if ($usuario === null) {
+            return ['success' => false, 'message' => 'Se necesita iniciar sesión para modificar la cantidad'];
+        } else {
+            $carrito = $usuario->getCarrito();
+    
+            if ($carrito === null) {
+                return ['success' => false, 'message' => 'El carrito está vacío'];
+            } else {
+                $detallesCarrito = $carrito->getDetallescarrito();
+    
+                foreach ($detallesCarrito as $detalle) {
+                    $producto = $detalle->getProducto();
+    
+                    if ($producto->getId() === $idProducto) {
+                        $detalle->setDcCantidad($nuevaCantidad);
+                        $nuevoImporte = $producto->getPrPrecio() * $nuevaCantidad;
+                        $detalle->setDcImporte($nuevoImporte);
+    
+                        $this->entityManager->flush();
+    
+                        return [
+                            'success' => true,
+                            'message' => 'Cantidad modificada exitosamente',
+                            'nueva_cantidad' => $nuevaCantidad,
+                            'nuevo_importe' => $nuevoImporte
+                        ];
+                    }
+                }
+    
+                return ['success' => false, 'message' => 'El producto no está en el carrito'];
+            }
+        }
     }
 
-    public function eliminar
-
+    public function obtenerResumenCarrito(): array
+    {
+        $usuario = $this->usuarioRepository->findOneBy([
+            'id' => 2
+        ]);
     
+        if ($usuario === null) {
+            return ['success' => false, 'message' => 'Se necesita iniciar sesión para ver el resumen del carrito'];
+        } else {
+            $carrito = $usuario->getCarrito();
+    
+            if ($carrito === null || $carrito->getDetallescarrito()->isEmpty()) {
+                return ['success' => true, 'message' => 'El carrito está vacío'];
+            } else {
+                $detalles = $carrito->getDetallescarrito();
+                $resumen = [];
+    
+                foreach ($detalles as $detalle) {
+                    $producto = $detalle->getProducto();
+                    $resumen[] = [
+                        'producto_id' => $producto->getId(),
+                        'producto_nombre' => $producto->getPrNombre(),
+                        'cantidad' => $detalle->getDcCantidad(),
+                        'importe' => $detalle->getDcImporte()
+                    ];
+                }
+    
+                return [
+                    'success' => true,
+                    'message' => 'Resumen del carrito obtenido correctamente',
+                    'resumen_carrito' => $resumen
+                ];
+            }
+        }
+    }    
 
+    public function eliminarProducto(int $idProducto, int $cantidad): array
+    {
+        $usuario = $this->usuarioRepository->findOneBy([
+            'id' => 2
+        ]);
+    
+        if ($usuario === null) {
+            return ['success' => false, 'message' => 'Se necesita iniciar sesión para proceder con el proceso'];
+        } else {
+            $producto = $this->productoRepository->findOneBy([
+                'id' => $idProducto
+            ]);
+    
+            if ($usuario->getCarrito() === null) {
+                return ['success' => false, 'message' => 'El carrito está vacío. No hay productos para eliminar.'];
+            } else {
+                $carrito = $usuario->getCarrito();
+    
+                $existe = false;
+                $detalles = $carrito->getDetallescarrito();
+    
+                foreach ($detalles as $detalle) {
+                    if ($detalle->getProducto() === $producto) {
+                        $existe = true;
+                        break;
+                    }
+                }
+    
+                if (!$existe) {
+                    return ['success' => false, 'message' => 'El producto no existe en el carrito.'];
+                }
+    
+                $detalleEncontrado = null;
+                foreach ($detalles as $detalle) {
+                    if ($detalle->getProducto() === $producto) {
+                        $detalleEncontrado = $detalle;
+                        break;
+                    }
+                }
+    
+                if ($detalleEncontrado !== null) {
+                    return $this->operacionEliminarDeCarrito(2, $carrito, $detalleEncontrado, $producto, $cantidad);
+                }
+            }
+        }
+    }    
+
+    private function operacionEliminarDeCarrito(int $tipo, Carrito $carrito, Detallecarrito $detallecarrito, Producto $producto, int $cantidad): array
+    {
+        if ($tipo == 1) {
+            $carrito->removeDetallescarrito($detallecarrito);
+        } else {
+            $detallecarrito->setDcCantidad($detallecarrito->getDcCantidad() - $cantidad);
+            $detallecarrito->setDcImporte($detallecarrito->getDcImporte() - ($cantidad * $producto->getPrPrecio()));
+    
+            if ($detallecarrito->getDcCantidad() <= 0) {
+                $carrito->removeDetallescarrito($detallecarrito);
+            }
+        }
+        $producto->setPrStock($producto->getPrStock() + $cantidad);
+        $this->entityManager->flush();
+        return ['success' => true, 'message' => 'Producto eliminado del carrito exitosamente.'];
+    }    
 }
