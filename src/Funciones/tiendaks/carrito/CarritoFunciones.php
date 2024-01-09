@@ -36,7 +36,7 @@ class CarritoFunciones
         $this->security = $security;
     }
 
-        public function agregarProducto(int $idproducto, int $cantidad): array
+        public function agregarProducto(int $idproducto, int $cantidad)
         {
         
 
@@ -97,7 +97,7 @@ class CarritoFunciones
     }
 
 
-    private function operacionAgregarACarrito(int $tipo,usuario $usuario, Carrito $carrito,detallecarrito $detallecarrito, Producto $producto, int $cantidad):array
+    private function operacionAgregarACarrito(int $tipo,usuario $usuario, Carrito $carrito,detallecarrito $detallecarrito, Producto $producto, int $cantidad)
     {
         $importe = $cantidad * $producto->getPrPrecio();
         $stockfinal = $producto->getPrStock() - $cantidad;
@@ -130,12 +130,18 @@ class CarritoFunciones
         if($tipo == 1 || $tipo == 3){
             $this->entityManager->persist($detallecarrito);
         }
+        $detallescarrito = $carrito->getDetallescarrito();
 
         $this->entityManager->flush();
-        return ['success' => true, 'message' => 'Producto agregado al carrito exitosamente.'];
+        return [
+            'success' => true,
+            'message' => 'Producto agregado al carrito exitosamente.',
+            'detallescarrito' => $detallescarrito
+        ];
     }
 
-    public function modificarProducto(int $detallecarrito, int $cantidad){
+    public function modificarProducto(int $detallecarrito, int $cantidad)
+    {
         $usuario = $this->usuarioRepository->findOneBy([
             'id' => 2
         ]);
@@ -151,7 +157,7 @@ class CarritoFunciones
         }
     }
 
-    public function visualizarCarrito(): array
+    public function visualizarCarrito()
     {
         $usuario = $this->usuarioRepository->findOneBy([
             'id' => 2
@@ -166,28 +172,31 @@ class CarritoFunciones
                 return ['success' => true, 'message' => 'El carrito está vacío'];
             } else {
                 $detalles = $carrito->getDetallescarrito();
-                $resumen = [];
+                // $resumen = [];
     
-                foreach ($detalles as $detalle) {
-                    $producto = $detalle->getProducto();
-                    $resumen[] = [
-                        'producto_id' => $producto->getId(),
-                        'producto_nombre' => $producto->getPrNombre(),
-                        'cantidad' => $detalle->getDcCantidad(),
-                        'importe' => $detalle->getDcImporte()
-                    ];
-                }
+                // foreach ($detalles as $detalle) {
+                //     $producto = $detalle->getProducto();
+                //     $resumen[] = [
+                //         'producto_id' => $producto->getId(),
+                //         'producto_nombre' => $producto->getPrNombre(),
+                //         'cantidad' => $detalle->getDcCantidad(),
+                //         'importe' => $detalle->getDcImporte()
+                //     ];
+                // }
     
+                // return [
+                //     'success' => true,
+                //     'message' => 'Resumen del carrito obtenido correctamente',
+                //     'resumen_carrito' => $resumen
+                // ];
                 return [
-                    'success' => true,
-                    'message' => 'Resumen del carrito obtenido correctamente',
-                    'resumen_carrito' => $resumen
+                    'detallescarrito' => $detalles,
                 ];
             }
         }
     }    
 
-    public function eliminarProducto(int $detallecarrito): array
+    public function eliminarProducto(int $detallecarrito)
     {
         $usuario = $this->usuarioRepository->findOneBy([
             'id' => 2
@@ -204,11 +213,18 @@ class CarritoFunciones
         }
     }    
 
-    private function operacionModificarCarrito(Carrito $carrito, Detallecarrito $detallecarrito, int $cantidad): array
+    private function operacionModificarCarrito(Carrito $carrito, Detallecarrito $detallecarrito, int $cantidad)
     {
         $producto = $detallecarrito->getProducto();
         $difcantidad = $cantidad - $detallecarrito->getDcCantidad();
+        $detallescarrito = $carrito->getDetallescarrito();
         $difprecio = $producto->getPrPrecio() * $difcantidad;
+        if($difcantidad > $producto->getPrStock()){
+            return [
+                'success' => false,
+                'message' => 'La cantidad supera el de los productos disponibles.',
+            ];
+        }
         $carrito->setCCantidadtotal($carrito->getCCantidadtotal() + $difcantidad);
         $carrito->setCImportetotal($carrito->getCImportetotal() + $difprecio);
         $producto->setPrStock($producto->getPrStock() - $difcantidad);
@@ -221,6 +237,7 @@ class CarritoFunciones
             return [
                 'success' => true,
                 'message' => 'Producto eliminado del carrito exitosamente.',
+                'detallescarrito' => $detallescarrito
             ];
         }
 
@@ -228,9 +245,7 @@ class CarritoFunciones
         return [
             'success' => true,
             'message' => 'Cantidad modificada exitosamente',
-            'difprecio' => $difprecio,
-            'nueva_cantidad' => $cantidad,
-            'nuevo_importe' => $detallecarrito->getDcImporte()
+            'detallescarrito' => $detallescarrito
         ];
     }    
 }

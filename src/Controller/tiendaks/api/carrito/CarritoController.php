@@ -2,12 +2,13 @@
 
 namespace App\Controller\tiendaks\api\carrito;
 
-use App\Funciones\tiendaks\carrito\CarritoFunciones;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use App\Funciones\tiendaks\carrito\CarritoFunciones;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CarritoController extends AbstractController
 {
@@ -26,7 +27,7 @@ class CarritoController extends AbstractController
         $idproducto = $data['id_producto'];
         $cantidad = $data['cantidad'];
         $respuesta = $carritoFunciones->agregarProducto($idproducto, $cantidad);
-        return new JsonResponse($respuesta, Response::HTTP_OK, []);
+        return $this->json($respuesta, Response::HTTP_OK,[],[ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER=>function ($detallecarrito){ return $detallecarrito->getId(); }]);
     }
 
     #[Route('/api/carrito/eliminar', name: 'app_api_carrito_eliminar', methods:['POST'])]
@@ -35,7 +36,7 @@ class CarritoController extends AbstractController
         $data = json_decode($request->getContent(),true);
         $iddetallecarrito = $data['id_detalle_carrito'];
         $respuesta = $carritoFunciones->eliminarProducto($iddetallecarrito);
-        return new JsonResponse($respuesta, Response::HTTP_OK, []);
+        return $this->json($respuesta, Response::HTTP_OK,[],[ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER=>function ($detallecarrito){ return $detallecarrito->getId(); }]);
     }
 
     #[Route('/api/carrito/modificar', name: 'app_api_carrito_modificar', methods:['POST'])]
@@ -45,14 +46,14 @@ class CarritoController extends AbstractController
         $iddetallecarrito = $data['id_detalle_carrito'];
         $cantidad = $data['cantidad'];
         $respuesta = $carritoFunciones->modificarProducto($iddetallecarrito, $cantidad);
-        return new JsonResponse($respuesta, Response::HTTP_OK, []);
+        return $this->json($respuesta, Response::HTTP_OK,[],[ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER=>function ($detallecarrito){ return $detallecarrito->getId(); }]);
     }
 
-    #[Route('/api/carrito/visualizar', name: 'app_api_carrito_visualizar', methods:['POST'])]
+    #[Route('/api/carrito/visualizar', name: 'app_api_carrito_visualizar', methods:['GET'])]
     public function visualizarProducto(CarritoFunciones $carritoFunciones): JsonResponse
     {
         $respuesta = $carritoFunciones->visualizarCarrito();
-        return new JsonResponse($respuesta, Response::HTTP_OK, []);
+        return $this->json($respuesta, Response::HTTP_OK,[],[ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER=>function ($detallecarrito){ return $detallecarrito->getId(); }]);
     }
 
     //método get para agregar producto a carrito
