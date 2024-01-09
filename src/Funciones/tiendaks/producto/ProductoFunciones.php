@@ -41,6 +41,7 @@ class ProductoFunciones
     }
 
     public function buscarProducto($busqueda){
+        // Funcion directa, si no hay productos no va hacer nada para crearlos
         $producto = $this->productoRepository->buscarProducto($busqueda);
         return $producto;
     }
@@ -136,10 +137,21 @@ class ProductoFunciones
         return $productos_aux;
     }
 
-    public function obtenerProductosFiltradosOrdenados(string $categoria, string $modo){
+    public function obtenerProductosFiltradosOrdenados(string $atributo, string $modo){
         $productos = $this->obtenerProductosProcesado();
         //Ordenamiento de precio
-        if ($categoria == 'precio') {
+        if ($atributo == 'precio') {
+            if ($modo == 'menor'){
+                $productos = $this->obtenerProductosOrdenadosPrecioMenor($productos);
+            } elseif ($modo == 'mayor') {
+                $productos = $this->obtenerProductosOrdenadosPrecioMayor($productos);
+            }
+        }
+        return $productos;
+    }
+
+    public function obtenerProductosOrdenados(string $atributo, string $modo, array $productos){
+        if ($atributo == 'precio') {
             if ($modo == 'menor'){
                 $productos = $this->obtenerProductosOrdenadosPrecioMenor($productos);
             } elseif ($modo == 'mayor') {
@@ -185,6 +197,19 @@ class ProductoFunciones
             //No hecer nada
         }
         return $productos_aux;
+    }
+
+    public function obtenerProductosClasificados(string $categoria, string $atributo, string $modo, float $inicio, float $fin){
+        $productos = $this->obtenerProductosProcesado();
+        
+        //1. Categorizemos
+        $productos = $this->obtenerProductosCategorizados($categoria, $productos);
+        //2. Ordenemos por atributo
+        $productos = $this->obtenerProductosOrdenados($atributo, $modo, $productos);
+        //3. Rango de precios aceptado
+        $productos = $this->obtenerProductosEstimados($inicio, $fin, $productos);
+
+        return $productos;
     }
 
     //Funciones Test

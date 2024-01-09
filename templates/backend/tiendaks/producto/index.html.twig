@@ -19,13 +19,16 @@
                 <span class="text-secondary">Precios: </span><a href="{{ path('app_api_producto_listado_precios', {'inicio': '500', 'fin': '1000'}) }}" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">/api/producto/listado/costo/{inicio}/entre/{fin}</a>
             </li>
             <li class="list-group-item">
-                <span class="text-secondary">Ordenado: </span><a href="{{ path('app_api_producto_listado_ordenado', {'categoria': 'precio', 'modo': 'menor'}) }}" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">/api/producto/listado/{categoria}/ordenado/{modo}</a>
+                <span class="text-secondary">Ordenado: </span><a href="{{ path('app_api_producto_listado_ordenado', {'atributo': 'precio', 'modo': 'menor'}) }}" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">/api/producto/listado/{atributo}/ordenado/{modo}</a>
             </li>
             <li class="list-group-item">
                 <span class="text-secondary">Ver: </span><a href="{{ path('app_api_producto_ver', {'id': '200'}) }}" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">/api/producto/ver/{id}</a>
             </li>
             <li class="list-group-item">
                 <span class="text-secondary">Busqueda: </span><a href="{{ path('app_api_producto_buscar', {'busqueda': 'iPhone'}) }}" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">/api/producto/buscar/{busqueda}</a>
+            </li>
+            <li class="list-group-item">
+                <span class="text-secondary">Clasificado: </span><a href="{{ path('app_api_producto_clasificar', {'categoria': 'smartphones', 'atributo': 'precio', 'modo': 'menor', 'inicio': '300', 'fin': '1000'}) }}" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">/api/producto/listado/{categoria}/por/{atributo}/ordenado/{modo}/de/{inicio}/entre/{fin}</a>
             </li>
         </ul>
     </div>

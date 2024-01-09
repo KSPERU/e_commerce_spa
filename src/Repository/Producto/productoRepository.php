@@ -26,7 +26,6 @@ class productoRepository extends ServiceEntityRepository
      */
     public function buscarProducto($busqueda): array
     {
-        $aux = $busqueda;
         $qb = $this->createQueryBuilder('p');
         $qb->add('where', $qb->expr()->orX(
             $qb->expr()->like('p.id', ':busqueda'),
