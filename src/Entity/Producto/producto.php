@@ -3,10 +3,12 @@
 namespace App\Entity\Producto;
 
 use App\Entity\Carrito\detallecarrito;
+use App\Entity\Descuento\descuento;
 use App\Entity\Usuario\usuario;
 use App\Repository\Producto\productoRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: productoRepository::class)]
@@ -35,6 +37,15 @@ class producto
 
     #[ORM\OneToMany(mappedBy: 'producto', targetEntity: detallecarrito::class, orphanRemoval: true)]
     private Collection $detallecarritos;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $pr_imagenes = null;
+
+    #[ORM\ManyToOne(inversedBy: 'productos')]
+    private ?descuento $descuento = null;
+
+    #[ORM\Column(type: Types::TEXT, nullable: true)]
+    private ?string $pr_descripcion = null;
 
     public function __construct()
     {
@@ -135,4 +146,41 @@ class producto
 
         return $this;
     }
+
+    public function getPrImagenes(): ?string
+    {
+        return $this->pr_imagenes;
+    }
+
+    public function setPrImagenes(?string $pr_imagenes): static
+    {
+        $this->pr_imagenes = $pr_imagenes;
+
+        return $this;
+    }
+
+    public function getDescuento(): ?descuento
+    {
+        return $this->descuento;
+    }
+
+    public function setDescuento(?descuento $descuento): static
+    {
+        $this->descuento = $descuento;
+
+        return $this;
+    }
+
+    public function getPrDescripcion(): ?string
+    {
+        return $this->pr_descripcion;
+    }
+
+    public function setPrDescripcion(?string $pr_descripcion): static
+    {
+        $this->pr_descripcion = $pr_descripcion;
+
+        return $this;
+    }
+
 }

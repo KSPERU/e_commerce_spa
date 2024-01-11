@@ -1,6 +1,6 @@
-<templte>
+<template>
 
-</templte>
+</template>
 <script setup>
 
 </script>
