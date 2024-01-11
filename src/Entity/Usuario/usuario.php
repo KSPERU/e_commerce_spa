@@ -4,6 +4,7 @@ namespace App\Entity\Usuario;
 
 use App\Entity\Carrito\carrito;
 use App\Entity\Producto\producto;
+use App\Entity\Valoracion\valoracion;
 use App\Repository\Usuario\usuarioRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -60,9 +61,13 @@ class usuario implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
 
+    #[ORM\OneToMany(mappedBy: 'usuario', targetEntity: valoracion::class, orphanRemoval: true)]
+    private Collection $valoraciones;
+
     public function __construct()
     {
         $this->productos = new ArrayCollection();
+        $this->valoraciones = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -262,6 +267,36 @@ class usuario implements UserInterface, PasswordAuthenticatedUserInterface
     public function setIsVerified(bool $isVerified): static
     {
         $this->isVerified = $isVerified;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, valoracion>
+     */
+    public function getValoraciones(): Collection
+    {
+        return $this->valoraciones;
+    }
+
+    public function addValoracione(valoracion $valoracione): static
+    {
+        if (!$this->valoraciones->contains($valoracione)) {
+            $this->valoraciones->add($valoracione);
+            $valoracione->setUsuario($this);
+        }
+
+        return $this;
+    }
+
+    public function removeValoracione(valoracion $valoracione): static
+    {
+        if ($this->valoraciones->removeElement($valoracione)) {
+            // set the owning side to null (unless already changed)
+            if ($valoracione->getUsuario() === $this) {
+                $valoracione->setUsuario(null);
+            }
+        }
 
         return $this;
     }

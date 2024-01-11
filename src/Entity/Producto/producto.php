@@ -5,6 +5,7 @@ namespace App\Entity\Producto;
 use App\Entity\Carrito\detallecarrito;
 use App\Entity\Descuento\descuento;
 use App\Entity\Usuario\usuario;
+use App\Entity\Valoracion\valoracion;
 use App\Repository\Producto\productoRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
@@ -47,9 +48,13 @@ class producto
     #[ORM\Column(type: Types::TEXT, nullable: true)]
     private ?string $pr_descripcion = null;
 
+    #[ORM\OneToMany(mappedBy: 'producto', targetEntity: valoracion::class, orphanRemoval: true)]
+    private Collection $valoraciones;
+
     public function __construct()
     {
         $this->detallecarritos = new ArrayCollection();
+        $this->valoraciones = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -179,6 +184,36 @@ class producto
     public function setPrDescripcion(?string $pr_descripcion): static
     {
         $this->pr_descripcion = $pr_descripcion;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, valoracion>
+     */
+    public function getValoraciones(): Collection
+    {
+        return $this->valoraciones;
+    }
+
+    public function addValoracione(valoracion $valoracione): static
+    {
+        if (!$this->valoraciones->contains($valoracione)) {
+            $this->valoraciones->add($valoracione);
+            $valoracione->setProducto($this);
+        }
+
+        return $this;
+    }
+
+    public function removeValoracione(valoracion $valoracione): static
+    {
+        if ($this->valoraciones->removeElement($valoracione)) {
+            // set the owning side to null (unless already changed)
+            if ($valoracione->getProducto() === $this) {
+                $valoracione->setProducto(null);
+            }
+        }
 
         return $this;
     }
