@@ -43,7 +43,8 @@ class ProductoFunciones
     public function buscarProducto($busqueda){
         // Funcion directa, si no hay productos no va hacer nada para crearlos
         $producto = $this->productoRepository->buscarProducto($busqueda);
-        return $producto;
+        $productoespecificado = $this->especificarProductos($producto);
+        return $productoespecificado;
     }
 
     // Funciones Procesadas
@@ -210,8 +211,8 @@ class ProductoFunciones
         $productos = $this->obtenerProductosOrdenados($atributo, $modo, $productos);
         //3. Rango de precios aceptado
         $productos = $this->obtenerProductosEstimados($inicio, $fin, $productos);
-
-        return $productos;
+        $productosespecificados = $this->especificarProductos($productos);
+        return $productosespecificados;
     }
 
     //Funciones Test

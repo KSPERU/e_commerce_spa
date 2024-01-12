@@ -65,7 +65,7 @@ class ProductoController extends AbstractController
     public function buscarProducto(string $busqueda, ProductoFunciones $productoFunciones): JsonResponse
     {
         $productos = $productoFunciones->buscarProducto($busqueda);
-        return $this->json($productos, Response::HTTP_OK,[], [ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER=>function ($articulo){ return $articulo->getId(); }]);
+        return $this->json($productos, Response::HTTP_OK,[]);
     }
 
     # Metodo compuesto
@@ -73,6 +73,6 @@ class ProductoController extends AbstractController
     public function clasificaciónProducto(string $categoria, string $atributo, string $modo, float $inicio, float $fin, ProductoFunciones $productoFunciones): JsonResponse
     {
         $productos = $productoFunciones->obtenerProductosClasificados($categoria, $atributo, $modo, $inicio, $fin);
-        return $this->json($productos, Response::HTTP_OK,[], [ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER=>function ($articulo){ return $articulo->getId(); }]);
+        return $this->json($productos, Response::HTTP_OK,[]);
     }
 }
