@@ -47,6 +47,16 @@ class ProductoFunciones
         return $productoespecificado;
     }
 
+    public function obtenerProductorPorUsuario(int $id){
+        $usuario = $this->usuarioRepository->findOneBy([
+            'id' => $id,
+        ]);
+        $productos = $this->productoRepository->findBy([
+            'usuario' => $usuario, 
+        ]);
+        return $productos;
+    }
+
     // Funciones Procesadas
 
     public function verProductoProcesado(int $id){
@@ -213,6 +223,10 @@ class ProductoFunciones
         $productos = $this->obtenerProductosEstimados($inicio, $fin, $productos);
         $productosespecificados = $this->especificarProductos($productos);
         return $productosespecificados;
+    }
+
+    public function obtenerProductorPorUsuarioArray(int $usuario){
+        return $this->especificarProductos($this->obtenerProductorPorUsuario($usuario));
     }
 
     //Funciones Test

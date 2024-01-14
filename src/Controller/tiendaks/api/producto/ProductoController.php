@@ -75,4 +75,12 @@ class ProductoController extends AbstractController
         $productos = $productoFunciones->obtenerProductosClasificados($categoria, $atributo, $modo, $inicio, $fin);
         return $this->json($productos, Response::HTTP_OK,[]);
     }
+
+    #1ra iteración
+    #[Route('/api/producto/listado/usuario/{usuario}', name: 'app_api_producto_listado_usuario', methods: ['GET'])]
+    public function listadoPorUsuario(int $usuario, ProductoFunciones $productoFunciones): JsonResponse
+    {
+        $productos = $productoFunciones->obtenerProductorPorUsuarioArray($usuario);
+        return $this->json($productos, Response::HTTP_OK,[]);
+    }
 }
