@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Controller\tiendaks\api\login;
+namespace App\Controller\tiendaks\api\APIs;
 
 use KnpU\OAuth2ClientBundle\Client\ClientRegistry;
 use League\OAuth2\Client\Provider\Exception\IdentityProviderException;
