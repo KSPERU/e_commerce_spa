@@ -111,11 +111,12 @@ class CarritoFunciones
             $this->entityManager->persist($detallecarrito);
         }
         $this->entityManager->flush();
+        $carritoVisualizado = $this->especificarDatos($carrito,$carrito->getDetallescarrito());
         return [
             'success' => true,
             'message' => 'Producto agregado al carrito exitosamente.',
-            'carrito' => $this->visualizarCarrito()['carrito'],
-            'detallescarrito' => $this->visualizarCarrito()['detallescarrito'],
+            'carrito' => $carritoVisualizado['carrito'],
+            'detallescarrito' => $carritoVisualizado['detallescarrito'],
         ];
     }
 
