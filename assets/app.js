@@ -6,9 +6,11 @@ import './bootstrap';
 import { createApp } from "vue";
 import { createPinia } from "pinia";
 import App from "./vue/controllers/App"; //Componente Principal en donde estarán todos los hijos.
+// import App2 from "./vue/controllers/App2"; //Ver componente de Listar productos
 
 const pinia = createPinia();
 const app = createApp(App);
+// const app = createApp(App2); //Ver componentes de Listar productos
 app.use(pinia);
 app.mount('#app');
 
