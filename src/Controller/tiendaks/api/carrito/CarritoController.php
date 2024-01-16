@@ -27,7 +27,7 @@ class CarritoController extends AbstractController
         $idproducto = $data['id_producto'];
         $cantidad = $data['cantidad'];
         $respuesta = $carritoFunciones->agregarProducto($idproducto, $cantidad);
-        return $this->json($respuesta, Response::HTTP_OK,[],[ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER=>function ($detallecarrito){ return $detallecarrito->getId(); }]);
+        return $this->json($respuesta, Response::HTTP_OK,[]);
     }
 
     #[Route('/api/carrito/eliminar', name: 'app_api_carrito_eliminar', methods:['POST'])]
@@ -36,7 +36,7 @@ class CarritoController extends AbstractController
         $data = json_decode($request->getContent(),true);
         $iddetallecarrito = $data['id_detalle_carrito'];
         $respuesta = $carritoFunciones->eliminarProducto($iddetallecarrito);
-        return $this->json($respuesta, Response::HTTP_OK,[],[ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER=>function ($detallecarrito){ return $detallecarrito->getId(); }]);
+        return $this->json($respuesta, Response::HTTP_OK,[]);
     }
 
     #[Route('/api/carrito/modificar', name: 'app_api_carrito_modificar', methods:['POST'])]
@@ -46,14 +46,14 @@ class CarritoController extends AbstractController
         $iddetallecarrito = $data['id_detalle_carrito'];
         $cantidad = $data['cantidad'];
         $respuesta = $carritoFunciones->modificarProducto($iddetallecarrito, $cantidad);
-        return $this->json($respuesta, Response::HTTP_OK,[],[ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER=>function ($detallecarrito){ return $detallecarrito->getId(); }]);
+        return $this->json($respuesta, Response::HTTP_OK,[]);
     }
 
     #[Route('/api/carrito/visualizar', name: 'app_api_carrito_visualizar', methods:['GET'])]
     public function visualizarProducto(CarritoFunciones $carritoFunciones): JsonResponse
     {
         $respuesta = $carritoFunciones->visualizarCarrito();
-        return $this->json($respuesta, Response::HTTP_OK,[],[ObjectNormalizer::CIRCULAR_REFERENCE_HANDLER=>function ($detallecarrito){ return $detallecarrito->getId(); }]);
+        return $this->json($respuesta, Response::HTTP_OK,[]);
     }
 
     //método get para agregar producto a carrito

@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20240111222655 extends AbstractMigration
+final class Version20240116163118 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -30,7 +30,7 @@ final class Version20240111222655 extends AbstractMigration
         $this->addSql('CREATE INDEX IDX_A7BB0615DB38439E ON producto (usuario_id)');
         $this->addSql('CREATE INDEX IDX_A7BB0615F045077C ON producto (descuento_id)');
         $this->addSql('CREATE TABLE usuario (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, u_correo VARCHAR(180) NOT NULL, roles CLOB NOT NULL --(DC2Type:json)
-        , password VARCHAR(255) NOT NULL, u_nombres VARCHAR(50) NOT NULL, u_apepat VARCHAR(50) NOT NULL, u_apemat VARCHAR(50) NOT NULL, u_dni VARCHAR(8) NOT NULL, u_telefono VARCHAR(9) DEFAULT NULL, u_estado BOOLEAN NOT NULL, is_verified BOOLEAN NOT NULL)');
+        , password VARCHAR(255) NOT NULL, u_nombres VARCHAR(50) NOT NULL, u_apepat VARCHAR(50) NOT NULL, u_apemat VARCHAR(50) NOT NULL, u_dni VARCHAR(8) NOT NULL, u_telefono VARCHAR(9) DEFAULT NULL, u_estado BOOLEAN NOT NULL, is_verified BOOLEAN NOT NULL, google_id VARCHAR(255) DEFAULT NULL, facebook_id VARCHAR(255) DEFAULT NULL)');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_2265B05D92C973A9 ON usuario (u_correo)');
         $this->addSql('CREATE TABLE valoracion (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, producto_id INTEGER NOT NULL, usuario_id INTEGER NOT NULL, vl_valor INTEGER NOT NULL, vl_comentario CLOB DEFAULT NULL, CONSTRAINT FK_6D3DE0F47645698E FOREIGN KEY (producto_id) REFERENCES producto (id) NOT DEFERRABLE INITIALLY IMMEDIATE, CONSTRAINT FK_6D3DE0F4DB38439E FOREIGN KEY (usuario_id) REFERENCES usuario (id) NOT DEFERRABLE INITIALLY IMMEDIATE)');
         $this->addSql('CREATE INDEX IDX_6D3DE0F47645698E ON valoracion (producto_id)');
