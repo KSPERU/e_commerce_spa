@@ -30,6 +30,12 @@
             <li class="list-group-item">
                 <span class="text-secondary">Clasificado: </span><a href="{{ path('app_api_producto_clasificar', {'categoria': 'smartphones', 'atributo': 'precio', 'modo': 'menor', 'inicio': '300', 'fin': '1000'}) }}" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">/api/producto/listado/{categoria}/por/{atributo}/ordenado/{modo}/de/{inicio}/entre/{fin}</a>
             </li>
+            <li class="list-group-item">
+                <span class="text-secondary">Listado por usuario: </span><a href="{{ path('app_api_producto_listado_usuario', {'usuario': '1'}) }}" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">/api/producto/listado/usuario/{usuario}</a>
+            </li>
         </ul>
+    </div>
+    <div class="container">
+        <div id="app"></div>
     </div>
 {% endblock %}
