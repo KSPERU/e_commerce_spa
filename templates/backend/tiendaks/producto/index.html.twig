@@ -33,6 +33,9 @@
             <li class="list-group-item">
                 <span class="text-secondary">Listado por usuario: </span><a href="{{ path('app_api_producto_listado_usuario', {'usuario': '1'}) }}" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">/api/producto/listado/usuario/{usuario}</a>
             </li>
+            <li class="list-group-item">
+                <span class="text-secondary">Clasificados por categoría: </span><a href="{{ path('app_backend_producto_categoria', {'categoria': 'laptops'}) }}" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">/api/producto/listado/categoria/stock</a>
+            </li>
         </ul>
     </div>
     <div class="container">

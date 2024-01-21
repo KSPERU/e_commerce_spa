@@ -17,33 +17,33 @@
     </div>
 
     <div class="container mt-4">
-    <div class="row">
-        <div class="col-md-4">
-        <div class="form-check">
-            <input type="checkbox" id="precio" value="precio" v-model="atributos" class="form-check-input">
-            <label for="precio" class="form-check-label">Precio</label>
-        </div>
+        <div class="row">
+            <div class="col-md-4">
+            <div class="form-check">
+                <input type="checkbox" id="precio" value="precio" v-model="atributos" class="form-check-input">
+                <label for="precio" class="form-check-label">Precio</label>
+            </div>
+            </div>
+
+            <div class="col-md-4">
+            <div class="form-check">
+                <input type="checkbox" id="otro" value="otro" v-model="atributos" class="form-check-input">
+                <label for="otro" class="form-check-label">Otro</label>
+            </div>
+            </div>
         </div>
 
-        <div class="col-md-4">
-        <div class="form-check">
-            <input type="checkbox" id="otro" value="otro" v-model="atributos" class="form-check-input">
-            <label for="otro" class="form-check-label">Otro</label>
+        <div class="row mt-3" v-if="atributos.includes('precio')">
+            <div class="col-md-4">
+            <input v-model="modo" type="text" class="form-control" placeholder="Modo">
+            </div>
+            <div class="col-md-4">
+            <input v-model="min" type="text" class="form-control" placeholder="Min">
+            </div>
+            <div class="col-md-4">
+            <input v-model="max" type="text" class="form-control" placeholder="Max">
+            </div>
         </div>
-        </div>
-    </div>
-
-    <div class="row mt-3" v-if="atributos.includes('precio')">
-        <div class="col-md-4">
-        <input v-model="modo" type="text" class="form-control" placeholder="Modo">
-        </div>
-        <div class="col-md-4">
-        <input v-model="min" type="text" class="form-control" placeholder="Min">
-        </div>
-        <div class="col-md-4">
-        <input v-model="max" type="text" class="form-control" placeholder="Max">
-        </div>
-    </div>
     </div>
 
 

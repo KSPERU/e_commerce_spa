@@ -10,6 +10,7 @@
                 <th scope="col">Descripción</th>
                 <th scope="col">Categoria</th>
                 <th scope="col">Precio</th>
+                <th scope="col">Stock</th>
             </tr>
         </thead>
         <tbody>
@@ -19,6 +20,7 @@
                 <td>{{ dato.pr_descripcion }}</td>
                 <td>{{ dato.pr_categoria }}</td>
                 <td>{{ dato.pr_precio }}</td>
+                <td> - </td>
             </tr>
         </tbody>
     </table>
@@ -30,6 +32,10 @@
 
     const productoModulo = useProductoModulo();
   
+    const actualizarStock = async (idProducto, nuevoStock) => {
+        console.log('No se modifico.');
+    };
+
     const listadoPorUsuario = computed(() => {
         return productoModulo.LISTADOPORUSUARIO
     })
