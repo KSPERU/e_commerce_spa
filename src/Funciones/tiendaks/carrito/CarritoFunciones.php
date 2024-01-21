@@ -254,6 +254,7 @@ class CarritoFunciones
                 'prNombre' => $producto->getPrNombre(),
                 'prDescripcion' => $producto->getPrDescripcion(),
                 'prPrecio' => $producto->getPrPrecio(),
+                'prStock' => $producto->getPrStock(),
                 'prImagenes' => json_decode($producto->getPrImagenes(), true),
                 'dcCantidad' => $detallecarrito->getDcCantidad(),
                 'dcImporte' => $detallecarrito->getDcImporte(),

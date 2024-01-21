@@ -16,6 +16,7 @@ export const carritoStore = defineStore('carrito', {
             try {
                 console.log(id_producto);
                 const response = await axios.post('/api/carrito/agregar', id_producto);
+                this.carrito = response.data.carrito;
                 this.detallesCarrito = response.data.detallescarrito;
                 console.log('detalle carrito ', this.detallesCarrito)
             } catch (error) {
@@ -27,6 +28,7 @@ export const carritoStore = defineStore('carrito', {
             try {
                 console.log(idDetalleCarrito);
                 const response = await axios.post('/api/carrito/eliminar', idDetalleCarrito);
+                this.carrito = response.data.carrito;
                 this.detallesCarrito = response.data.detallescarrito;
             } catch (error) {
                 alert(error)
@@ -37,7 +39,14 @@ export const carritoStore = defineStore('carrito', {
             try {
                 console.log(idDetalleCarrito);
                 const response = await axios.post('/api/carrito/modificar', idDetalleCarrito);
-                this.detallesCarrito = response.data.detallescarrito;
+                if (response.data.success) {
+                    this.carrito = response.data.carrito;
+                    this.detallesCarrito = response.data.detallescarrito;
+                } else {
+                    // Alerta del mensaje enviado por la api
+                    alert(response.data.message);
+                    return { error: response.data.message };
+                }
             } catch (error) {
                 alert(error)
                 console.log(error.response.data)
@@ -49,7 +58,7 @@ export const carritoStore = defineStore('carrito', {
                 this.carrito = response.data.carrito;
                 this.detallesCarrito = response.data.detallescarrito;
                 console.log('detalle carrito ', this.detallesCarrito)
-                //console.log('carrito ', carrito)
+                console.log('carrito ', this.carrito)
             } catch (error) {
                 alert(error)
                 console.log(error.response.data)
