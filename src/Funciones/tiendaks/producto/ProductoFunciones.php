@@ -41,10 +41,20 @@ class ProductoFunciones
     }
 
     public function buscarProducto($busqueda){
-        // Funcion directa, si no hay productos no va hacer nada para crearlos
+        if($this->validarExistenciaProductos() === false){
+            $this->registrarProductosTest();
+        }
         $producto = $this->productoRepository->buscarProducto($busqueda);
         $productoespecificado = $this->especificarProductos($producto);
         return $productoespecificado;
+    }
+
+    public function buscarProductoStock($busqueda){
+        if($this->validarExistenciaProductos() === false){
+            $this->registrarProductosTest();
+        }
+        $productos = $this->productoRepository->buscarProducto($busqueda);
+        return $productos;
     }
 
     public function obtenerProductorPorUsuario(int $id){
@@ -111,11 +121,53 @@ class ProductoFunciones
         return $productos;
     }
 
+    public function obtenerProductosFiltradosCategorizadosConStock(string $categoria){
+        $productos = $this->obtenerProductosProcesado();
+        $productos = $this->obtenerProductosCategorizados($categoria, $productos);
+        $productos = $this->obtenerProductosConStock($productos);
+        return $productos;
+    }
+
     public function obtenerProductosCategorizados(string $categoria, array $productos){
         try {
             $productos_aux = array_filter($productos, 
                 function($articulo) use ($categoria){
                     if($articulo->getPrCategoria() !== $categoria){
+                        return false;
+                    }
+                    return true;
+                }
+            );
+        } catch (Exception $e) {
+            //No hecer nada
+        }
+        return $productos_aux;
+    }
+
+    public function obtenerProductosCategorizadosArray(array $categorias, array $productos){
+        try {
+            $productos_aux = array_filter($productos, 
+                function($articulo) use ($categorias){
+                    if(!in_array($articulo->getPrCategoria(), $categorias)){
+                        return false;
+                    }
+                    return true;
+                }
+            );
+            if(empty($productos_aux)){
+                $productos_aux = $productos;
+            }
+        } catch (Exception $e) {
+            //No hecer nada
+        } 
+        return $productos_aux;
+    }
+
+    public function obtenerProductosConStock(array $productos){
+        try {
+            $productos_aux = array_filter($productos, 
+                function($articulo) {
+                    if($articulo->getPrStock() == 0){
                         return false;
                     }
                     return true;
@@ -158,6 +210,20 @@ class ProductoFunciones
                 $productos = $this->obtenerProductosOrdenadosPrecioMenor($productos);
             } elseif ($modo == 'mayor') {
                 $productos = $this->obtenerProductosOrdenadosPrecioMayor($productos);
+            }
+        }
+        return $productos;
+    }
+
+    public function ordenarProductosPorAtributo(array $atributos, array $productos){
+        foreach ($atributos as $atributo) {
+            if($atributo[0] == 'precio'){
+                if ($atributo[1]== 'menor'){
+                    $productos = $this->obtenerProductosOrdenadosPrecioMenor($productos);
+                } elseif ($atributo[1] == 'mayor') {
+                    $productos = $this->obtenerProductosOrdenadosPrecioMayor($productos);
+                }
+                $productos = $this->obtenerProductosEstimados($atributo[2], $atributo[3], $productos);
             }
         }
         return $productos;
@@ -223,6 +289,19 @@ class ProductoFunciones
         $productos = $this->obtenerProductosEstimados($inicio, $fin, $productos);
         $productosespecificados = $this->especificarProductos($productos);
         return $productosespecificados;
+    }
+
+    public function obtenerProductosClasificadosStock(array $categorias, array $atributos, string $busqueda){
+        $productos = $this->obtenerProductosProcesado();
+        if($busqueda !== ""){
+            $productos = $this->buscarProductoStock($busqueda);
+        }
+        $productos = $this->obtenerProductosCategorizadosArray($categorias, $productos);
+        $productos = $this->ordenarProductosPorAtributo($atributos, $productos);
+        // Limpieza de listado
+        $productos = $this->obtenerProductosConStock($productos);
+        $productos = $this->especificarProductos($productos);
+        return $productos;
     }
 
     public function obtenerProductorPorUsuarioArray(int $usuario){

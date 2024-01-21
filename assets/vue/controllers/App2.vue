@@ -29,12 +29,13 @@
     import buscarProducto from './store/backend/tiendaks/producto/buscarProducto';
     import clasificacionProducto from './store/backend/tiendaks/producto/clasificacionProducto';
     import listadoPorUsuario from './store/backend/tiendaks/producto/listadoPorUsuario';
-const productoModulo = useProductoModulo();
+    const productoModulo = useProductoModulo();
     //const datosEnPadre = productoModulo.DATOS;
 
     const datosEnPadre = computed(() => {
         return productoModulo.DATOS
     })
+    
     onMounted(() => {
         productoModulo.actualizarDatos()
     }) 

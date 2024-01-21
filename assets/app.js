@@ -6,14 +6,23 @@ import './bootstrap';
 import { createApp } from "vue";
 import { createPinia } from "pinia";
 import App from "./vue/controllers/App"; //Componente Principal en donde estarán todos los hijos.
+import App2 from "./vue/controllers/App2";
+import App3 from "./vue/controllers/App3";
 // import App2 from "./vue/controllers/App2"; //Ver componente de Listar productos
 
 const pinia = createPinia();
 const app = createApp(App);
-// const app = createApp(App2); //Ver componentes de Listar productos
+const app2 = createApp(App2); //Ver componentes de Listar productos
+const app3 = createApp(App3); 
+
 app.use(pinia);
 app.mount('#app');
 
+app2.use(pinia);
+app2.mount('#app2');
+
+app3.use(pinia);
+app3.mount('#app3');
 
 const $ = require('jquery');
 // this "modifies" the jquery module: adding behavior to it

@@ -7,24 +7,28 @@ export const useProductoModulo = defineStore('productoModulo', {
     listarProductos: [],
     listarProductosPaginados: [],
     listarProductosCategorizados: [],
+    listarProductosCategorizadosStock: [],
     listarProductosPrecios: [],
     listarProductosOrdenado: [],
     verProducto: [],
     buscarProducto: [],
     clasificacionProducto: [],
     listadoPorUsuario: [],
+    categoriaConMenuDeFiltros: [],
   }),
   getters: {
     DATOS(state) {return state.datos}, 
     LISTARPRODUCTOS(state) {return state.listarProductos}, 
     LISTARPRODUCTOSPAGINADOS(state) {return state.listarProductosPaginados}, 
     LISTARPRODUCTOSCATEGORIZADOS(state) {return state.listarProductosCategorizados}, 
+    LISTARPRODUCTOSCATEGORIZADOSSTOCK(state) {return state.listarProductosCategorizadosStock},
     LISTARPRODUCTOSPRECIOS(state) {return state.listarProductosPrecios}, 
     LISTARPRODUCTOSORDENADO(state) {return state.listarProductosOrdenado}, 
     VERPRODUCTO(state) {return state.verProducto}, 
     BUSCARPRODUCTO(state) {return state.buscarProducto}, 
     CLASIFICACIONPRODUCTO(state) {return state.clasificacionProducto}, 
     LISTADOPORUSUARIO(state) {return state.listadoPorUsuario}, 
+    CATEGORIACONMENUDEFILTROS(state) {return state.categoriaConMenuDeFiltros},
   },
   actions: {
     actualizarDatos(nuevosDatos) {
@@ -55,6 +59,14 @@ export const useProductoModulo = defineStore('productoModulo', {
       try {
         const data = await axios.get('/api/producto/listado/'+ categoria);
         this.listarProductosCategorizados = data.data;
+      } catch (error) {
+        console.log(error);
+      }
+    },
+    async getListarProductosCategorizadosStock(categoria) {
+      try {
+        const data = await axios.get('/api/producto/listado/'+ categoria + '/stock');
+        this.listarProductosCategorizadosStock = data.data;
       } catch (error) {
         console.log(error);
       }
@@ -105,6 +117,14 @@ export const useProductoModulo = defineStore('productoModulo', {
         this.listadoPorUsuario = data.data;
       } catch (error) {
         console.log(error);
+      }
+    },
+    async getCategoriaConMenuDeFiltros(datos) {
+      try {
+          const response = await axios.post('/api/producto/listado/categoria/stock', datos);
+          this.categoriaConMenuDeFiltros = response.data;
+      } catch (error) {
+          console.log("Un error" + error.response.data)
       }
     },
   },

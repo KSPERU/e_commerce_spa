@@ -7,7 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Funciones\tiendaks\producto\ProductoFunciones;
 use Symfony\Component\HttpFoundation\JsonResponse;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
+use Symfony\Component\HttpFoundation\Request;
 
 class ProductoController extends AbstractController
 {
@@ -37,6 +37,13 @@ class ProductoController extends AbstractController
     public function listarProductosCategorizados(string $categoria, ProductoFunciones $productoFunciones): JsonResponse
     {
         $productos = $productoFunciones->especificarProductos($productoFunciones->obtenerProductosFiltradosCategorizados($categoria));
+        return $this->json($productos, Response::HTTP_OK,[]);
+    }
+
+    #[Route('/api/producto/listado/{categoria}/stock', name: 'app_api_producto_listado_categorizados_stock', methods: ['GET'])]
+    public function listarProductosCategorizadosConStock(string $categoria, ProductoFunciones $productoFunciones): JsonResponse
+    {
+        $productos = $productoFunciones->especificarProductos($productoFunciones->obtenerProductosFiltradosCategorizadosConStock($categoria));
         return $this->json($productos, Response::HTTP_OK,[]);
     }
 
@@ -73,6 +80,17 @@ class ProductoController extends AbstractController
     public function clasificaciónProducto(string $categoria, string $atributo, string $modo, float $inicio, float $fin, ProductoFunciones $productoFunciones): JsonResponse
     {
         $productos = $productoFunciones->obtenerProductosClasificados($categoria, $atributo, $modo, $inicio, $fin);
+        return $this->json($productos, Response::HTTP_OK,[]);
+    }
+
+    #[Route('/api/producto/listado/categoria/stock', name: 'app_api_producto_categoria_stock', methods: ['POST'])]
+    public function categoriaConMenuDeFiltros(Request $request, ProductoFunciones $productoFunciones): JsonResponse
+    {
+        $datos = json_decode($request->getContent(),true);
+        $categorias = $datos["categorias"];
+        $atributos = $datos["atributos"];
+        $busqueda = $datos["busqueda"];
+        $productos = $productoFunciones->obtenerProductosClasificadosStock($categorias, $atributos, $busqueda);
         return $this->json($productos, Response::HTTP_OK,[]);
     }
 

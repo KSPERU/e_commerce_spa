@@ -1,6 +1,6 @@
 <template>
     <div class="alert alert-primary" role="alert">
-        Categorias: /api/producto/listado/{categoria} 
+        Categorias: /api/producto/listado/{categoria}/stock 
     </div>
     <table class="table">
         <thead>
@@ -13,7 +13,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr v-for="dato in listarProductosCategorizados">
+            <tr v-for="dato in listarProductosCategorizadosStock">
                 <th scope="row">{{ dato.id }}</th>
                 <td>{{ dato.pr_nombre }}</td>
                 <td>{{ dato.pr_descripcion }}</td>
@@ -30,10 +30,9 @@
 
     const productoModulo = useProductoModulo();
   
-    const listarProductosCategorizados = computed(() => {
-        return productoModulo.LISTARPRODUCTOSCATEGORIZADOS
+    const listarProductosCategorizadosStock = computed(() => {
+        return productoModulo.LISTARPRODUCTOSCATEGORIZADOSSTOCK
     })
-    
     onMounted(() => {
         productoModulo.getListarProductosCategorizadosStock('skincare')
     })
