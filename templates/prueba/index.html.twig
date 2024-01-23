@@ -12,11 +12,13 @@
     <h1>Hello {{ controller_name }}! ✅</h1>
 
     This friendly message is coming from:
+     
     <ul>
         <li>Your controller at <code><a href="{{ 'C:/xampp/htdocs/e_commerce_spa/src/Controller/PruebaController.php'|file_link(0) }}">src/Controller/PruebaController.php</a></code></li>
         <li>Your template at <code><a href="{{ 'C:/xampp/htdocs/e_commerce_spa/templates/prueba/index.html.twig'|file_link(0) }}">templates/prueba/index.html.twig</a></code></li>
     </ul>
 </div>
+<a href="{{ path('app_tiendaks_vistacarrito') }}">Ver mi carrito</a>
 <a href="{{ path('app_logout') }}">Cerrar sesión</a>
 <div id="app"></div>
 {% endblock %}

@@ -39,14 +39,14 @@ export const carritoStore = defineStore('carrito', {
             try {
                 console.log(idDetalleCarrito);
                 const response = await axios.post('/api/carrito/modificar', idDetalleCarrito);
-                if (response.data.success) {
+                // if (response.data.success) {
                     this.carrito = response.data.carrito;
                     this.detallesCarrito = response.data.detallescarrito;
-                } else {
-                    // Alerta del mensaje enviado por la api
-                    alert(response.data.message);
-                    return { error: response.data.message };
-                }
+                // } else {
+                //     // Alerta del mensaje enviado por la api
+                //     alert(response.data.message);
+                //     return { error: response.data.message };
+                // }
             } catch (error) {
                 alert(error)
                 console.log(error.response.data)
