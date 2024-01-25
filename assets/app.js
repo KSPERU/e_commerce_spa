@@ -5,12 +5,17 @@ import './bootstrap';
 
 import { createApp } from "vue";
 import { createPinia } from "pinia";
+
 import App from "./vue/controllers/App"; //Componente Principal en donde estarán todos los hijos.
 import App2 from "./vue/controllers/App2";
 import App3 from "./vue/controllers/App3";
 // import App2 from "./vue/controllers/App2"; //Ver componente de Listar productos
+// import App3 from "./vue/controllers/carrito"; //Ver componente de Listar productos
+// import app from "./vue/controllers/App";
 
 const pinia = createPinia();
+
+
 const app = createApp(App);
 const app2 = createApp(App2); //Ver componentes de Listar productos
 const app3 = createApp(App3); 
