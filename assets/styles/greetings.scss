@@ -1,0 +1,12 @@
+.titulo {
+    p{
+      color: white;
+      &:hover{
+          color: green;
+      }
+    }
+    h1{
+      color: brown;
+    }
+  }
+  
