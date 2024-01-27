@@ -1,0 +1,42 @@
+<template>
+    <div class="container mt-3">
+      <p class="text-secondary">¿Funciona?: {{ datosEnPadre }}</p>
+    </div>
+    <listados />
+    
+    <p class="fs-2 fw-bold text-uppercase">APIS en VUE</p>
+    <listarProductos />
+    <listarProductosPaginados />
+    <listarProductosCategorizados />
+    <listarProductosPrecios />
+    <listarProductosOrdenado />
+    <verProducto />
+    <buscarProducto />
+    <clasificacionProducto />
+    <listadoPorUsuario />
+</template>
+  
+<script setup>
+    import { onMounted, computed } from "vue"; 
+    import { useProductoModulo } from '../controllers/store/backend/tiendaks/producto/productoModulo';
+    import listados from './store/backend/tiendaks/producto/listados';
+    import listarProductos from './store/backend/tiendaks/producto/listarProductos';
+    import listarProductosPaginados from './store/backend/tiendaks/producto/listarProductosPaginados';
+    import listarProductosCategorizados from './store/backend/tiendaks/producto/listarProductosCategorizados';
+    import listarProductosPrecios from './store/backend/tiendaks/producto/listarProductosPrecios';
+    import listarProductosOrdenado from './store/backend/tiendaks/producto/listarProductosOrdenado';
+    import verProducto from './store/backend/tiendaks/producto/verProducto';
+    import buscarProducto from './store/backend/tiendaks/producto/buscarProducto';
+    import clasificacionProducto from './store/backend/tiendaks/producto/clasificacionProducto';
+    import listadoPorUsuario from './store/backend/tiendaks/producto/listadoPorUsuario';
+    const productoModulo = useProductoModulo();
+    //const datosEnPadre = productoModulo.DATOS;
+
+    const datosEnPadre = computed(() => {
+        return productoModulo.DATOS
+    })
+    
+    onMounted(() => {
+        productoModulo.actualizarDatos()
+    }) 
+</script>

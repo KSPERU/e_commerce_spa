@@ -61,6 +61,11 @@ class usuario implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(type: 'boolean')]
     private $isVerified = false;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $googleId = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $facebookId = null;
     #[ORM\OneToMany(mappedBy: 'usuario', targetEntity: valoracion::class, orphanRemoval: true)]
     private Collection $valoraciones;
 
@@ -271,6 +276,18 @@ class usuario implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
+    public function getGoogleId(): ?string
+    {
+        return $this->googleId;
+    }
+
+    public function setGoogleId(?string $googleId): static
+    {
+        $this->googleId = $googleId;
+
+        return $this;
+    }
+    
     /**
      * @return Collection<int, valoracion>
      */
@@ -285,6 +302,18 @@ class usuario implements UserInterface, PasswordAuthenticatedUserInterface
             $this->valoraciones->add($valoracione);
             $valoracione->setUsuario($this);
         }
+
+        return $this;
+    }
+
+    public function getFacebookId(): ?string
+    {
+        return $this->facebookId;
+    }
+
+    public function setFacebookId(?string $facebookId): static
+    {
+        $this->facebookId = $facebookId;
 
         return $this;
     }

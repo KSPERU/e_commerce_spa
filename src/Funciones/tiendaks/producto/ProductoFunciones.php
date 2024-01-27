@@ -41,9 +41,30 @@ class ProductoFunciones
     }
 
     public function buscarProducto($busqueda){
-        // Funcion directa, si no hay productos no va hacer nada para crearlos
+        if($this->validarExistenciaProductos() === false){
+            $this->registrarProductosTest();
+        }
         $producto = $this->productoRepository->buscarProducto($busqueda);
-        return $producto;
+        $productoespecificado = $this->especificarProductos($producto);
+        return $productoespecificado;
+    }
+
+    public function buscarProductoStock($busqueda){
+        if($this->validarExistenciaProductos() === false){
+            $this->registrarProductosTest();
+        }
+        $productos = $this->productoRepository->buscarProducto($busqueda);
+        return $productos;
+    }
+
+    public function obtenerProductorPorUsuario(int $id){
+        $usuario = $this->usuarioRepository->findOneBy([
+            'id' => $id,
+        ]);
+        $productos = $this->productoRepository->findBy([
+            'usuario' => $usuario, 
+        ]);
+        return $productos;
     }
 
     // Funciones Procesadas
@@ -54,7 +75,9 @@ class ProductoFunciones
             $aux = $this->obtenerProductos();
             $producto = $aux[0];
         }
-        return $producto;
+
+        $productoespecificado = $this->especificarProducto($producto);
+        return $productoespecificado;
     }
 
     public function validarExistenciaProductos(){
@@ -98,11 +121,53 @@ class ProductoFunciones
         return $productos;
     }
 
+    public function obtenerProductosFiltradosCategorizadosConStock(string $categoria){
+        $productos = $this->obtenerProductosProcesado();
+        $productos = $this->obtenerProductosCategorizados($categoria, $productos);
+        $productos = $this->obtenerProductosConStock($productos);
+        return $productos;
+    }
+
     public function obtenerProductosCategorizados(string $categoria, array $productos){
         try {
             $productos_aux = array_filter($productos, 
                 function($articulo) use ($categoria){
                     if($articulo->getPrCategoria() !== $categoria){
+                        return false;
+                    }
+                    return true;
+                }
+            );
+        } catch (Exception $e) {
+            //No hecer nada
+        }
+        return $productos_aux;
+    }
+
+    public function obtenerProductosCategorizadosArray(array $categorias, array $productos){
+        try {
+            $productos_aux = array_filter($productos, 
+                function($articulo) use ($categorias){
+                    if(!in_array($articulo->getPrCategoria(), $categorias)){
+                        return false;
+                    }
+                    return true;
+                }
+            );
+            if(empty($productos_aux)){
+                $productos_aux = $productos;
+            }
+        } catch (Exception $e) {
+            //No hecer nada
+        } 
+        return $productos_aux;
+    }
+
+    public function obtenerProductosConStock(array $productos){
+        try {
+            $productos_aux = array_filter($productos, 
+                function($articulo) {
+                    if($articulo->getPrStock() == 0){
                         return false;
                     }
                     return true;
@@ -145,6 +210,20 @@ class ProductoFunciones
                 $productos = $this->obtenerProductosOrdenadosPrecioMenor($productos);
             } elseif ($modo == 'mayor') {
                 $productos = $this->obtenerProductosOrdenadosPrecioMayor($productos);
+            }
+        }
+        return $productos;
+    }
+
+    public function ordenarProductosPorAtributo(array $atributos, array $productos){
+        foreach ($atributos as $atributo) {
+            if($atributo[0] == 'precio'){
+                if ($atributo[1]== 'menor'){
+                    $productos = $this->obtenerProductosOrdenadosPrecioMenor($productos);
+                } elseif ($atributo[1] == 'mayor') {
+                    $productos = $this->obtenerProductosOrdenadosPrecioMayor($productos);
+                }
+                $productos = $this->obtenerProductosEstimados($atributo[2], $atributo[3], $productos);
             }
         }
         return $productos;
@@ -208,8 +287,25 @@ class ProductoFunciones
         $productos = $this->obtenerProductosOrdenados($atributo, $modo, $productos);
         //3. Rango de precios aceptado
         $productos = $this->obtenerProductosEstimados($inicio, $fin, $productos);
+        $productosespecificados = $this->especificarProductos($productos);
+        return $productosespecificados;
+    }
 
+    public function obtenerProductosClasificadosStock(array $categorias, array $atributos, string $busqueda){
+        $productos = $this->obtenerProductosProcesado();
+        if($busqueda !== ""){
+            $productos = $this->buscarProductoStock($busqueda);
+        }
+        $productos = $this->obtenerProductosCategorizadosArray($categorias, $productos);
+        $productos = $this->ordenarProductosPorAtributo($atributos, $productos);
+        // Limpieza de listado
+        $productos = $this->obtenerProductosConStock($productos);
+        $productos = $this->especificarProductos($productos);
         return $productos;
+    }
+
+    public function obtenerProductorPorUsuarioArray(int $usuario){
+        return $this->especificarProductos($this->obtenerProductorPorUsuario($usuario));
     }
 
     //Funciones Test
@@ -238,6 +334,9 @@ class ProductoFunciones
                 $producto->setUsuario($usuarioTest);
                 $producto->setPrNombre($articulo['title']);
                 $producto->setPrCategoria($articulo['category']);
+                $producto->setPrDescripcion($articulo['description']);
+                $imagenes = json_encode($articulo['images']);
+                $producto->setPrImagenes($imagenes);
                 $producto->setPrStock($articulo['stock']);
                 $producto->setPrPrecio($articulo['price']);
                 $this->entityManagerInterface->persist($producto);
@@ -276,5 +375,66 @@ class ProductoFunciones
         $usuarioTest->setUEstado(true);
         $this->entityManagerInterface->persist($usuarioTest);
         $this->entityManagerInterface->flush();
+    }
+
+    private function especificarProductoBase(Producto $producto) {
+        $precio = $producto->getPrPrecio();
+        $descuento = $this->obtenerdescuentoproducto($producto);
+        $valoracionData = $this->obtenervaloracionesproducto($producto);
+        $valoracion = $valoracionData['valoracion'];
+        $cantvaloraciones = $valoracionData['cantvaloraciones'];
+    
+        return [
+            'id' => $producto->getId(),
+            'pr_nombre' => $producto->getPrNombre(),
+            'pr_descripcion' => $producto->getPrDescripcion(),
+            'pr_categoria' => $producto->getPrCategoria(),
+            'pr_imagenes' => json_decode($producto->getPrImagenes(), true),
+            'pr_precio' => $precio,
+            'pr_descuento' => $descuento,
+            'pr_preciofinal' => $precio - $precio * $descuento,
+            'valoracion' => $valoracion,
+            'cantidadvaloracion' => $cantvaloraciones
+        ];
+    }
+    
+    public function especificarProductos(array $productos) {
+        $productoslistado = [];
+        foreach ($productos as $producto) {
+            $productoslistado[] = $this->especificarProductoBase($producto);
+        }
+    
+        return $productoslistado;
+    }
+    
+    public function especificarProducto(Producto $producto) {
+        return [$this->especificarProductoBase($producto)];
+    }
+
+    private function obtenerdescuentoproducto(Producto $producto){
+        if($producto->getDescuento() == null){
+            $descuento = 0;
+        }else{
+            $descuento = $producto->getDescuento()->getDsValor();
+        }
+        return $descuento;
+    }
+
+    private function obtenervaloracionesproducto(Producto $producto){
+            $valoraciones = $producto->getValoraciones();
+            $cantvaloraciones = count($valoraciones);
+            $total = 0;
+            foreach($valoraciones as $valoracion){
+                $total = $total + $valoracion->getVlValor();
+            }
+            if ($cantvaloraciones == 0){
+                $valoracion = 0;
+            }else{
+                $valoracion = intval($total/count($valoraciones));
+            }
+        return [
+            'valoracion' => $valoracion,
+            'cantvaloraciones' => $cantvaloraciones,
+        ];
     }
 }
