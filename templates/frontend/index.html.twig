@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello Frontends{% endblock %}
+
+
+
+{% block body %}
+
+    <h1>Hola mundo</h1>
+
+    <div {{ vue_component('Slider') }}></div>
+    <div {{ vue_component('ListadoProductos') }}></div>
+    <div {{ vue_component('CirculoCarrito') }}></div>
+    <div {{ vue_component('ListadoOfertas') }}></div>
+
+{% endblock %}
