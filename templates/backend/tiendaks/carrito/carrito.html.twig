@@ -1,38 +1,24 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello CarritoController!{% endblock %}
+{% block title %}
+  Hello CarritoController!
+{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
-
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/proyectos/PROYECTOS-SYMFONY/e_commerce_spa/src/Controller/Tiendaks/backend/carrito/CarritoController.php'|file_link(0) }}">src/Controller/Tiendaks/backend/carrito/CarritoController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/proyectos/PROYECTOS-SYMFONY/e_commerce_spa/templates/tiendaks/backend/carrito/carrito/index.html.twig'|file_link(0) }}">templates/tiendaks/backend/carrito/carrito/index.html.twig</a></code></li>
-    </ul>
-</div>
-<form method="post"> {# Establece el método POST para enviar datos #}
-    <button type="submit">Realizar compra</button>
-  </form>
-{% if iniciarSesion %}
-    <div class="alert alert-success">
-        Se necesita iniciar sesion para realizar la compra, redireccionando ...
-    </div>
-    <script>
-        setTimeout(() => {
-            // Redirecciona a otra página
-            window.location.href = "{{ path('app_login') }}";
-        }, 5000); // 5 segundos
-    </script> 
-{% else %}
-
-    
-{% endif %}
-<div id="app3"></div>
+  {% set name = 'World' %}
+  {% set papitas = ['fritas', 'picantes', 'con queso', 'tocosh'] %}
+{% set papitasObjeto = {
+  'Perfil': {
+    'nombre': 'Josue',
+    'apellido': 'Chambilla',
+  },
+  'Celular': '982531296',
+  'Correo': 'josue123@hotmail.com',
+} %}  
+  <div id="app3" 
+  
+    data-my-variable="{{ name }}" 
+    data-papitas="{{ papitas | json_encode }}"
+    data-producto="{{ papitasObjeto | json_encode }}"
+  ></div>
 {% endblock %}

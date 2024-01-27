@@ -1,9 +1,51 @@
 <template>
-    <listarProductosCategorizadosStock />
-    <categoriaConMenuDeFiltros />
+  <div class="text-bg-dark">Hello {{ name }}!</div>
+  <div class="text-bg-dark">Tipo de de papitas {{ papitas }}!</div>
+
+  <div v-for="(papita, id) in papitas" :key="id">
+    {{ papita }}
+  </div>
+
+  <p>Trabajando con objetos</p>
+
+  {{ informacion }}
+
+  <div v-for="(data, index) in informacion" :key="index">
+    <h2>{{ data.Perdil }}</h2>
+  </div>
 </template>
-  
-<script setup>
-    import listarProductosCategorizadosStock from './store/backend/tiendaks/producto/listarProductosCategorizadosStock';
-    import categoriaConMenuDeFiltros from './store/backend/tiendaks/producto/categoriaConMenuDeFiltros';
+
+<script>
+export default {
+  name: "App3",
+  components: {},
+  setup(props) {
+    try {
+      const informacion = props.informacion;
+      const propiedades = Object.keys(informacion);
+      for (const propiedad of propiedades) {
+        console.log(propiedad, informacion[propiedad]);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  },
+  props: {
+    name: {
+      type: String,
+      default: document.getElementById("app3").getAttribute("data-my-variable"),
+    },
+    papitas: {
+      type: Array,
+      default: JSON.parse(
+        document.getElementById("app3").getAttribute("data-papitas")
+      ),
+    },
+    informacion: {
+      default: JSON.parse(
+        document.getElementById("app3").getAttribute("data-producto")
+      ),
+    },
+  },
+};
 </script>
