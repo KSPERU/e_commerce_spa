@@ -46,6 +46,7 @@
     height: 90px;
     border-radius: 50%;
     margin: 50px;
+    z-index: 99;
   }
   
   .popup_carrito_cantidad{
@@ -61,10 +62,12 @@
     height: 60px;
     border-radius: 50%;
     margin: 20px;
-  }
-  .popup-carrito-cart-icon{
-    font-size: 24px;
-  }
+    top: 50%;
+    z-index: 99;
+    }
+    .popup-carrito-cart-icon{
+      font-size: 24px;
+    }
   }
   </style>
   
