@@ -8,13 +8,14 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Funciones\tiendaks\carrito\CarritoFunciones;
 use App\Funciones\tiendaks\pruebas\PruebaFunciones;
+use App\Repository\Producto\productoRepository;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CarritoController extends AbstractController
 {
     #[Route('/tiendaks/carrito', name: 'app_tiendaks_vistacarrito')]
-    public function vistacarrito(Request $request): Response
+    public function vistacarrito(Request $request, productoRepository $productoRepository): Response
     {
         $iniciarSesion = false;
         if ($request->isMethod('POST')) {
@@ -36,6 +37,7 @@ class CarritoController extends AbstractController
         return $this->render('backend/tiendaks/carrito/carrito.html.twig', [
             'controller_name' => 'CarritoController',
             'iniciarSesion' => $iniciarSesion,
+            'producto' => ($productoRepository->findAll())[0],
         ]);
     }
 
