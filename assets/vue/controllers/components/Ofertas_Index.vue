@@ -1,11 +1,13 @@
 <template lang="">
   <div class="container mt-4">
     <div class="d-flex justify-content-start align-items-baseline mb-4">
-      <span class="fs-4 fw-semibold me-2">Productos</span>
-      <span><a href="#" class="fs-6 fw-semibold">Ver mas </a></span>
+      <span class="fs-4 fw-semibold me-2">Ofertas</span>
+      <span
+        ><a href="#" class="fs-6 fw-semibold">Ver todas las Ofertas </a></span
+      >
     </div>
 
-    <div id="carouselProductos" class="carousel slide">
+    <div id="carouselOfertas" class="carousel slide">
       <div class="carousel-inner d-flex">
         <div class="carousel-item active">
           <div class="row row-cols-lg-4 row-cols-md-3 row-cols-sm-1 g-4">
@@ -57,7 +59,70 @@
                         class="fa fa-star ms-1"
                         style="color: #d9d9d9"
                       ></span>
-
+                      
+                      <span class="ms-2 text-body-secondary">
+                        20
+                      </span>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                      <p class="size-14">
+                        <span class="fw-bold">Envío gratis</span>, llega
+                        <span class="fw-bold">en 3+ dias</span>
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col d-lg-block d-md-block d-none">
+              <div class="card h-100 p-2">
+                <img
+                  src="../img/aspiradora.png"
+                  class="card-img-top"
+                  alt="..."
+                />
+                <div class="card-body pt-4">
+                  <div class="row g-2">
+                    <div class="col-lg-5 col-md-6 col-4">
+                      <span class="size-18 fw-normal">S/. 255.00</span>
+                    </div>
+                    <div class="col-lg-7 col-md-6 col-8 d-flex align-items-end">
+                      <span
+                        class="size-15 text-decoration-line-through fw-normal text-body-secondary"
+                        >S/. 250.00</span
+                      >
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-3">
+                      <span class="size-14 badge bg-dark text-wrap"
+                        >Ahorras</span
+                      >
+                    </div>
+                    <div class="col-lg-8 col-md-6 col-9">
+                      <span class="size-14 fw-normal text-start"
+                        >S/. 50.00</span
+                      >
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-12">
+                      <p class="size-14 custom-truncate m-0">
+                        Shark IQ Robot Self-Empty XL Vacuum with Self-Empty
+                        Base, Home Mapping, RV1002AE, New Shark IQ Robot
+                        Self-Empty XL Vacuum with Self-Empty Base, Home Mapping,
+                        RV1002AE, New
+                      </p>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                      <span class="fa fa-star checked ms-1"></span>
+                      <span class="fa fa-star checked ms-1"></span>
+                      <span class="fa fa-star checked ms-1"></span>
+                      <span
+                        class="fa fa-star ms-1"
+                        style="color: #d9d9d9"
+                      ></span>
+                      <span
+                        class="fa fa-star ms-1"
+                        style="color: #d9d9d9"
+                      ></span>
+              
                       <span class="ms-2 text-body-secondary">
                         20
                       </span>
@@ -136,62 +201,6 @@
                 </div>
               </div>
             </div>
-            <div class="col d-lg-block d-md-block d-none">
-              <div class="card h-100 p-2">
-                <img
-                  src="../img/aspiradora.png"
-                  class="card-img-top"
-                  alt="..."
-                />
-                <div class="card-body pt-4">
-                  <div class="row g-2">
-                    <div class="col-lg-5 col-md-6 col-sm-6">
-                      <span class="size-18 fw-normal">S/. 255.00</span>
-                    </div>
-                    <div
-                      class="col-lg-7 col-md-6 col-sm-6 d-flex align-items-end"
-                    >
-                      <span
-                        class="size-15 text-decoration-line-through fw-normal text-body-secondary"
-                        >S/. 250.00</span
-                      >
-                    </div>
-                    <div class="col-lg-12 col-md-12 col-sm-12">
-                      <p class="size-14 custom-truncate m-0">
-                        Shark IQ Robot Self-Empty XL Vacuum with Self-Empty
-                        Base, Home Mapping, RV1002AE, New Shark IQ Robot
-                        Self-Empty XL Vacuum with Self-Empty Base, Home Mapping,
-                        RV1002AE, New
-                      </p>
-                    </div>
-                    <div class="col-lg-12 col-md-12 col-sm-12">
-                      <span class="fa fa-star checked ms-1"></span>
-                      <span class="fa fa-star checked ms-1"></span>
-                      <span class="fa fa-star checked ms-1"></span>
-                      <span
-                        class="fa fa-star ms-1"
-                        style="color: #d9d9d9"
-                      ></span>
-                      <span
-                        class="fa fa-star ms-1"
-                        style="color: #d9d9d9"
-                      ></span>
-
-                      
-                      <span class="ms-2 text-body-secondary">
-                        20
-                      </span>
-                    </div>
-                    <div class="col-lg-12 col-md-12 col-sm-12">
-                      <p class="size-14">
-                        <span class="fw-bold">Envío gratis</span>, llega
-                        <span class="fw-bold">en 3+ dias</span>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
             <div class="col d-lg-block d-none">
               <div class="card h-100 p-2">
                 <img
@@ -201,18 +210,26 @@
                 />
                 <div class="card-body pt-4">
                   <div class="row g-2">
-                    <div class="col-lg-5 col-md-6 col-sm-6">
+                    <div class="col-lg-5 col-md-6 col-4">
                       <span class="size-18 fw-normal">S/. 255.00</span>
                     </div>
-                    <div
-                      class="col-lg-7 col-md-6 col-sm-6 d-flex align-items-end"
-                    >
+                    <div class="col-lg-7 col-md-6 col-8 d-flex align-items-end">
                       <span
                         class="size-15 text-decoration-line-through fw-normal text-body-secondary"
                         >S/. 250.00</span
                       >
                     </div>
-                    <div class="col-lg-12 col-md-12 col-sm-12">
+                    <div class="col-lg-4 col-md-6 col-3">
+                      <span class="size-14 badge bg-dark text-wrap"
+                        >Ahorras</span
+                      >
+                    </div>
+                    <div class="col-lg-8 col-md-6 col-9">
+                      <span class="size-14 fw-normal text-start"
+                        >S/. 50.00</span
+                      >
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-12">
                       <p class="size-14 custom-truncate m-0">
                         Shark IQ Robot Self-Empty XL Vacuum with Self-Empty
                         Base, Home Mapping, RV1002AE, New Shark IQ Robot
@@ -255,13 +272,59 @@
             <div class="col">
               <div class="card h-100">
                 <img src="../img/Portada.png" class="card-img-top" alt="..." />
-                <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">
-                    This is a longer card with supporting text below as a
-                    natural lead-in to additional content. This content is a
-                    little bit longer.
-                  </p>
+                <div class="card-body pt-4">
+                  <div class="row g-2">
+                    <div class="col-lg-5 col-md-6 col-4">
+                      <span class="size-18 fw-normal">S/. 255.00</span>
+                    </div>
+                    <div class="col-lg-7 col-md-6 col-8 d-flex align-items-end">
+                      <span
+                        class="size-15 text-decoration-line-through fw-normal text-body-secondary"
+                        >S/. 250.00</span
+                      >
+                    </div>
+                    <div class="col-lg-4 col-md-6 col-3">
+                      <span class="size-14 badge bg-dark text-wrap"
+                        >Ahorras</span
+                      >
+                    </div>
+                    <div class="col-lg-8 col-md-6 col-9">
+                      <span class="size-14 fw-normal text-start"
+                        >S/. 50.00</span
+                      >
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-12">
+                      <p class="size-14 custom-truncate m-0">
+                        Shark IQ Robot Self-Empty XL Vacuum with Self-Empty
+                        Base, Home Mapping, RV1002AE, New Shark IQ Robot
+                        Self-Empty XL Vacuum with Self-Empty Base, Home Mapping,
+                        RV1002AE, New
+                      </p>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                      <span class="fa fa-star checked ms-1"></span>
+                      <span class="fa fa-star checked ms-1"></span>
+                      <span class="fa fa-star checked ms-1"></span>
+                      <span
+                        class="fa fa-star ms-1"
+                        style="color: #d9d9d9"
+                      ></span>
+                      <span
+                        class="fa fa-star ms-1"
+                        style="color: #d9d9d9"
+                      ></span>
+
+                      <span class="ms-2 text-body-secondary">
+                        20
+                      </span>
+                    </div>
+                    <div class="col-lg-12 col-md-12 col-sm-12">
+                      <p class="size-14">
+                        <span class="fw-bold">Envío gratis</span>, llega
+                        <span class="fw-bold">en 3+ dias</span>
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
@@ -271,7 +334,7 @@
       <button
         class="carousel-control-prev"
         type="button"
-        data-bs-target="#carouselProductos"
+        data-bs-target="#carouselOfertas"
         data-bs-slide="prev"
       >
         <span class="carousel-control-prev-icon" aria-hidden="true"></span>
@@ -280,7 +343,7 @@
       <button
         class="carousel-control-next"
         type="button"
-        data-bs-target="#carouselProductos"
+        data-bs-target="#carouselOfertas"
         data-bs-slide="next"
       >
         <span class="carousel-control-next-icon" aria-hidden="true"></span>
