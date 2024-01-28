@@ -1,23 +1,10 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Hello CarritoController!{% endblock %}
+{% block title %}TiendaKS - carrito{% endblock %}
 
 {% block body %}
-<style>
-    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
-    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
-</style>
 
-<div class="example-wrapper">
-    <h1>Hello {{ controller_name }}! ✅</h1>
-
-    This friendly message is coming from:
-    <ul>
-        <li>Your controller at <code><a href="{{ 'C:/proyectos/PROYECTOS-SYMFONY/e_commerce_spa/src/Controller/Tiendaks/backend/carrito/CarritoController.php'|file_link(0) }}">src/Controller/Tiendaks/backend/carrito/CarritoController.php</a></code></li>
-        <li>Your template at <code><a href="{{ 'C:/proyectos/PROYECTOS-SYMFONY/e_commerce_spa/templates/tiendaks/backend/carrito/carrito/index.html.twig'|file_link(0) }}">templates/tiendaks/backend/carrito/carrito/index.html.twig</a></code></li>
-    </ul>
-</div>
-<form method="post"> {# Establece el método POST para enviar datos #}
+<form method="post"> 
     <button type="submit">Realizar compra</button>
   </form>
 {% if iniciarSesion %}
@@ -26,13 +13,12 @@
     </div>
     <script>
         setTimeout(() => {
-            // Redirecciona a otra página
             window.location.href = "{{ path('app_login') }}";
-        }, 5000); // 5 segundos
+        }, 5000); 
     </script> 
 {% else %}
 
     
 {% endif %}
-<div id="app3"></div>
+<div id="appcarrito"></div>
 {% endblock %}

@@ -8,31 +8,17 @@ use App\Entity\Producto\producto;
 use App\Entity\Carrito\detallecarrito;
 use App\Funciones\tiendaks\producto\ProductoFunciones;
 use Doctrine\ORM\EntityManagerInterface;
-use Symfony\Bundle\SecurityBundle\Security;
-use App\Repository\Carrito\carritoRepository;
-use App\Repository\Usuario\usuarioRepository;
-use App\Repository\Producto\productoRepository;
 use App\Funciones\tiendaks\usuario\UsuarioFunciones;
 use App\Repository\Carrito\detallecarritoRepository;
 use Doctrine\Common\Collections\Collection;
-use Exception;
-use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Session\SessionInterface;
-use Symfony\Contracts\HttpClient\HttpClientInterface;
 use Symfony\Component\HttpFoundation\RequestStack;
-
 
 class CarritoFunciones
 {
-
-    private $session;
     private $detallecarritoRepository;
     private $entityManager;
     private $usuario;
     private $funcionesproducto;
-
-    
-    
 
     public function __construct(private RequestStack $requestStack,ProductoFunciones $productoFunciones, UsuarioFunciones $usuarioFunciones, detallecarritoRepository $detallecarritoRepository,EntityManagerInterface $entityManager)
     {
@@ -40,8 +26,6 @@ class CarritoFunciones
         $this->usuario = $usuarioFunciones->obtenerUsuario();
         $this->entityManager = $entityManager;
         $this->funcionesproducto = $productoFunciones;
-  
-        
     }
 
     public function agregarProductoACarrito(int $idproducto, int $cantidad){
@@ -182,10 +166,7 @@ class CarritoFunciones
             ];
             $carrito['cImportetotal'] += $importe;
             $carrito['cCantidad'] += $cantidad;
-            // Agregar el nuevo detallecarrito al arreglo detallescarrito
             $detallesCarrito[]=$nuevoDetalleCarrito;
-
-            // Guardar el arreglo actualizado en la sesión
             $session->set('carrito', $carrito);
             $session->set('detallescarrito',$detallesCarrito);
             
@@ -232,18 +213,9 @@ class CarritoFunciones
             return true;
 
         }catch (\Exception $e) {
-            // En caso de error, puedes manejar la excepción si es necesario
-            // Devolver un indicador de fallo
             return false;
         }
         
-        // $carritoVisualizado = $this->especificarDatos($carrito,$carrito->getDetallescarrito());
-        // return [
-        //     'success' => true,
-        //     'message' => 'Producto agregado al carrito exitosamente.',
-        //     'carrito' => $carritoVisualizado['carrito'],
-        //     'detallescarrito' => $carritoVisualizado['detallescarrito'],
-        // ];
     }
 
     public function modificarProducto(int $detallecarrito, int $cantidad)
@@ -271,24 +243,7 @@ class CarritoFunciones
             if ($carrito === null || $carrito->getDetallescarrito()->isEmpty()) {
                 return ['success' => true, 'carrito' => '', 'detallescarrito' => ''];
             } else {
-                
-                // $resumen = [];
-    
-                // foreach ($detalles as $detalle) {
-                //     $producto = $detalle->getProducto();
-                //     $resumen[] = [
-                //         'producto_id' => $producto->getId(),
-                //         'producto_nombre' => $producto->getPrNombre(),
-                //         'cantidad' => $detalle->getDcCantidad(),
-                //         'importe' => $detalle->getDcImporte()
-                //     ];
-                // }
-    
-                // return [
-                //     'success' => true,
-                //     'message' => 'Resumen del carrito obtenido correctamente',
-                //     'resumen_carrito' => $resumen
-                // ];
+
                 $detallescarrito = $carrito->getDetallescarrito();
                 return $this->especificarDatos($carrito,$detallescarrito);
             }
@@ -350,13 +305,6 @@ class CarritoFunciones
         $session = $this->requestStack->getSession();
         $carrito = $session->get('carrito',[]);
         $detallesCarrito = $session->get('detallescarrito', []);
-        // if((count($detallesCarrito) <= 1) && $cantidad == 0){
-        //     $session->remove('detallescarrito');
-        //     $carrito['cImportetotal'] = 0;
-        //     $carrito['cCantidad'] = 0;
-        //     $session->set('carrito', $carrito);
-        //     return $this->visualizarCarritosession(); 
-        // } 
         
         foreach ($detallesCarrito as $key => $detalle) {
             if ($detalle['id'] == $idetalle) {

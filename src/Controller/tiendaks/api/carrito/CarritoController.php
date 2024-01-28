@@ -7,14 +7,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Funciones\tiendaks\carrito\CarritoFunciones;
-use App\Funciones\tiendaks\pruebas\PruebaFunciones;
-use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CarritoController extends AbstractController
 {
-    #[Route('/tiendaks/carrito', name: 'app_tiendaks_vistacarrito')]
-    public function vistacarrito(Request $request): Response
+    #[Route('/tiendaks/carrito', name: 'app_carrito_mostrar_vistacarrito')]
+    public function carritoMostrarVistacarrito(Request $request): Response
     {
         $iniciarSesion = false;
         if ($request->isMethod('POST')) {
@@ -28,7 +26,6 @@ class CarritoController extends AbstractController
                     'controller_name' => 'CarritoController',
                     'iniciarSesion' => $iniciarSesion,
                 ]);
-                //return $this->redirectToRoute('app_login');
             }
         }
         $session = $request->getSession();
@@ -39,7 +36,7 @@ class CarritoController extends AbstractController
         ]);
     }
 
-    #[Route('/api/carrito/agregar', name: 'app_api_carrito_agregar', methods:['POST'])]
+    #[Route('/api/carrito/agregar/producto', name: 'app_api_carrito_agregar_producto', methods:['POST'])]
     public function agregarProducto(Request $request, CarritoFunciones $carritoFunciones): JsonResponse
     {
         $data = json_decode($request->getContent(),true);
@@ -49,7 +46,7 @@ class CarritoController extends AbstractController
         return $this->json($respuesta, Response::HTTP_OK,[]);
     }
 
-    #[Route('/api/carrito/eliminar', name: 'app_api_carrito_eliminar', methods:['POST'])]
+    #[Route('/api/carrito/eliminar/producto', name: 'app_api_carrito_eliminar_producto', methods:['POST'])]
     public function eliminarProducto(Request $request, CarritoFunciones $carritoFunciones): JsonResponse
     {
         $data = json_decode($request->getContent(),true);
@@ -58,16 +55,8 @@ class CarritoController extends AbstractController
         return $this->json($respuesta, Response::HTTP_OK,[]);
     }
 
-    // #[Route('/api/carrito/eliminar', name: 'app_api_carrito_eliminar', methods:['POST'])]
-    // public function eliminarProducto(Request $request, PruebaFunciones $carritoFunciones): JsonResponse
-    // {
-    //     $data = json_decode($request->getContent(),true);
-    //     $iddetallecarrito = $data['id_detalle_carrito'];
-    //     $respuesta = $carritoFunciones->eliminarcarrito($iddetallecarrito);
-    //     return $this->json($respuesta, Response::HTTP_OK,[]);
-    // }
 
-    #[Route('/api/carrito/modificar', name: 'app_api_carrito_modificar', methods:['POST'])]
+    #[Route('/api/carrito/modificar/producto', name: 'app_api_carrito_modificar_producto', methods:['POST'])]
     public function modificarProducto(Request $request, CarritoFunciones $carritoFunciones): JsonResponse
     {
         $data = json_decode($request->getContent(),true);
@@ -77,35 +66,12 @@ class CarritoController extends AbstractController
         return $this->json($respuesta, Response::HTTP_OK,[]);
     }
 
-    // #[Route('/api/carrito/modificar', name: 'app_api_carrito_modificar', methods:['POST'])]
-    // public function modificarProducto(Request $request, PruebaFunciones $pruebaFunciones): JsonResponse
-    // {
-    //     $data = json_decode($request->getContent(),true);
-    //     $iddetallecarrito = $data['id_detalle_carrito'];
-    //     $cantidad = $data['cantidad'];
-    //     $respuesta = $pruebaFunciones->modificarCarrito($iddetallecarrito, $cantidad);
-    //     return $this->json($respuesta, Response::HTTP_OK,[]);
-    // }
 
     #[Route('/api/carrito/visualizar', name: 'app_api_carrito_visualizar', methods:['GET'])]
-    public function visualizarProducto(CarritoFunciones $carritoFunciones): JsonResponse
+    public function visualizarCarrito(CarritoFunciones $carritoFunciones): JsonResponse
     {
         $respuesta = $carritoFunciones->visualizarCarrito();
         return $this->json($respuesta, Response::HTTP_OK,[]);
     }
 
-    // #[Route('/api/carrito/visualizar', name: 'app_api_carrito_visualizar', methods:['GET'])]
-    // public function visualizarProducto(PruebaFunciones $pruebaFunciones, Request $request): JsonResponse
-    // {
-    //     $respuesta = $pruebaFunciones->crearCarrito();
-    //     return $this->json($respuesta, Response::HTTP_OK,[]);
-    // }
-    //método get para agregar producto a carrito
-    // #[Route('/api/carrito/agregar/{idproducto}/{cantidad}', name: 'app_api_carrito_agregar', methods:['GET'])]
-    // public function agregarProducto(int $idproducto, int $cantidad, Request $request, CarritoFunciones $carritoFunciones): JsonResponse
-    // {
-        
-    //     $respuesta = $carritoFunciones->agregarProducto($idproducto, $cantidad);
-    //     return new JsonResponse($respuesta, Response::HTTP_OK, []);
-    // }
 }

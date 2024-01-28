@@ -110,13 +110,4 @@
         carrito.ListarProducto();
     })
 
-    // const productoModulo = useProductoModulo();
-    // //const datosEnPadre = productoModulo.DATOS;
-
-    // const datosEnPadre = computed(() => {
-    //     return productoModulo.DATOS
-    // })
-    // onMounted(() => {
-    //     productoModulo.actualizarDatos()
-    // }) 
 </script>
