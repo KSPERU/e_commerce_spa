@@ -25,6 +25,7 @@ security:
             entry_point: form_login
             logout:
                 path: app_logout
+                target: app_prueba
             login_throttling:
                 # max_attempts: 3
 
