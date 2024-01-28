@@ -96,6 +96,10 @@
   </script>
   
   <style scoped>
+  .main-content-popup-carrito{
+    position: relative;
+    z-index: 100;
+  }
   .content-popup-carrito {
     background-color: white;
     border-radius: 10px;
@@ -189,6 +193,7 @@
       height: 100vh;
       padding: 25px !important;
       background-color: rgba(0, 0, 0, 0.7);
+      z-index: 100;
     }
     .content-popup-carrito {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
