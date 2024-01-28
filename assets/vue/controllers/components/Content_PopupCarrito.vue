@@ -18,7 +18,7 @@
                 </figure>
               </div>
               <div class="col-3 h-100 px-0">
-                <p class="m-0 size-12 line-clamp-4">Shark Matrix Self-Empty Robot Vacuum & Mop with no</p>
+                <p class="m-0 size-12-10 line-clamp-4">Shark Matrix Self-Empty Robot Vacuum & Mop with no</p>
               </div>
               <div class="col-2 h-100 d-flex flex-column align-items-center justify-content-center">
                 <button id="increment" @click="stepper('increment')"><font-awesome-icon icon="angle-up" color="#D9D9D9"/></button>
@@ -26,7 +26,7 @@
                 <button id="decrement" @click="stepper('decrement')"><font-awesome-icon icon="angle-down" color="#D9D9D9"/></button>
               </div>
               <div class="col-3 h-100 px-0 text-center">
-                <span class="m-0 size-12">S/. 13 555.00</span>
+                <span class="m-0 size-12-10">S/. 13 555.00</span>
               </div>
               <div class="col-1 h-100 px-0">
                 <button class="popup-carrito-product-eliminar ps-2">
@@ -199,7 +199,7 @@
     height: calc(100% - 24px);
     }
     .content-popup-carrito-card-body-products{
-      min-height: calc(100% - 160px);
+      height: calc(100% - 160px);
     }
     .input-cantidad{
       padding-left: 0px;
