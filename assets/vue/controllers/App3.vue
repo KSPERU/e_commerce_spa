@@ -31,21 +31,7 @@ export default {
     }
   },
   props: {
-    name: {
-      type: String,
-      default: document.getElementById("app3").getAttribute("data-my-variable"),
-    },
-    papitas: {
-      type: Array,
-      default: JSON.parse(
-        document.getElementById("app3").getAttribute("data-papitas")
-      ),
-    },
-    informacion: {
-      default: JSON.parse(
-        document.getElementById("app3").getAttribute("data-producto")
-      ),
-    },
+
   },
 };
 </script>

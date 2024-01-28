@@ -1,9 +1,31 @@
 @import "~bootstrap/scss/bootstrap";
+
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Nunito:wght@200;300;400;500;600;700;800;900;1000&family=Odor+Mean+Chey&display=swap');
 body {
-    background-color: lightgray;
+    background-color: #EBEBEB;
 }
 
 p, h1, h2, h3, span, h4, h5, h6 {
     font-family: 'Inter', sans-serif;
 }
+
+.size-22{
+    font-size: 22px;
+}
+.size-16{
+    font-size: 16px;
+}
+.size-12{
+    font-size: 12px;
+}
+
+:root{
+    --color-azul-oscuro: #17172B;
+}
+
+
+@media (max-width: 767.98px) { 
+    .size-12{
+        font-size: 10px;
+    }
+ }

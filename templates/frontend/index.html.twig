@@ -2,15 +2,14 @@
 
 {% block title %}Hello Frontends{% endblock %}
 
-
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock %}
 
 {% block body %}
+    {{ parent() }}
 
-    <h1>Hola mundo</h1>
 
-    {# <div {{ vue_component('Slider') }}></div>
-    <div {{ vue_component('ListadoProductos') }}></div>
-    <div {{ vue_component('CirculoCarrito') }}></div>
-    <div {{ vue_component('ListadoOfertas') }}></div> #}
-
+    <div id="popup_carrito">
+    </div>
 {% endblock %}
