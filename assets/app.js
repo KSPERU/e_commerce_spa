@@ -15,6 +15,8 @@ import App4 from "./vue/controllers/App4";
 // import App3 from "./vue/controllers/carrito"; //Ver componente de Listar productos
 // import app from "./vue/controllers/App";
 import PopupCarrito from "./vue/controllers/components/Btn_PopupCarrito";
+import Tarjetas_VistaGeneral from "./vue/controllers/components/Tarjetas_VistaGeneral";
+
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
@@ -32,6 +34,7 @@ const app3 = createApp(App3);
 const app4 = createApp(App4); 
 
 const popup_carrito = createApp(PopupCarrito); 
+const TarjetasProductos = createApp(Tarjetas_VistaGeneral);
 
 app.use(pinia);
 app.mount('#app');
@@ -50,6 +53,9 @@ popup_carrito.use(pinia);
 popup_carrito.component('font-awesome-icon', FontAwesomeIcon);
 popup_carrito.mount('#popup_carrito');
 
+TarjetasProductos.use(pinia);
+TarjetasProductos.component('font-awesome-icon', FontAwesomeIcon);
+TarjetasProductos.mount('#TarjetasProductos');
 
 const $ = require('jquery');
 // this "modifies" the jquery module: adding behavior to it

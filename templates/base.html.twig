@@ -12,13 +12,15 @@
             {{ encore_entry_link_tags('app') }}
         {% endblock %}
 
+        {% block css %}
+        {% endblock %}
+
         {% block javascripts %}
             {{ encore_entry_script_tags('app') }}
         {% endblock %}
     </head>
     <body>
         {% block body %}
-        
         {# Aqui irá el navbar #}
         <div class="bg-dark text-white" style="height: 126px">
             <h1 class="m-auto  " style="height: 78px">Navbar</h1>
