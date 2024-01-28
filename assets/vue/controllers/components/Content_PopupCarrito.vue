@@ -35,7 +35,6 @@
               </div>
             </div>
             <!--  -->
-            
           </div>
 
 
@@ -140,6 +139,9 @@
     min-height: 86px;
     width: 100%;
   }
+  .content-popup-carrito-card-body-products{
+    height: 350px;
+  }
 
   .card-body-products-height{
     height: auto;
@@ -154,7 +156,7 @@
     /*  */    
     .input-cantidad {
 
-      width: 42px;
+      width: 54px;
       padding-left: 6px;
       text-align: center !important;
       background-color: transparent;
