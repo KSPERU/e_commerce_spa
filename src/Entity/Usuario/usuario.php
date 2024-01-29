@@ -3,6 +3,7 @@
 namespace App\Entity\Usuario;
 
 use App\Entity\Carrito\carrito;
+use App\Entity\Compras\compras;
 use App\Entity\Producto\producto;
 use App\Entity\Valoracion\valoracion;
 use App\Repository\Usuario\usuarioRepository;
@@ -69,10 +70,14 @@ class usuario implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'usuario', targetEntity: valoracion::class, orphanRemoval: true)]
     private Collection $valoraciones;
 
+    #[ORM\OneToMany(mappedBy: 'cliente', targetEntity: compras::class)]
+    private Collection $compras;
+
     public function __construct()
     {
         $this->productos = new ArrayCollection();
         $this->valoraciones = new ArrayCollection();
+        $this->compras = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -324,6 +329,36 @@ class usuario implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($valoracione->getUsuario() === $this) {
                 $valoracione->setUsuario(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, compras>
+     */
+    public function getCompras(): Collection
+    {
+        return $this->compras;
+    }
+
+    public function addCompra(compras $compra): static
+    {
+        if (!$this->compras->contains($compra)) {
+            $this->compras->add($compra);
+            $compra->setCliente($this);
+        }
+
+        return $this;
+    }
+
+    public function removeCompra(compras $compra): static
+    {
+        if ($this->compras->removeElement($compra)) {
+            // set the owning side to null (unless already changed)
+            if ($compra->getCliente() === $this) {
+                $compra->setCliente(null);
             }
         }
 

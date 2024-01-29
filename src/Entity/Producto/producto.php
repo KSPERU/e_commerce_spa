@@ -3,6 +3,7 @@
 namespace App\Entity\Producto;
 
 use App\Entity\Carrito\detallecarrito;
+use App\Entity\Compras\detallecompra;
 use App\Entity\Descuento\descuento;
 use App\Entity\Usuario\usuario;
 use App\Entity\Valoracion\valoracion;
@@ -51,10 +52,14 @@ class producto
     #[ORM\OneToMany(mappedBy: 'producto', targetEntity: valoracion::class, orphanRemoval: true)]
     private Collection $valoraciones;
 
+    #[ORM\OneToMany(mappedBy: 'producto', targetEntity: detallecompra::class)]
+    private Collection $detallecompras;
+
     public function __construct()
     {
         $this->detallecarritos = new ArrayCollection();
         $this->valoraciones = new ArrayCollection();
+        $this->detallecompras = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -212,6 +217,36 @@ class producto
             // set the owning side to null (unless already changed)
             if ($valoracione->getProducto() === $this) {
                 $valoracione->setProducto(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, detallecompra>
+     */
+    public function getDetallecompras(): Collection
+    {
+        return $this->detallecompras;
+    }
+
+    public function addDetallecompra(detallecompra $detallecompra): static
+    {
+        if (!$this->detallecompras->contains($detallecompra)) {
+            $this->detallecompras->add($detallecompra);
+            $detallecompra->setProducto($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDetallecompra(detallecompra $detallecompra): static
+    {
+        if ($this->detallecompras->removeElement($detallecompra)) {
+            // set the owning side to null (unless already changed)
+            if ($detallecompra->getProducto() === $this) {
+                $detallecompra->setProducto(null);
             }
         }
 
