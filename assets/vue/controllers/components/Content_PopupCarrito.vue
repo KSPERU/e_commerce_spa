@@ -11,7 +11,7 @@
         <div class="content-popup-carrito-card-body-products mb-2">
           <div class="overflow-hidden m-0 w-100 card-body-products-height" >
             <!--  -->
-            <div class="popup-carrito-product row overflow-hidden d-flex align-items-center">
+            <div class="popup-carrito-product row overflow-hidden d-flex align-items-center pb-3">
               <div class="col-3 h-100">
                 <figure class="m-0 w-100 h-100">
                   <img class="w-100 h-100 object-fit-cover" src="../img/producto-prueba.png" alt="producto-"/>
@@ -36,8 +36,6 @@
             </div>
             <!--  -->
           </div>
-
-
         </div>
         <div class="content-popup-carrito-card-body-resume size-16 pt-3">
             <div>
@@ -117,6 +115,10 @@
   .content-popup-carrito-card-header{
     background-color: var(--color-azul-oscuro);
     color: #fff;
+  }
+
+  .popup-carrito-product {
+    border-bottom: 1px solid #EBEBEB;
   }
 
   .content-popup-carrito-card-body-resume .resume-total{

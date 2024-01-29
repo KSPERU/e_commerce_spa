@@ -62,7 +62,6 @@
     height: 60px;
     border-radius: 50%;
     margin: 20px;
-    top: 50%;
     z-index: 99;
     }
     .popup-carrito-cart-icon{
