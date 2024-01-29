@@ -1,6 +1,6 @@
 <template>
     <div class="alert alert-primary" role="alert">
-        Clasificado: /api/producto/listado/{categoria}/por/{atributo}/ordenado/{modo}/de/{inicio}/entre/{fin} 
+        Paginación: /api/producto/listado/{pagina}/total/{cantidad} 
     </div>
     <table class="table">
         <thead>
@@ -13,7 +13,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr v-for="dato in clasificacionProducto">
+            <tr v-for="dato in listarProductosPaginados">
                 <th scope="row">{{ dato.id }}</th>
                 <td>{{ dato.pr_nombre }}</td>
                 <td>{{ dato.pr_descripcion }}</td>
@@ -26,14 +26,14 @@
   
 <script setup>
     import { onMounted, computed } from "vue";
-    import { useProductoModulo } from '../producto/productoModulo';
+    import { useProductoModulo } from '../en_desuso/productoModulo';
 
     const productoModulo = useProductoModulo();
   
-    const clasificacionProducto = computed(() => {
-        return productoModulo.CLASIFICACIONPRODUCTO
+    const listarProductosPaginados = computed(() => {
+        return productoModulo.LISTARPRODUCTOSPAGINADOS
     })
     onMounted(() => {
-        productoModulo.getClasificacionProducto('smartphones', 'precio', 'menor', 300, 1000)
+        productoModulo.getListarProductosPaginados(1, 5)
     })
 </script>

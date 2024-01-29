@@ -1,6 +1,6 @@
 <template>
     <div class="alert alert-primary" role="alert">
-        Listado: /api/producto/listado 
+        Listado por usuario: /api/producto/listado/usuario/{usuario} 
     </div>
     <table class="table">
         <thead>
@@ -10,15 +10,17 @@
                 <th scope="col">Descripción</th>
                 <th scope="col">Categoria</th>
                 <th scope="col">Precio</th>
+                <th scope="col">Stock</th>
             </tr>
         </thead>
         <tbody>
-            <tr v-for="dato in listarProductos">
+            <tr v-for="dato in listadoPorUsuario">
                 <th scope="row">{{ dato.id }}</th>
                 <td>{{ dato.pr_nombre }}</td>
                 <td>{{ dato.pr_descripcion }}</td>
                 <td>{{ dato.pr_categoria }}</td>
                 <td>{{ dato.pr_precio }}</td>
+                <td> - </td>
             </tr>
         </tbody>
     </table>
@@ -26,14 +28,18 @@
   
 <script setup>
     import { onMounted, computed } from "vue";
-    import { useProductoModulo } from '../producto/productoModulo';
-
+    import { useProductoModulo } from '../en_desuso/productoModulo';
+    
     const productoModulo = useProductoModulo();
   
-    const listarProductos = computed(() => {
-        return productoModulo.LISTARPRODUCTOS
+    const actualizarStock = async (idProducto, nuevoStock) => {
+        console.log('No se modifico.');
+    };
+
+    const listadoPorUsuario = computed(() => {
+        return productoModulo.LISTADOPORUSUARIO
     })
     onMounted(() => {
-        productoModulo.getListarProductos()
+        productoModulo.getListadoPorUsuario(1)
     })
 </script>

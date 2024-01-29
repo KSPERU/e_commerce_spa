@@ -22,3 +22,16 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    App\Funciones\tiendaks\producto\ProductoFunciones:
+        calls: 
+            - [setProductoRepository, ['@App\Repository\Producto\productoRepository']]
+            - [setProductoTestFunciones, ['@App\Funciones\tiendaks\producto\ProductoTestFunciones']]
+            - [setUsuarioRepository, ['@App\Repository\Usuario\usuarioRepository']]
+
+    App\Funciones\tiendaks\producto\ProductoTestFunciones:
+        calls: 
+            - [setUsuarioRepository, ['@App\Repository\Usuario\usuarioRepository']]
+            - [setEntityManagerInterface, ['@Doctrine\ORM\EntityManagerInterface']]
+            - [setHttpClientInterface, ['@Symfony\Contracts\HttpClient\HttpClientInterface']]
+            - [setProductoFunciones, ['@App\Funciones\tiendaks\producto\ProductoFunciones']]
