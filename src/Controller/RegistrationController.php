@@ -4,10 +4,13 @@ namespace App\Controller;
 
 use App\Entity\Usuario\usuario;
 use App\Security\EmailVerifier;
+use App\Security\EmailVerifier;
 use App\Form\RegistrationFormType;
+use Symfony\Component\Mime\Address;
 use Symfony\Component\Mime\Address;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+use App\Repository\Usuario\usuarioRepository;
 use App\Repository\Usuario\usuarioRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -60,13 +63,13 @@ class RegistrationController extends AbstractController
             // );
             // do anything else you need here, like send an email
 
-            return $this->redirectToRoute('app_login');
+            return $this->redirectToRoute('app_prueba');
         }
 
         return $this->render('registration/register.html.twig', [
             'registrationForm' => $form->createView(),
-            'last_username' => $lastUsername,
-            'error'         => $error,
+            'last_username' => $lastUsername, 
+            'error' => $error
         ]);
     }
 
