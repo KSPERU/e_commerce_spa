@@ -35,3 +35,10 @@ services:
             - [setEntityManagerInterface, ['@Doctrine\ORM\EntityManagerInterface']]
             - [setHttpClientInterface, ['@Symfony\Contracts\HttpClient\HttpClientInterface']]
             - [setProductoFunciones, ['@App\Funciones\tiendaks\producto\ProductoFunciones']]
+
+    App\Funciones\tiendaks\compras\ComprasFunciones:
+        calls: 
+            - [setUsuarioRepository, ['@App\Repository\Usuario\usuarioRepository']]
+            - [setComprasRepository, ['@App\Repository\Compras\comprasRepository']]
+            - [setDetalleCompraRepository, ['@App\Repository\Compras\detallecompraRepository']]
+            - [setProductoFunciones, ['@App\Funciones\tiendaks\producto\ProductoFunciones']]

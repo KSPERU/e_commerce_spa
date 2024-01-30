@@ -35,6 +35,11 @@ const producto_app = createApp(productoApp);
 producto_app.use(pinia);
 producto_app.mount('#producto_app');
 
+import comprasApp from "./vue/controllers/store/backend/tiendaks/compras/comprasApp";
+const compras_app = createApp(comprasApp);
+compras_app.use(pinia);
+compras_app.mount('#compras_app');
+
 const $ = require('jquery');
 // this "modifies" the jquery module: adding behavior to it
 // the bootstrap module doesn't export/return anything

@@ -90,7 +90,7 @@ class ProductoFunciones
         return $productoslistado;
     }
 
-    private function convertirProductoAArray(producto $producto) {
+    public function convertirProductoAArray(producto $producto) {
         $precio = $producto->getPrPrecio();
         $descuento = $this->obtenerProductoDescuento($producto);
         $valoracionData = $this->obtenerProductoValoracion($producto);
