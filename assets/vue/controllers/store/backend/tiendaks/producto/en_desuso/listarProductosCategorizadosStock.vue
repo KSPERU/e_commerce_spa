@@ -26,7 +26,7 @@
   
 <script setup>
     import { onMounted, computed } from "vue";
-    import { useProductoModulo } from '../producto/productoModulo';
+    import { useProductoModulo } from '../en_desuso/productoModulo';
 
     const productoModulo = useProductoModulo();
   

@@ -1,6 +1,6 @@
 <template>
     <div class="alert alert-primary" role="alert">
-        Busqueda: /api/producto/buscar/{busqueda} 
+        Ver: /api/producto/ver/{id} 
     </div>
     <table class="table">
         <thead>
@@ -13,7 +13,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr v-for="dato in buscarProducto">
+            <tr v-for="dato in verProducto">
                 <th scope="row">{{ dato.id }}</th>
                 <td>{{ dato.pr_nombre }}</td>
                 <td>{{ dato.pr_descripcion }}</td>
@@ -26,14 +26,14 @@
   
 <script setup>
     import { onMounted, computed } from "vue";
-    import { useProductoModulo } from '../producto/productoModulo';
+    import { useProductoModulo } from '../en_desuso/productoModulo';
 
     const productoModulo = useProductoModulo();
   
-    const buscarProducto = computed(() => {
-        return productoModulo.BUSCARPRODUCTO
+    const verProducto = computed(() => {
+        return productoModulo.VERPRODUCTO
     })
     onMounted(() => {
-        productoModulo.getBuscarProducto('iPhone')
+        productoModulo.getVerProducto(200)
     })
 </script>

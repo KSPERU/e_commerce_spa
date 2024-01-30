@@ -3,43 +3,5 @@
 {% block title %}API Productos - TiendaKS!{% endblock %}
 
 {% block body %}
-    <div class="container">
-        <p class="fs-2 fw-bold text-uppercase">API de productos</p>
-        <ul class="list-group">
-            <li class="list-group-item">
-                <span class="text-secondary">Listado: </span><a href="{{ path('app_api_producto_listado') }}" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">/api/producto/listado</a>
-            </li>
-            <li class="list-group-item">
-                <span class="text-secondary">Paginación: </span><a href="{{ path('app_api_producto_listado_paginados', {'pagina': '1', 'cantidad': '5'}) }}" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">/api/producto/listado/{pagina}/total/{cantidad}</a>
-            </li>
-            <li class="list-group-item">
-                <span class="text-secondary">Categorias: </span><a href="{{ path('app_api_producto_listado_categorizados', {'categoria': 'skincare'}) }}" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">/api/producto/listado/{categoria}</a>
-            </li>
-            <li class="list-group-item">
-                <span class="text-secondary">Precios: </span><a href="{{ path('app_api_producto_listado_precios', {'inicio': '500', 'fin': '1000'}) }}" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">/api/producto/listado/costo/{inicio}/entre/{fin}</a>
-            </li>
-            <li class="list-group-item">
-                <span class="text-secondary">Ordenado: </span><a href="{{ path('app_api_producto_listado_ordenado', {'atributo': 'precio', 'modo': 'menor'}) }}" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">/api/producto/listado/{atributo}/ordenado/{modo}</a>
-            </li>
-            <li class="list-group-item">
-                <span class="text-secondary">Ver: </span><a href="{{ path('app_api_producto_ver', {'id': '200'}) }}" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">/api/producto/ver/{id}</a>
-            </li>
-            <li class="list-group-item">
-                <span class="text-secondary">Busqueda: </span><a href="{{ path('app_api_producto_buscar', {'busqueda': 'iPhone'}) }}" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">/api/producto/buscar/{busqueda}</a>
-            </li>
-            <li class="list-group-item">
-                <span class="text-secondary">Clasificado: </span><a href="{{ path('app_api_producto_clasificar', {'categoria': 'smartphones', 'atributo': 'precio', 'modo': 'menor', 'inicio': '300', 'fin': '1000'}) }}" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">/api/producto/listado/{categoria}/por/{atributo}/ordenado/{modo}/de/{inicio}/entre/{fin}</a>
-            </li>
-            <li class="list-group-item">
-                <span class="text-secondary">Listado por usuario: </span><a href="{{ path('app_api_producto_listado_usuario', {'usuario': '1'}) }}" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">/api/producto/listado/usuario/{usuario}</a>
-            </li>
-            <li class="list-group-item">
-                <span class="text-secondary">Clasificados por categoría: </span><a href="{{ path('app_backend_producto_categoria', {'categoria': 'laptops'}) }}" class="link-primary link-offset-2 link-underline-opacity-25 link-underline-opacity-100-hover">/api/producto/listado/categoria/stock</a>
-            </li>
-        </ul>
-    </div>
-    <div class="container">
-        {# <div id="app"></div> #}
-        <div id="app2"></div>
-    </div>
+    <div id="producto_app"></div>
 {% endblock %}
