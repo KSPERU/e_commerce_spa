@@ -26,6 +26,12 @@ class FrontendController extends AbstractController
         return $this->render('frontend/carrito2.html.twig', []);
     }
 
+    #[Route('/perfil-usuario', name: 'app_frontend_perfil_usuario')]
+    public function perfil_usuario(): Response
+    {
+        return $this->render('frontend/perfil_usuario.html.twig', []);
+    }
+
 }
 
 

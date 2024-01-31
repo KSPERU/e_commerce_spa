@@ -7,6 +7,8 @@
 {% block body %}
   {{ parent() }}
 
+   {% include "./frontend/layout/slider.html.twig" %}
+
   <div id="TarjetasProductos"></div>
   <div id="TarjetasOfertas"></div>
   <div id="popup_carrito"></div>

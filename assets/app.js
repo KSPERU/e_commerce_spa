@@ -20,11 +20,14 @@ import Ofertas_Index from "./vue/controllers/components/Ofertas_Index";
 import carrito_vacio from "./vue/controllers/components/carrito_vacio";
 import carrito from "./vue/controllers/components/carrito";
 
+// Agrupar si es necesario en pages:
+import Card_PerfilUsuario from "./vue/controllers/components/perfil-usuario/Card_PerfilUsuario";
+// Fin
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faCartShopping, faAngleDown, faAngleUp, faTrash} from '@fortawesome/free-solid-svg-icons';
-library.add(faCartShopping, faAngleDown, faAngleUp, faTrash);
+import { faCartShopping, faAngleDown, faAngleUp, faTrash, faEnvelope, faPhoneSquare} from '@fortawesome/free-solid-svg-icons';
+library.add(faCartShopping, faAngleDown, faAngleUp, faTrash, faEnvelope, faPhoneSquare);
 
 
 
@@ -41,6 +44,8 @@ const TarjetasProductos = createApp(Tarjetas_VistaGeneral);
 const TarjetasOfertas = createApp(Ofertas_Index);
 const Carrito_vacio = createApp(carrito_vacio);
 const Carrito = createApp(carrito);
+
+const card_perfil_usuario = createApp(Card_PerfilUsuario);
 
 app.use(pinia);
 app.mount('#app');
@@ -73,6 +78,10 @@ Carrito_vacio.mount('#carrito_vacio');
 Carrito.use(pinia);
 Carrito.component('font-awesome-icon', FontAwesomeIcon);
 Carrito.mount('#carrito');
+
+card_perfil_usuario.use(pinia);
+card_perfil_usuario.component('font-awesome-icon', FontAwesomeIcon);
+card_perfil_usuario.mount('#card_perfil_usuario');
 
 const $ = require('jquery');
 // this "modifies" the jquery module: adding behavior to it

@@ -1,0 +1,30 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Perfil de Usuario{% endblock %}
+
+{% block body %}
+
+    {# <div id="perfil_usuario"></div> #}
+  {{ parent() }}
+    <div class="container">
+        <div class="row mt-3">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-3">
+
+                {# Card_PerfilUsuario.vue #}
+                <div id="card_perfil_usuario"></div>
+
+                <div class="bg-dark my-4">
+                    <div class="bg-success">a</div>
+                    <div class="bg-info">b</div>
+                </div>
+
+                <div class="card-filtros-avanzados bg-info d-none d-lg-block">filtros avanzados</div>
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-9 bg-dark">
+                <div class="productos-venta-head bg-warning">head</div>
+                <div class="productos-venta-body bg-secondary">listado productos</div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
