@@ -24,8 +24,8 @@
                     <td>{{ dato.dcImporte }}</td>
                     <td>{{ dato.prStock }}</td>
                     <td>
-                        <input v-model="cantidad"  type="number" placeholder="Cantidad" />
-                        <button @click="modificarProducto(dato.id, cantidad, dato.prStock)">Guardar</button>
+                        <input v-model="cantidad[dato.id]"  type="number" placeholder="Cantidad" pattern="[0-9]+" />
+                        <button @click="modificarProducto(dato.id, dato.prStock, dato.dcCantidad)">Guardar</button>
                     </td>
                     <td><button @click="eliminarProducto(dato.id)">X</button></td>
                 </tr>
@@ -70,7 +70,7 @@
     
     const carrito = carritoStore();
     const carritoAdvertencia = ref('');
-    const cantidad = ref('');
+    const cantidad = ref({});
     const agregarProducto = async (id, cantidad) => {
         await carrito.agregarProducto({
             id_producto: id,
@@ -82,15 +82,21 @@
             id_detalle_carrito: id_eliminar,
         })
     };
-    const modificarProducto = async (id_modificar, cantidad, prStock) => {
+    const modificarProducto = async (id_modificar, prStock,dcCantidad) => {
         const mensaje = await carrito.modificarProducto({
             id_detalle_carrito: id_modificar,
-            cantidad: cantidad,
+            cantidad: cantidad.value[id_modificar] !== undefined ? cantidad.value[id_modificar] : dcCantidad,
         })
+        
         if (mensaje) {
             carritoAdvertencia.value = `${mensaje.error} Stock actual: ${prStock}`;
         } else {
+            if(cantidad.value[id_modificar]==undefined){
+            carritoAdvertencia.value = `El campo no debe estar vacío`;
+        }else{
             carritoAdvertencia.value = "";
+        }
+           
         }
     };
     const detallesCarrito = computed(() => {

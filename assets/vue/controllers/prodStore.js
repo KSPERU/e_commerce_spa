@@ -15,7 +15,7 @@ export const carritoStore = defineStore('carrito', {
         async agregarProducto(id_producto) {  //Los datos se envian como array y no por separado
             try {
                 console.log(id_producto);
-                const response = await axios.post('/api/carrito/agregar', id_producto);
+                const response = await axios.post('/api/carrito/agregar/producto', id_producto);
                 this.carrito = response.data.carrito;
                 this.detallesCarrito = response.data.detallescarrito;
                 console.log('detalle carrito ', this.detallesCarrito)
@@ -27,7 +27,7 @@ export const carritoStore = defineStore('carrito', {
         async eliminarProducto(idDetalleCarrito) {
             try {
                 console.log(idDetalleCarrito);
-                const response = await axios.post('/api/carrito/eliminar', idDetalleCarrito);
+                const response = await axios.post('/api/carrito/eliminar/producto', idDetalleCarrito);
                 this.carrito = response.data.carrito;
                 this.detallesCarrito = response.data.detallescarrito;
             } catch (error) {
@@ -38,7 +38,7 @@ export const carritoStore = defineStore('carrito', {
         async modificarProducto(idDetalleCarrito) {
             try {
                 console.log(idDetalleCarrito);
-                const response = await axios.post('/api/carrito/modificar', idDetalleCarrito);
+                const response = await axios.post('/api/carrito/modificar/producto', idDetalleCarrito);
                 // if (response.data.success) {
                     this.carrito = response.data.carrito;
                     this.detallesCarrito = response.data.detallescarrito;

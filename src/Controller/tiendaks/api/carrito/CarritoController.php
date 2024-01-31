@@ -42,7 +42,7 @@ class CarritoController extends AbstractController
         $data = json_decode($request->getContent(),true);
         $idproducto = $data['id_producto'];
         $cantidad = $data['cantidad'];
-        $respuesta = $carritoFunciones->agregarProductoACarrito($idproducto, $cantidad);
+        $respuesta = $carritoFunciones->agregarProducto($idproducto, $cantidad);
         return $this->json($respuesta, Response::HTTP_OK,[]);
     }
 
