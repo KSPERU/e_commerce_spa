@@ -34,6 +34,9 @@ p, h1, h2, h3, span, h4, h5, h6 {
 .size-12-10{
     font-size: 12px;
 }
+.size-16-12{
+    font-size: 16px;
+}
 
 :root{
     --color-azul-oscuro: #17172B;
@@ -49,11 +52,19 @@ p, h1, h2, h3, span, h4, h5, h6 {
     .size-22{
         font-size: 16px;
     }
+
+    .size-16 {
+        font-size: 12px;
+    }
 }
 
 @media (max-width: 575.98px) {
     .size-22{
         font-size: 16px;
+    }
+
+    .size-16-12{
+        font-size: 12px;
     }
 }
 
