@@ -71,7 +71,7 @@
   
 <script setup>
     import { onMounted, computed } from "vue";
-    import { useProductoModulo } from '../producto/productoModulo';
+    import { useProductoModulo } from '../en_desuso/productoModulo';
     import { ref } from 'vue';
 
     const productoModulo = useProductoModulo();

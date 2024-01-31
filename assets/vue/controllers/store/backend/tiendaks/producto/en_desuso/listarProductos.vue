@@ -1,6 +1,6 @@
 <template>
     <div class="alert alert-primary" role="alert">
-        Categorias: /api/producto/listado/{categoria} 
+        Listado: /api/producto/listado 
     </div>
     <table class="table">
         <thead>
@@ -13,7 +13,7 @@
             </tr>
         </thead>
         <tbody>
-            <tr v-for="dato in listarProductosCategorizados">
+            <tr v-for="dato in listarProductos">
                 <th scope="row">{{ dato.id }}</th>
                 <td>{{ dato.pr_nombre }}</td>
                 <td>{{ dato.pr_descripcion }}</td>
@@ -26,15 +26,14 @@
   
 <script setup>
     import { onMounted, computed } from "vue";
-    import { useProductoModulo } from '../producto/productoModulo';
+    import { useProductoModulo } from '../en_desuso/productoModulo';
 
     const productoModulo = useProductoModulo();
   
-    const listarProductosCategorizados = computed(() => {
-        return productoModulo.LISTARPRODUCTOSCATEGORIZADOS
+    const listarProductos = computed(() => {
+        return productoModulo.LISTARPRODUCTOS
     })
-    
     onMounted(() => {
-        productoModulo.getListarProductosCategorizadosStock('skincare')
+        productoModulo.getListarProductos()
     })
 </script>
