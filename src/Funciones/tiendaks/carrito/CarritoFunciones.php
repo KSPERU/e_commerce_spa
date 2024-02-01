@@ -3,15 +3,17 @@
 namespace App\Funciones\tiendaks\carrito;
 
 use App\Entity\Carrito\carrito;
+use App\Entity\Compras\compras;
 use App\Entity\Usuario\usuario;
 use App\Entity\Producto\producto;
+use App\Entity\Compras\detallecompra;
 use App\Entity\Carrito\detallecarrito;
-use App\Funciones\tiendaks\producto\ProductoFunciones;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Funciones\tiendaks\usuario\UsuarioFunciones;
-use App\Repository\Carrito\detallecarritoRepository;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\HttpFoundation\RequestStack;
+use App\Funciones\tiendaks\usuario\UsuarioFunciones;
+use App\Repository\Carrito\detallecarritoRepository;
+use App\Funciones\tiendaks\producto\ProductoFunciones;
 
 class CarritoFunciones
 {
@@ -418,6 +420,57 @@ class CarritoFunciones
             'message' => 'Cantidad modificada exitosamente',
             'carrito' => $this->visualizarCarrito()['carrito'],
             'detallescarrito' => $this->visualizarCarrito()['detallescarrito'],
+        ];
+    }
+
+    public function comprarCarrito()
+    {
+        $usuario = $this->usuario;
+
+        if ($usuario === null || $usuario->getCarrito() === null) {
+            return [
+                'success' => false,
+                'message' => 'No hay carrito para realizar la compra.',
+            ];
+        }
+
+        $carrito = $usuario->getCarrito();
+        $detallesCarrito = $carrito->getDetallescarrito();
+
+        if ($detallesCarrito->isEmpty()) {
+            return [
+                'success' => false,
+                'message' => 'El carrito está vacío, no hay productos para comprar.',
+            ];
+        }
+
+        $compra = new compras();
+        $compra->setCliente($usuario);
+        $compra->setCmCantidadtotal($carrito->getCCantidadtotal());
+        $compra->setCmImportetotal($carrito->getCImportetotal());
+        $compra->setCmFechacompra(new \DateTime('now'));
+
+        $this->entityManager->persist($compra);
+        $this->entityManager->flush();
+
+        foreach ($detallesCarrito as $detalleCarrito) {
+            $detalleCompra = new detallecompra();
+            $detalleCompra->setCompra($compra);
+            $detalleCompra->setProducto($detalleCarrito->getProducto());
+            $detalleCompra->setDcmCantidad($detalleCarrito->getDcCantidad());
+            $detalleCompra->setDcmImporte($detalleCarrito->getDcImporte());
+            $detalleCompra->setDcmEstado(0);
+
+            $this->entityManager->persist($detalleCompra);
+            $this->entityManager->remove($detalleCarrito);
+        }
+
+        $this->entityManager->remove($carrito);
+        $this->entityManager->flush();
+
+        return [
+            'success' => true,
+            'message' => 'Compra realizada con éxito.',
         ];
     }
     

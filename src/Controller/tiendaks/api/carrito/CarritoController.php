@@ -74,4 +74,11 @@ class CarritoController extends AbstractController
         return $this->json($respuesta, Response::HTTP_OK,[]);
     }
 
+    #[Route('/api/carrito/comprar', name: 'app_api_carrito_comprar', methods:['GET'])]
+    public function comprarCarrito(CarritoFunciones $carritoFunciones): JsonResponse
+    {
+        $respuesta = $carritoFunciones->visualizarCarrito();
+        return $this->json($respuesta, Response::HTTP_OK,[]);
+    }
+
 }
