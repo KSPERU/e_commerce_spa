@@ -14,16 +14,18 @@ import App4 from "./vue/controllers/App4";
 // import App2 from "./vue/controllers/App2"; //Ver componente de Listar productos
 // import App3 from "./vue/controllers/carrito"; //Ver componente de Listar productos
 // import app from "./vue/controllers/App";
-import PopupCarrito from "./vue/controllers/components/Btn_PopupCarrito";
+import PopupCarrito from "./vue/controllers/components/popup-carrito/Btn_PopupCarrito";
 import Tarjetas_VistaGeneral from "./vue/controllers/components/Tarjetas_VistaGeneral";
 import Ofertas_Index from "./vue/controllers/components/Ofertas_Index";
 import carrito_vacio from "./vue/controllers/components/carrito_vacio";
 import carrito from "./vue/controllers/components/carrito";
 
-// Agrupar si es necesario en pages:
+// Agrupar si es necesario:
 import Card_PerfilUsuario from "./vue/controllers/components/perfil-usuario/Card_PerfilUsuario";
 import Btns_Config from "./vue/controllers/components/perfil-usuario/Btns_Config";
 // Fin
+
+import Card_Component from "./vue/controllers/components/Card_Component";
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
@@ -48,6 +50,8 @@ const Carrito = createApp(carrito);
 
 const card_perfil_usuario = createApp(Card_PerfilUsuario);
 const btns_config_perfil_usuario = createApp(Btns_Config);
+
+const card_component = createApp(Card_Component);
 
 app.use(pinia);
 app.mount('#app');
@@ -88,6 +92,9 @@ card_perfil_usuario.mount('#card_perfil_usuario');
 btns_config_perfil_usuario.use(pinia);
 btns_config_perfil_usuario.component('font-awesome-icon', FontAwesomeIcon);
 btns_config_perfil_usuario.mount('#btns_config_perfil_usuario');
+
+card_component.use(pinia);
+card_component.mount("#card_component");
 
 const $ = require('jquery');
 // this "modifies" the jquery module: adding behavior to it

@@ -14,7 +14,7 @@
             <div class="popup-carrito-product row overflow-hidden d-flex align-items-center pb-3">
               <div class="col-3 h-100">
                 <figure class="m-0 w-100 h-100">
-                  <img class="w-100 h-100 object-fit-cover" src="../img/producto-prueba.png" alt="producto-"/>
+                  <img class="w-100 h-100 object-fit-cover" src="../../img/producto-prueba.png" alt="producto-"/>
                 </figure>
               </div>
               <div class="col-3 h-100 px-0">
