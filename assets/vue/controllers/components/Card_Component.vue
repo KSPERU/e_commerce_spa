@@ -1,16 +1,10 @@
 <template>
-    <div class="row row-cols-3 p-1">
+    <div class="row row-cols-2 row-cols-md-3 p-1">
         <div v-for="product in products" :key="product.id">
             <div class="card p-2 my-2">
                 <img :src="product.img" class="card-img-top" :alt="'producto-' + product.id" />
                 <div class="card-body pt-4">
                     <div class="row g-2">
-                        <!-- <div class="col-lg-7 col-md-7 col-sm-12">
-                    <span class="size-18 fw-normal">S/. 255.00</span>
-                </div>
-                <div class="col-lg-5 col-md-5 col-sm-12 d-flex align-items-end d-lg-inline d-md-inline d-none">
-                    <span class="size-15 text-decoration-line-through fw-normal text-body-secondary">S/. 250.00</span>
-                </div> -->
                         <div class="d-flex justify-content-start align-items-end">
                             <span class="size-18 fw-semibold">S/. {{ product.price }}</span>
                             <span class="size-15 text-decoration-line-through fw-normal text-body-secondary ms-0 ms-md-3">
