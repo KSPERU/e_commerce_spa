@@ -15,7 +15,7 @@ import App4 from "./vue/controllers/App4";
 // import App3 from "./vue/controllers/carrito"; //Ver componente de Listar productos
 // import app from "./vue/controllers/App";
 import PopupCarrito from "./vue/controllers/components/popup-carrito/Btn_PopupCarrito";
-import Tarjetas_VistaGeneral from "./vue/controllers/components/Tarjetas_VistaGeneral";
+import Tarjetas_VistaGeneral from "./vue/controllers/components/index-usuario/Tarjetas_VistaGeneral";
 import Ofertas_Index from "./vue/controllers/components/Ofertas_Index";
 import carrito_vacio from "./vue/controllers/components/carrito_vacio";
 import carrito from "./vue/controllers/components/carrito";
