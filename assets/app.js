@@ -15,10 +15,14 @@ import App4 from "./vue/controllers/App4";
 // import App3 from "./vue/controllers/carrito"; //Ver componente de Listar productos
 // import app from "./vue/controllers/App";
 import PopupCarrito from "./vue/controllers/components/popup-carrito/Btn_PopupCarrito";
-import Tarjetas_VistaGeneral from "./vue/controllers/components/index-usuario/Tarjetas_VistaGeneral";
-import Ofertas_Index from "./vue/controllers/components/Ofertas_Index";
 import carrito_vacio from "./vue/controllers/components/carrito_vacio";
 import carrito from "./vue/controllers/components/carrito";
+
+
+// Grupo Index - Usuario
+import Tarjetas_VistaGeneral from "./vue/controllers/components/index-usuario/Tarjetas_VistaGeneral";
+import Tarjetas_Ofertas from "./vue/controllers/components/index-usuario/Tarjetas_Ofertas";
+ /// Fin
 
 // Agrupar si es necesario:
 import Card_PerfilUsuario from "./vue/controllers/components/perfil-usuario/Card_PerfilUsuario";
@@ -44,7 +48,7 @@ const app4 = createApp(App4);
 
 const popup_carrito = createApp(PopupCarrito); 
 const TarjetasProductos = createApp(Tarjetas_VistaGeneral);
-const TarjetasOfertas = createApp(Ofertas_Index);
+const TarjetasOfertas = createApp(Tarjetas_Ofertas); 
 const Carrito_vacio = createApp(carrito_vacio);
 const Carrito = createApp(carrito);
 
@@ -76,7 +80,7 @@ TarjetasProductos.mount('#TarjetasProductos');
 
 TarjetasOfertas.use(pinia);
 TarjetasOfertas.component('font-awesome-icon', FontAwesomeIcon);
-TarjetasOfertas.mount('#TarjetasOfertas');
+TarjetasOfertas.mount('#TarjetasOfertas'); 
 
 Carrito_vacio.use(pinia);
 Carrito_vacio.mount('#carrito_vacio');
