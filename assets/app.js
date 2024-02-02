@@ -26,11 +26,13 @@ import Btns_Config from "./vue/controllers/components/perfil-usuario/Btns_Config
 // Fin
 
 import Card_Component from "./vue/controllers/components/Card_Component";
+import Head_ProductosVenta from "./vue/controllers/components/perfil-usuario/Head_ProductosVenta";
+import Card_FiltrosAvanzados from "./vue/controllers/components/perfil-usuario/Card_FiltrosAvanzados";
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faCartShopping, faAngleDown, faAngleUp, faTrash, faEnvelope, faPhoneSquare, faAngleRight} from '@fortawesome/free-solid-svg-icons';
-library.add(faCartShopping, faAngleDown, faAngleUp, faTrash, faEnvelope, faPhoneSquare, faAngleRight);
+import { faCartShopping, faAngleDown, faAngleUp, faTrash, faEnvelope, faPhoneSquare, faAngleRight, faFilter} from '@fortawesome/free-solid-svg-icons';
+library.add(faCartShopping, faAngleDown, faAngleUp, faTrash, faEnvelope, faPhoneSquare, faAngleRight, faFilter);
 
 
 
@@ -52,6 +54,8 @@ const card_perfil_usuario = createApp(Card_PerfilUsuario);
 const btns_config_perfil_usuario = createApp(Btns_Config);
 
 const card_component = createApp(Card_Component);
+const head_productos_venta = createApp(Head_ProductosVenta);
+const card_filtros_avanzados = createApp(Card_FiltrosAvanzados)
 
 app.use(pinia);
 app.mount('#app');
@@ -95,6 +99,14 @@ btns_config_perfil_usuario.mount('#btns_config_perfil_usuario');
 
 card_component.use(pinia);
 card_component.mount("#card_component");
+
+head_productos_venta.use(pinia);
+head_productos_venta.component('font-awesome-icon', FontAwesomeIcon);
+head_productos_venta.mount('#head_productos_venta');
+
+card_filtros_avanzados.use(pinia);
+card_filtros_avanzados.component('font-awesome-icon', FontAwesomeIcon);
+card_filtros_avanzados.mount('#card_filtros_avanzados')
 
 const $ = require('jquery');
 // this "modifies" the jquery module: adding behavior to it
