@@ -96,7 +96,6 @@
         }else{
             carritoAdvertencia.value = "";
         }
-           
         }
     };
     const detallesCarrito = computed(() => {

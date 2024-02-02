@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Funciones\tiendaks\carrito\CarritoFunciones;
+use App\Funciones\tiendaks\producto\en_desuso\ProductoFuncionesRevisado;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class CarritoController extends AbstractController
@@ -73,12 +74,10 @@ class CarritoController extends AbstractController
         $respuesta = $carritoFunciones->visualizarCarrito();
         return $this->json($respuesta, Response::HTTP_OK,[]);
     }
-
-    #[Route('/api/carrito/comprar', name: 'app_api_carrito_comprar', methods:['GET'])]
-    public function comprarCarrito(CarritoFunciones $carritoFunciones): JsonResponse
+    #[Route('/api/producto/listado', name: 'app_api_producto_listado', methods: ['GET'])] //usando funcion en desuso acoplacion con el listado real
+    public function listarProductos(ProductoFuncionesRevisado $productoFunciones): JsonResponse
     {
-        $respuesta = $carritoFunciones->visualizarCarrito();
-        return $this->json($respuesta, Response::HTTP_OK,[]);
+        $productos = $productoFunciones->especificarProductos($productoFunciones->obtenerProductosProcesado());
+        return $this->json($productos, Response::HTTP_OK,[]);
     }
-
 }

@@ -16,7 +16,7 @@ class carrito
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\OneToOne(inversedBy: 'carrito', cascade: ['persist', 'remove'])]
+    #[ORM\OneToOne(inversedBy: 'carrito', cascade: ['persist'])]
     #[ORM\JoinColumn(nullable: false)]
     private ?usuario $usuario = null;
 

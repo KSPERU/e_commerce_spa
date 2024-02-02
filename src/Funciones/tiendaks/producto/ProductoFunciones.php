@@ -138,7 +138,7 @@ class ProductoFunciones
         ];
     }
 
-    private function obtenerProductoPorId(int $id){
+    public function obtenerProductoPorId(int $id){    //Sorry manuel lo cambie de private a public para no modificar tanto la otra api :3 Me Per Do Nas?
         $producto = $this->productoRepository->findOneBy([
             'id' => $id
         ]);
