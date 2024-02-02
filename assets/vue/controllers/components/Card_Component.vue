@@ -1,7 +1,7 @@
 <template>
     <div class="row row-cols-2 row-cols-md-3 p-1">
-        <div v-for="product in products" :key="product.id">
-            <div class="card p-2 my-2">
+        <div v-for="product in products" :key="product.id" class="p-1 p-sm-2">
+            <div class="card p-2">
                 <img :src="product.img" class="card-img-top" :alt="'producto-' + product.id" />
                 <div class="card-body pt-4">
                     <div class="row g-2">
