@@ -1,53 +1,65 @@
 <template lang="">
-  <div class="card h-100 p-2">
-    <img src="../img/aspiradora.png" class="card-img-top" alt="..." />
-    <div class="card-body pt-4">
-      <div class="row g-2">
-        <div class="col-lg-6 col-md-5 col-sm-12">
-          <span class="size-18 fw-normal">S/. 66 255.00</span>
-        </div>
-        <div
-          class="col-lg-6 col-md-7 col-sm-12 d-flex align-items-end d-lg-inline d-md-inline d-none"
-        >
-          <span
-            class="size-15 text-decoration-line-through fw-normal text-body-secondary"
-            >S/. 250.00</span
+  <div v-for="product in products" :key="product.id">
+    <div class="card h-100 p-2">
+      <img src="../img/aspiradora.png" class="card-img-top" alt="..." />
+      <div class="card-body pt-4">
+        <div class="row g-2">
+          <div class="col-lg-6 col-md-5 col-sm-12">
+            <span class="size-18 fw-normal">S/. {{ product.price }}</span>
+          </div>
+          <div
+            class="col-lg-6 col-md-7 col-sm-12 d-flex align-items-end d-lg-inline d-md-inline d-none"
           >
-        </div>
-        <div
-          class="col-lg-4 col-md-4 col-sm-6"
-          :class="{ VistaMovil: mostrarOferta }"
-        >
-          <span class="size-14 badge bg-dark text-wrap">{{
-            mostrarOferta ? "Oferta" : "Ahorras"
-          }}</span>
-        </div>
-        <div class="col-lg-8 col-md-8 col-sm-6 d-none d-lg-inline d-md-inline">
-          <span class="size-14 fw-normal text-start">S/. 50.00</span>
-        </div>
-        <div class="col-lg-12 col-md-12 col-12">
-          <p class="size-14 custom-truncate m-0">
-            Shark IQ Robot Self-Empty XL Vacuum with Self-Empty Base, Home
-            Mapping, RV1002AE, New Shark IQ Robot Self-Empty XL Vacuum with
-            Self-Empty Base, Home Mapping, RV1002AE, New
-          </p>
-        </div>
-        <div class="col-lg-12 col-md-12 col-sm-12">
-          <span class="fa fa-star checked ms-1"></span>
-          <span class="fa fa-star checked ms-1"></span>
-          <span class="fa fa-star checked ms-1"></span>
-          <span class="fa fa-star ms-1" style="color: #d9d9d9"></span>
-          <span class="fa fa-star ms-1" style="color: #d9d9d9"></span>
-
-          <span class="ms-2 text-body-secondary d-lg-inline d-md-inline d-none">
-            20
-          </span>
-        </div>
-        <div class="col-lg-12 col-md-12 col-sm-12">
-          <p class="size-14">
-            <span class="fw-bold">Envío gratis</span>, llega
-            <span class="fw-bold">en 3+ dias</span>
-          </p>
+            <span
+              class="size-15 text-decoration-line-through fw-normal text-body-secondary"
+              >S/. {{ product.price + product.desc }}</span
+            >
+          </div>
+          <div
+            class="col-lg-4 col-md-4 col-sm-6"
+            :class="{ VistaMovil: mostrarOferta }"
+          >
+            <span class="size-14 badge bg-dark text-wrap">{{
+              mostrarOferta ? "Oferta" : "Ahorras"
+            }}</span>
+          </div>
+          <div
+            class="col-lg-8 col-md-8 col-sm-6 d-none d-lg-inline d-md-inline"
+          >
+            <span class="size-14 fw-normal text-start"
+              >S/. {{ product.desc }}</span
+            >
+          </div>
+          <div class="col-lg-12 col-md-12 col-12">
+            <p class="size-14 custom-truncate m-0">
+              {{ product.name }}
+            </p>
+          </div>
+          <div class="col-lg-12 col-md-12 col-sm-12">
+            <span
+              v-for="i in product.score"
+              :key="i"
+              class="fa fa-star checked ms-1"
+            ></span>
+            <span
+              v-for="j in 5 - product.score"
+              :key="j"
+              class="fa fa-star ms-1"
+              style="color: #d9d9d9"
+            ></span>
+            <span
+              class="ms-2 text-body-secondary d-lg-inline d-md-inline d-none"
+            >
+              {{ product.votes }}
+            </span>
+          </div>
+          <div class="col-lg-12 col-md-12 col-sm-12">
+            <p class="size-14">
+              <span class="fw-bold">{{ product.send }}</span
+              >, llega
+              <span class="fw-bold">en {{ product.send_days }}+ dias</span>
+            </p>
+          </div>
         </div>
       </div>
     </div>
@@ -58,6 +70,20 @@ export default {
   data() {
     return {
       mostrarOferta: window.innerWidth < 426.8,
+
+      products: [
+        {
+          id: 1,
+          name: "Shark IQ Robot Self-Empty XL Vacuum with Self-Empty Base, Home Mapping, RV1002AE, New Shark IQ Robot Self-Empty XL Vacuum with Self-Empty Base, Home Mapping, RV1002AE, New",
+          price: 300.0,
+          desc: 0.0,
+          score: 3,
+          votes: 20,
+          send: "Envío gratis",
+          send_days: 3,
+          img: "../img/tiendaks/producto/producto-prueba.png",
+        },
+      ],
     };
   },
   mounted() {
@@ -74,10 +100,6 @@ export default {
 };
 </script>
 <style scoped>
-.carousel-control-prev,
-.carousel-control-next {
-  width: 5%;
-}
 .checked {
   color: #000000;
 }
