@@ -22,6 +22,7 @@ import carrito from "./vue/controllers/components/carrito";
 // Grupo Index - Usuario
 import Tarjetas_VistaGeneral from "./vue/controllers/components/index-usuario/Tarjetas_VistaGeneral";
 import Tarjetas_Ofertas from "./vue/controllers/components/index-usuario/Tarjetas_Ofertas";
+import Categorias_Populares from "./vue/controllers/components/index-usuario/Categorias_Populares";
  /// Fin
 
 // Agrupar si es necesario:
@@ -35,8 +36,12 @@ import Card_FiltrosAvanzados from "./vue/controllers/components/perfil-usuario/C
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import { faCartShopping, faAngleDown, faAngleUp, faTrash, faEnvelope, faPhoneSquare, faAngleRight, faFilter} from '@fortawesome/free-solid-svg-icons';
-library.add(faCartShopping, faAngleDown, faAngleUp, faTrash, faEnvelope, faPhoneSquare, faAngleRight, faFilter);
+
+import { faCartShopping, faAngleDown, faAngleUp, faTrash, faEnvelope, faPhoneSquare, faAngleRight, faFilter, faMobileScreen,faTv,faHeadphones,faKeyboard,faTabletAlt,faLaptop } from '@fortawesome/free-solid-svg-icons';
+library.add(faCartShopping, faAngleDown, faAngleUp, faTrash, faEnvelope, faPhoneSquare, faAngleRight, faFilter,faMobileScreen,faTv,faHeadphones,faKeyboard,faTabletAlt,faLaptop);
+
+
+
 
 
 
@@ -49,8 +54,11 @@ const app3 = createApp(App3);
 const app4 = createApp(App4); 
 
 const popup_carrito = createApp(PopupCarrito); 
+
 const TarjetasProductos = createApp(Tarjetas_VistaGeneral);
-const TarjetasOfertas = createApp(Tarjetas_Ofertas); 
+const TarjetasOfertas = createApp(Tarjetas_Ofertas);
+const CategoriasPopulares = createApp(Categorias_Populares);  
+
 const Carrito_vacio = createApp(carrito_vacio);
 const Carrito = createApp(carrito);
 
@@ -85,6 +93,10 @@ TarjetasProductos.mount('#TarjetasProductos');
 TarjetasOfertas.use(pinia);
 TarjetasOfertas.component('font-awesome-icon', FontAwesomeIcon);
 TarjetasOfertas.mount('#TarjetasOfertas'); 
+
+CategoriasPopulares.use(pinia);
+CategoriasPopulares.component('font-awesome-icon', FontAwesomeIcon);
+CategoriasPopulares.mount('#CategoriasPopulares');
 
 Carrito_vacio.use(pinia);
 Carrito_vacio.mount('#carrito_vacio');
