@@ -3,8 +3,8 @@
         <div class="container">
             <div class="row">
             <!-- CARRITO -->  
-            <div class="col-md-8">
-                <h4 class="card-title mb-4">Tu carrito</h4>
+            <div class="col-md-8" style="font-size: 16px">
+                <h4 class="card-title mb-4" style="font-size: 16px; font-weight: 600; padding-top:10px">TU CARRITO</h4>
                 <div class="card border shadow-0">
                 <div class="m-4">
                     
@@ -108,7 +108,7 @@
 
             <!-- PRECIO -->
             <div class="col-md-4">
-                <h4 class="card-title mb-4">Resumen</h4>
+                <h4 class="card-title mb-4" style="font-size: 16px; font-weight: 600; padding-top:10px">RESUMEN</h4>
                 <div class="card shadow-0 border">
                 <div class="card-body">
                     <div class="d-flex justify-content-between">

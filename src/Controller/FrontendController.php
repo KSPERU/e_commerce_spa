@@ -26,6 +26,13 @@ class FrontendController extends AbstractController
         return $this->render('frontend/carrito2.html.twig', []);
     }
 
+    #[Route('/checkout', name: 'app_checkout')]
+    public function checkout(): Response
+    {
+        return $this->render('frontend/checkout.html.twig', []);
+    }
+
+
     #[Route('/perfil-usuario', name: 'app_frontend_perfil_usuario')]
     public function perfil_usuario(): Response
     {
