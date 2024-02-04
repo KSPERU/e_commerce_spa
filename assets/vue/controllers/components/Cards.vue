@@ -61,6 +61,30 @@
             </p>
           </div>
         </div>
+
+        <div class="buttons col-5">
+          <button
+            class="btn border border-black border-2 text-black bg-secondary-subtle col-12 mb-3 button-effect"
+          >
+            <font-awesome-icon icon="eye" class="me-1" />Ver
+          </button>
+          <button
+            class="btn border border-black border-2 text-black bg-secondary-subtle col-12 mb-3 button-effect"
+          >
+            <font-awesome-icon icon="cart-shopping" class="me-1" />Agregar
+          </button>
+          <button
+            class="btn border border-black border-2 text-black bg-secondary-subtle col-12 mb-3 button-effect"
+          >
+            <font-awesome-icon icon="money-bill-wave" class="me-1" />Comprar
+          </button>
+        </div>
+
+        <div class="favorito col-5">
+          <button class="m-0 p-0 border border-0 bg-transparent">
+            <font-awesome-icon icon="star" class="fa-xl" />
+          </button>
+        </div>
       </div>
     </div>
   </div>
@@ -100,6 +124,38 @@ export default {
 };
 </script>
 <style scoped>
+/* .button-effect {
+  background: #D9D9D9;
+} */
+.button-effect:hover {
+  background: #17172b !important;
+  color: white !important;
+}
+.favorito {
+  position: absolute;
+  top: 5%;
+  left: 105%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+.card:hover .favorito {
+  opacity: 1;
+  background-color: transparent;
+}
+
+.buttons {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.card:hover .buttons {
+  opacity: 1;
+}
 .checked {
   color: #000000;
 }
