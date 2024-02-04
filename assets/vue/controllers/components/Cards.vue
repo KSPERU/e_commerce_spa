@@ -62,7 +62,7 @@
           </div>
         </div>
 
-        <div class="buttons col-5">
+        <div class="buttons col-lg-5 col-md-5 col-8">
           <button
             class="btn border border-black border-2 text-black bg-secondary-subtle col-12 mb-3 button-effect"
           >
