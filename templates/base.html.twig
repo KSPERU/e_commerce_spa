@@ -26,11 +26,50 @@
   </head>
   <body>
     {% block body %}
+      <style>
+        .menu-contaner{
+          height: 126px;
+        }
+        .menu-bg{
+          background-color: var(--color-azul-oscuro);
+          height: 78px;
+        }
+        .submenu-bg{
+          background-color: #fff;
+          height: 48px;
+          color: #0f0f0f;
+        }
+      </style>
       {# Aqui irá el navbar #}
-      <div class="bg-dark text-white" style="height: 126px">
-        <h1 class="m-auto" style="height: 78px">Navbar</h1>
-        <h2 class="m-auto bg-white text-dark" style="height: 48px">Submenu</h2>
+      <div class="menu-container text-white">
+        <div class="menu-bg d-flex justify-content-between align-items-center px-5">
+          {# <figure class="m-0">
+          <img src="" alt="logo"/>
+          </figure> #}
+          <h1>LOGO</h1>
+          <form class="d-flex" role="search">
+            <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
+            <button class="btn btn-outline-success" type="submit">Search</button>
+          </form>
+          <div>
+            <button class="btn btn-primary">Ingresar</button>
+            <button class="btn btn-outline-primary">Registrar</button>
+          </div>
+        </div>
+        <div class="submenu-bg px-5">
+          <h1 class="m-auto">Submenu</h1>
+        </div>
       </div>
+
+
+
+
+
+
+
+
+
+
     {% endblock %}
   </body>
 </html>
