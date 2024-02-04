@@ -17,6 +17,7 @@ import App4 from "./vue/controllers/App4";
 import PopupCarrito from "./vue/controllers/components/popup-carrito/Btn_PopupCarrito";
 import carrito_vacio from "./vue/controllers/components/carrito_vacio";
 import carrito from "./vue/controllers/components/carrito";
+import checkout from "./vue/controllers/components/checkout.vue"
 
 
 // Grupo Index - Usuario
@@ -37,12 +38,8 @@ import Card_FiltrosAvanzados from "./vue/controllers/components/perfil-usuario/C
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
-import { faCartShopping, faAngleDown, faAngleUp, faTrash, faEnvelope, faPhoneSquare, faAngleRight, faFilter, faMobileScreen,faTv,faHeadphones,faKeyboard,faTabletAlt,faLaptop } from '@fortawesome/free-solid-svg-icons';
-library.add(faCartShopping, faAngleDown, faAngleUp, faTrash, faEnvelope, faPhoneSquare, faAngleRight, faFilter,faMobileScreen,faTv,faHeadphones,faKeyboard,faTabletAlt,faLaptop);
-
-
-
-
+import { faCartShopping, faAngleDown, faAngleUp, faTrash, faEnvelope, faPhoneSquare, faAngleRight, faFilter, faMobileScreen,faTv,faHeadphones,faKeyboard,faTabletAlt,faLaptop,faMoneyBillWave,faStar,faEye ,faCreditCard, faCity, faMobile, faMoneyBill} from '@fortawesome/free-solid-svg-icons';
+library.add(faCartShopping, faAngleDown, faAngleUp, faTrash, faEnvelope, faPhoneSquare, faAngleRight, faFilter,faMobileScreen,faTv,faHeadphones,faKeyboard,faTabletAlt,faLaptop,faMoneyBillWave,faStar,faEye,faCreditCard, faCity, faMobile, faMoneyBill);
 
 
 const pinia = createPinia();
@@ -61,6 +58,7 @@ const CategoriasPopulares = createApp(Categorias_Populares);
 
 const Carrito_vacio = createApp(carrito_vacio);
 const Carrito = createApp(carrito);
+const Checkout = createApp(checkout)
 
 const card_perfil_usuario = createApp(Card_PerfilUsuario);
 const btns_config_perfil_usuario = createApp(Btns_Config);
@@ -104,6 +102,10 @@ Carrito_vacio.mount('#carrito_vacio');
 Carrito.use(pinia);
 Carrito.component('font-awesome-icon', FontAwesomeIcon);
 Carrito.mount('#carrito');
+
+Checkout.use(pinia);
+Checkout.component('font-awesome-icon', FontAwesomeIcon);
+Checkout.mount('#checkout');
 
 card_perfil_usuario.use(pinia);
 card_perfil_usuario.component('font-awesome-icon', FontAwesomeIcon);
