@@ -18,6 +18,7 @@
     </div>
 </template>
 <script setup>
+    /* Hola mundo */
     import { onMounted, computed } from "vue";
     import { useInicioContenedor } from '../../../inicio/inicioContenedor';
 
