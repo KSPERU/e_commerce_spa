@@ -62,12 +62,18 @@ class ProductoFunciones
             }
         }
 
+        if (isset($criterios['optionsOrdenProdList']['descuento'])){
+            if ('si' === $criterios['optionsOrdenProdList']['descuento']){
+                $productos = $this->ordenarProductoListadoConDescuento($productos);
+            }
+        }
+
         if (isset($criterios['optionsOrdenProdList']['precio']['direccion'])){
             $productos = $this->ordenarProductoListadoPorPrecioConDireccion($criterios['optionsOrdenProdList']['precio']['direccion'], $productos);
         }
         
         if(isset($criterios['optionsOrdenProdList']['pagina']) && isset($criterios['optionsOrdenProdList']['cantidad_productos'])){
-            $productos = $this->ordenarProductosListadoPorPaginacion($criterios['optionsOrdenProdList']['pagina'], $criterios['optionsOrdenProdList']['cantidad_productos'], $productos);
+            $productos = $this->ordenarProductoListadoPorPaginacion($criterios['optionsOrdenProdList']['pagina'], $criterios['optionsOrdenProdList']['cantidad_productos'], $productos);
         }
 
         return $this->convertirProductoAArrayLista($productos);
@@ -155,7 +161,7 @@ class ProductoFunciones
         return $productos;
     }
 
-    private function ordenarProductosListadoPorPaginacion(int $pagina, int $cantidad_productos, array $productos){
+    private function ordenarProductoListadoPorPaginacion(int $pagina, int $cantidad_productos, array $productos){
         $inicio = $cantidad_productos * ($pagina - 1);
         $extracto = [];
 
@@ -253,6 +259,139 @@ class ProductoFunciones
             for ($i=0; $i < $longitud; $i++) { 
                 for ($j=0; $j < $longitud - 1; $j++) { 
                     if($extracto[$j]->getPrPrecio() < $extracto[$j + 1]->getPrPrecio()){
+                        $temporal = $extracto[$j];
+                        $extracto[$j] = $extracto[$j + 1];
+                        $extracto[$j + 1] = $temporal;
+                    }
+                }
+            }
+        } catch (Exception $e) {
+           //No hecer nada
+        }
+        return $extracto;
+    }
+
+    private function ordenarProductoListadoConDescuento(array $productos){
+        try {
+            $extracto = array_filter($productos, 
+                function($articulo) {
+                    if(is_null($articulo->getDescuento())){
+                        return false;
+                    }
+                    return true;
+                }
+            );
+        } catch (Exception $e) {
+            //No hecer nada
+        }
+        return $extracto;
+    }
+
+    public function obtenerProductoListadoCategoriasConOrden(array $criterios = []){
+        $categorias = [];
+
+        if(false === $this->validarProductoExistente()){
+            $this->productoTestFunciones->registrarProductoDesdeAPILista();
+        }
+        
+        // Parametros para el listado de productos
+        if(empty($criterios) || empty($criterios['paramsCatList'])){
+            $categorias = $this->obtenerProductoArrayObjetoCategoria();
+        }
+
+        // Opciones de ordenamiento para el listado de productos
+        if (isset($criterios['optionsOrdenCatList']['valoracion']['direccion'])){
+            $categorias = $this->ordenarProductoListadoCategoriasPorValoracionConDireccion($criterios['optionsOrdenCatList']['valoracion']['direccion'], $categorias);
+        }
+
+        if(isset($criterios['optionsOrdenCatList']['posicion_inicial']) && isset($criterios['optionsOrdenCatList']['cantidad_categorias'])){
+            $categorias = $this->ordenarProductoLimiteArrayCategorias($criterios['optionsOrdenCatList']['posicion_inicial'], $criterios['optionsOrdenCatList']['cantidad_categorias'], $categorias);
+        }
+
+        return $categorias;
+    }
+
+    private function obtenerProductoArrayObjetoCategoria(){
+        $categorias = [];
+        $productos = $this->obtenerProductoTodosOLlenarSiVacio();
+        foreach ($productos as $producto) {
+            $registrado = false;
+            foreach ($categorias as &$categoria_aux) {
+                if($categoria_aux['ct_nombre'] === $producto['pr_categoria']){
+                    $registrado = true;
+                    $cantidad_actualizada = $categoria_aux['ct_productos_valoradados'] + (($producto['valoracion'] > 0) ? 1 : 0);
+                    $valoracion_acumulada_actualizada = $categoria_aux['ct_valoracion_acumulada'] + $producto['valoracion'];
+                    $valoracion_actualizada = ($cantidad_actualizada > 0) ? intval($valoracion_acumulada_actualizada / $cantidad_actualizada) : $categoria_aux['ct_valoracion'];
+                    $categoria_aux['ct_valoracion'] = $valoracion_actualizada;
+                    $categoria_aux['ct_valoracion_acumulada'] = $valoracion_acumulada_actualizada;
+                    $categoria_aux['ct_productos_valoradados'] = $cantidad_actualizada;
+                    break;
+                }
+            }
+
+            if(!$registrado){
+                $categoria = [
+                    "ct_nombre" => $producto['pr_categoria'],
+                    "ct_valoracion" => $producto['valoracion'],
+                    "ct_valoracion_acumulada" => $producto['valoracion'],
+                    "ct_productos_valoradados" => ($producto['valoracion'] > 0) ? 1 : 0
+                ];
+                array_push($categorias, $categoria);
+            }
+        }
+
+        return $categorias;
+    }
+
+    private function ordenarProductoLimiteArrayCategorias(int $posicion_inicial, int $cantidad_categorias, array $categorias){
+        $inicio = $cantidad_categorias * ($posicion_inicial - 1);
+        $extracto = [];
+
+        try {
+            $extracto = array_slice($categorias, $inicio, $cantidad_categorias);
+        } catch (Exception $e) {
+            //No hecer nada
+        }
+
+        return $extracto;
+    }
+
+    private function ordenarProductoListadoCategoriasPorValoracionConDireccion(string $direccion, array $categorias){
+        if ($direccion === 'descendente'){
+            $productos = $this->ordenarProductoListadoCategoriasPorValoracionDescendente($categorias);
+        } elseif ($direccion === 'ascendente') {
+            $productos = $this->ordenarProductoListadoCategoriasPorValoracionAscendente($categorias);
+        }
+        
+        return $productos;
+    }
+
+    private function ordenarProductoListadoCategoriasPorValoracionDescendente(array $categorias){
+        $longitud = count($categorias);
+        $extracto = array_values($categorias);
+        try {
+            for ($i=0; $i < $longitud; $i++) { 
+                for ($j=0; $j < $longitud - 1; $j++) { 
+                    if($extracto[$j]['ct_valoracion'] < $extracto[$j + 1]['ct_valoracion']){
+                        $temporal = $extracto[$j];
+                        $extracto[$j] = $extracto[$j + 1];
+                        $extracto[$j + 1] = $temporal;
+                    }
+                }
+            }
+        } catch (Exception $e) {
+           //No hecer nada
+        }
+        return $extracto;
+    }
+
+    private function ordenarProductoListadoCategoriasPorValoracionAscendente(array $categorias){
+        $longitud = count($categorias);
+        $extracto = array_values($categorias);
+        try {
+            for ($i=0; $i < $longitud; $i++) { 
+                for ($j=0; $j < $longitud - 1; $j++) { 
+                    if($extracto[$j]['ct_valoracion'] > $extracto[$j + 1]['ct_valoracion']){
                         $temporal = $extracto[$j];
                         $extracto[$j] = $extracto[$j + 1];
                         $extracto[$j + 1] = $temporal;

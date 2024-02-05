@@ -38,6 +38,7 @@ class ProductoController extends AbstractController
         }
         
     }
+    
     #[Route('/mostrar/producto/listadodeapis', name: 'mostar_producto_listadodeapis')]
     public function mostrarProductoListadoDeApis(): Response
     {
@@ -50,5 +51,13 @@ class ProductoController extends AbstractController
         $datos = json_decode($request->getContent(),true);
         $productos = ($datos !== null) ? $productoFunciones->obtenerProductoTodosOLlenarSiVacio($datos) : $productoFunciones->obtenerProductoTodosOLlenarSiVacio();
         return $this->json($productos, Response::HTTP_OK,[]);
+    }
+
+    #[Route('/listar/producto/listadocategorias', name: 'listar_producto_listadocategorias', methods: ['POST'])]
+    public function listarProductosCategorizadosConStock(Request $request, ProductoFunciones $productoFunciones): JsonResponse
+    {
+        $datos = json_decode($request->getContent(),true);
+        $categorias = ($datos !== null) ? $productoFunciones->obtenerProductoListadoCategoriasConOrden($datos) : $productoFunciones->obtenerProductoListadoCategoriasConOrden();
+        return $this->json($categorias, Response::HTTP_OK,[]);
     }
 }
