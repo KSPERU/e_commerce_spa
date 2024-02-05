@@ -16,12 +16,21 @@ class ProductoController extends AbstractController
         return $this->render('backend/tiendaks/producto/mostrarProductoListado.html.twig');
     }
 
-    # Vista Producto por Categoria
-    #[Route('/mostrar/producto/porcategoria', name: 'mostar_producto_porcategoria')]
-    public function mostrarProductoPorCategoria(): Response
+    # Vista Productos por Categoria
+    #[Route('/mostrar/producto/listadoporcategoria', name: 'mostar_producto_listadoporcategoria')]
+    public function mostrarProductoListadoPorCategoria(): Response
     {
-        return $this->render('backend/tiendaks/producto/mostrarProductoPorCategoria.html.twig', [
-            'categoria' => 'laptops'
+        return $this->render('backend/tiendaks/producto/mostrarProductoListadoPorCategoria.html.twig', [
+            'categoria' => 'skincare'
+        ]); 
+    }
+
+    # Vista Ver Producto
+    #[Route('/mostrar/producto/porid', name: 'mostar_producto_porid')]
+    public function mostrarProductoPorId(): Response
+    {
+        return $this->render('backend/tiendaks/producto/mostrarProductoPorId.html.twig', [
+            'producto_id' => 2
         ]);
     }
 }

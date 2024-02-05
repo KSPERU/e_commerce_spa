@@ -51,7 +51,7 @@ export const useInicioContenedor = defineStore('inicioContenedor', {
       },
       async getListarProductoListarCategoriaMasValorada(datos) {
         try {
-            const response = await axios.post('/api/producto/listar/producto/listadocategorias', datos);
+            const response = await axios.post('/api/producto/listar/producto/listadocategorias', datos);  
             this.categorias_mas_valoradas = response.data;
         } catch (error) {
             console.log("Un error " + error.response.data)

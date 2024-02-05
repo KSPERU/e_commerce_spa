@@ -30,6 +30,7 @@ compras_app.mount('#compras_app');
 
 import './vue/controllers/store/backend/tiendaks/producto/inicio/inicioApp.js';
 import './vue/controllers/store/backend/tiendaks/producto/producto_por_categoria/productoPorCategoriaApp.js';
+import './vue/controllers/store/backend/tiendaks/producto/ver_producto/verProductoApp.js';
 
 const $ = require('jquery');
 require('bootstrap');

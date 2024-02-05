@@ -108,7 +108,7 @@
     });
     
     onMounted(() => {
-        categoria.value = document.getElementById('inicio_producto_listar_por_categoria').getAttribute('data-categoria');
+        categoria.value = document.getElementById('producto_por_categoria_producto_listar_producto_por_categoria').getAttribute('data-categoria');
         productoPorCategoriaContenedor.getListarProductoPorCategoria({
             "optionsOrdenProdList": {
                 "categorias": [ categoria.value ],
