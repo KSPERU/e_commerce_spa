@@ -40,6 +40,8 @@
           height: 48px;
           color: #0f0f0f;
         }
+
+        /* busqueda */
         .form-width{
           width: 600px;
         }
@@ -50,6 +52,38 @@
         .line-height-48 li a{
           color: black;
         }
+
+        #ingresar {
+            background-color: white !important;
+            width: 124px;
+            color: black;
+        }
+        #ingresar:hover {
+            background-color: #ebebeb !important;
+        }
+
+        #registrar {
+            background-color: var(--color-azul-oscuro) !important;
+            color: white;
+            width: 124px;
+            border: 1px solid white;
+        }
+        #registrar:hover {
+            background-color: #ebebeb !important;
+            color: black;    
+        }
+
+        #ingresar-mobile, #registrar-mobile, #btn-toggler-mobile, #btn-toggler{
+          transition: transform 0.2s ease-in-out;
+        }
+        #ingresar-mobile:active, #registrar-mobile:active, #btn-toggler-mobile:active, #btn-toggler:active{
+          transform: scale(1.1);
+        }
+        #ingresar-mobile:focus,#registrar-mobile:focus{ border: 1px solid #ebebeb; }
+        #ingresar-mobile:hover,#registrar-mobile:hover{
+          color: var(--color-azul-oscuro);
+        }
+
 
         @media (max-width: 767.98px) {
           .form-width{
@@ -112,11 +146,11 @@
             </div>
           {% else %}
             <div class="d-none d-lg-block">
-              <button class="btn btn-primary mx-1">
+              <button class="btn mx-1 fw-semibold" id="ingresar">
                 <i class="fa-solid fa-user me-1"></i> 
                 Ingresar
               </button>
-              <button class="btn btn-outline-primary mx-1">
+              <button class="btn mx-1 fw-semibold" id="registrar">
                 <i class="fa-solid fa-user-pen me-1"></i>
                 Registrar
               </button>
@@ -145,7 +179,7 @@
           <nav class="navbar navbar-expand-lg bg-light d-block d-lg-none" style="background-color: white !important;">
               <div class="container-fluid d-flex justify-content-between px-3">
                 <h6 class="m-0 size-16" style="color:black;">Bienvenido, <span class="fw-bold">Jean Carlos Torres</span></h6>
-                <button style="font-size:10px;" class="navbar-toggler p-1" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <button style="font-size:10px;" class="navbar-toggler p-1" id="btn-toggler"type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                   <span class="navbar-toggler-icon" ></span>
                 </button>
                 <div class="collapse navbar-collapse mt-2" id="navbarSupportedContent">
@@ -187,18 +221,18 @@
             </nav>
           {% else %}
             <nav class="navbar navbar-expand-lg bg-light d-block d-lg-none" style="background-color: white !important;">
-              <div class="container-fluid d-flex justify-content-between px-3">
+              <div class="container-fluid d-flex justify-content-between px-3 px-md-5">
                 <div class="d-block d-lg-none">
-                  <button class="btn btn-sm mx-3 mx-md-1">
+                  <button class="btn btn-sm mx-3 mx-md-1" id="ingresar-mobile">
                     <i class="fa-solid fa-user me-1"></i> 
                     Ingresar
                   </button>
-                  <button class="btn btn-sm mx-3 mx-md-1">
+                  <button class="btn btn-sm mx-3 mx-md-1" id="registrar-mobile">
                     <i class="fa-solid fa-user-pen me-1"></i>
                     Registrar
                   </button>
                 </div>
-                <button style="font-size:10px;" class="navbar-toggler p-1" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <button style="font-size:10px;" class="navbar-toggler p-1 shadow-none" id="btn-toggler-mobile"type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
                   <span class="navbar-toggler-icon" ></span>
                 </button>
                 <div class="collapse navbar-collapse mt-2" id="navbarSupportedContent">
