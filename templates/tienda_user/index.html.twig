@@ -1,0 +1,35 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello TiendaUserController!{% endblock %}
+
+{% block body %}
+<style>
+    .example-wrapper { margin: 1em auto; max-width: 800px; width: 95%; font: 18px/1.5 sans-serif; }
+    .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
+</style>
+
+<div class="example-wrapper">
+    <h1>Perfil de {{ usuario.unombres }} {{ usuario.uapepat }} {{ usuario.uapemat }}</h1>
+
+    <ul>
+        <li>ID: {{ usuario.id }}</li>
+        <li>Correo: {{ usuario.ucorreo }}</li>
+        <li>Nombres: {{ usuario.unombres }}</li>
+        <li>Apellido Paterno: {{ usuario.uapepat }}</li>
+        <li>Apellido Materno: {{ usuario.uapemat }}</li>
+        <li>DNI: {{ usuario.udni }}</li>
+        <li>Teléfono: {{ usuario.utelefono }}</li>
+    </ul>
+    {% if perfil == true %}
+        <a href="{{ path('app_tienda_nuevo_producto', {'id': usuario.id}) }}" class="btn btn-primary">
+            Agregar un Producto
+        </a>
+
+        <a href="{{ path('app_tienda_actualizar_productos', {'id': usuario.id}) }}" class="btn btn-primary">
+            Actualizar mis productos
+        </a>
+    {% endif %}
+</div>
+<div id="producto_app"></div>
+<div id="appcarrito"></div>
+{% endblock %}

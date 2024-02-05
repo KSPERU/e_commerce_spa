@@ -18,7 +18,10 @@
         <li>Your template at <code><a href="{{ 'C:/xampp/htdocs/e_commerce_spa/templates/prueba/index.html.twig'|file_link(0) }}">templates/prueba/index.html.twig</a></code></li>
     </ul>
 </div>
-<a href="{{ path('app_tiendaks_vistacarrito') }}">Ver mi carrito</a>
+{# <a href="{{ path('app_tiendaks_vistacarrito') }}">Ver mi carrito</a> #}
 <a href="{{ path('app_logout') }}">Cerrar sesión</a>
+<a href="{{ path('app_register') }}">Registrar</a>
+<a href="{{ path('app_login') }}">Login</a>
+<div id="listarProductoRegistradoPorUsuarioId"></div>
 {# <div id="app"></div> #}
 {% endblock %}

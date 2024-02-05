@@ -57,6 +57,9 @@
     import { useComprasContenedor } from '../compras/comprasContenedor';
     import { ref } from 'vue';
 
+    const currentURL = window.location.href;
+    const segments = currentURL.split("/");
+    const usuario_id = segments[segments.length - 1];
     const comprasContenedor = useComprasContenedor();
 
     const compras = computed(() => {
@@ -66,7 +69,7 @@
     onMounted(() => {
         comprasContenedor.getListarComprasConCriterios({
             "ParamsCompraList": {
-                "usuario_id": 1
+                "usuario_id": usuario_id
             }
         })
     })

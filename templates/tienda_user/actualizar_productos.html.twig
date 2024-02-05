@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello TiendaUserController!{% endblock %}
+
+{% block body %}
+    <h1>Actualizar Productos</h1>
+
+    {% for producto in productos %}
+        <div>
+            <h3>{{ producto.prnombre }}</h3>
+            <ul>
+                <li>Imágenes: {{ producto.primagenes }}</li>
+                <li>Categoría: {{ producto.prcategoria }}</li>
+                <li>Stock: {{ producto.prstock }}</li>
+                <li>Precio: {{ producto.prprecio }}</li>
+                <li>Descripción: {{ producto.prdescripcion }}</li>
+                <a href="{{ path('app_tienda_editar_productos', {'id': producto.id}) }}" class="btn btn-primary">
+                    Editar
+                </a>
+                {{ include('tienda_user/_delete_form.html.twig') }}
+            </ul>
+
+            {# Puedes agregar un formulario de edición aquí si lo necesitas #}
+        </div>
+    {% endfor %}
+{% endblock %}

@@ -93,10 +93,9 @@
         } else {
             if(cantidad.value[id_modificar]==undefined){
             carritoAdvertencia.value = `El campo no debe estar vacío`;
-        }else{
-            carritoAdvertencia.value = "";
-        }
-           
+            }else{
+                carritoAdvertencia.value = "";
+            }
         }
     };
     const detallesCarrito = computed(() => {
