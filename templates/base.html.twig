@@ -84,6 +84,11 @@
           color: var(--color-azul-oscuro);
         }
 
+        .btn-ingresar, .btn-ingresar:focus, .btn-ingresar:hover{
+          background-color: var(--color-azul-oscuro) !important; 
+          color: white !important;
+        }
+
 
         @media (max-width: 767.98px) {
           /* .form-width{
@@ -116,7 +121,7 @@
         }
       </style>
 
-      {% set logged = true %}
+      {% set logged = false %}
 
       {# Aqui irá el navbar #}
       <div class="menu-container text-white">
@@ -146,15 +151,16 @@
             </div>
           {% else %}
             <div class="d-none d-lg-block">
-              <button class="btn mx-1 fw-semibold" id="ingresar">
+              <button type="button"  class="btn mx-1 fw-semibold" id="ingresar" data-bs-toggle="modal" data-bs-target="#exampleModal">
                 <i class="fa-solid fa-user me-1"></i> 
                 Ingresar
               </button>
-              <button class="btn mx-1 fw-semibold" id="registrar">
+              <button type="button"  class="btn mx-1 fw-semibold" id="registrar"  data-bs-toggle="modal" data-bs-target="#modalRegistrar">
                 <i class="fa-solid fa-user-pen me-1"></i>
                 Registrar
               </button>
             </div>
+
           {% endif %}
         </div>
 
@@ -223,11 +229,11 @@
             <nav class="navbar navbar-expand-lg bg-light d-block d-lg-none" style="background-color: white !important;">
               <div class="container-fluid d-flex justify-content-between px-3 px-md-5">
                 <div class="d-block d-lg-none">
-                  <button class="btn btn-sm mx-3 mx-md-1" id="ingresar-mobile">
+                  <button class="btn btn-sm mx-3 mx-md-1" id="ingresar-mobile" data-bs-toggle="modal" data-bs-target="#exampleModal">
                     <i class="fa-solid fa-user me-1"></i> 
                     Ingresar
                   </button>
-                  <button class="btn btn-sm mx-3 mx-md-1" id="registrar-mobile">
+                  <button class="btn btn-sm mx-3 mx-md-1" id="registrar-mobile"  data-bs-toggle="modal" data-bs-target="#modalRegistrar">
                     <i class="fa-solid fa-user-pen me-1"></i>
                     Registrar
                   </button>
@@ -263,5 +269,74 @@
           {% endif %}
       </div>
     {% endblock %}
+    <!-- Modal Ingresar -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="position-absolute top-0 end-0 p-3" style="z-index: 100;">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body p-4">
+            <h1 class="modal-title fs-5 fw-semibold size-22 text-center mt-3 mb-2" id="exampleModalLabel">Ingresa a tu cuenta</h1>
+            <div class="mb-3 px-3">
+              <label for="correo" class="form-label size-16">Correo</label>
+              <input type="email" class="form-control size-16" id="correo" placeholder="name@example.com">
+            </div>
+            <div class="mb-3 px-3">
+              <label for="password" class="form-label size-16">Contraseña</label>
+              <input type="password" class="form-control size-16" id="password" placeholder="*********">
+            </div>
+            <div class="px-3 pb-2 mt-2">
+              <button type="button" class="btn btn-ingresar w-100">Ingresar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal Registrar -->
+    <div class="modal fade" id="modalRegistrar" tabindex="-1" aria-labelledby="modalRegistrarLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="position-absolute top-0 end-0 p-3" style="z-index: 100;">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body p-4">
+            <h1 class="modal-title fs-5 fw-semibold size-22 text-center mt-3 mb-2" id="exampleModalLabel">¡Bienvenido a TIENDA KS!</h1>
+            <p class="fw-semibold size-16 pt-2 px-3">Completa el siguiente formulario:</p>
+            <div class="mb-3 px-3">
+              <label for="correo" class="form-label size-16">Correo</label>
+              <input type="email" class="form-control size-16" id="correo" placeholder="">
+            </div>
+            <div class="mb-3 px-3">
+              <label for="password" class="form-label size-16">Contraseña</label>
+              <input type="password" class="form-control size-16" id="password" placeholder="">
+            </div>
+            <div class="mb-3 px-3">
+              <label for="nombres" class="form-label size-16">Nombres</label>
+              <input type="email" class="form-control size-16" id="nombres" placeholder="">
+            </div>
+            <div class="mb-3 px-3">
+              <label for="ape_paterno" class="form-label size-16">Apellido Paterno</label>
+              <input type="password" class="form-control size-16" id="ape_paterno" placeholder="">
+            </div>
+            <div class="mb-3 px-3">
+              <label for="ape_materno" class="form-label size-16">Apellido Materno</label>
+              <input type="email" class="form-control size-16" id="ape_materno" placeholder="">
+            </div>
+            <div class="mb-3 px-3">
+              <label for="dni" class="form-label size-16">DNI</label>
+              <input type="number" class="form-control size-16" id="dni" placeholder="8 digitos">
+            </div>
+            <div class="mb-3 px-3">
+              <label for="telefono" class="form-label size-16">Telefono</label>
+              <input type="number" class="form-control size-16" id="telefono" placeholder="999 999 999">
+            </div>
+            <div class="px-3 py-2">
+              <button type="button" class="btn btn-ingresar w-100">Registrarse</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
 </html>
