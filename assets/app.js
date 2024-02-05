@@ -29,6 +29,7 @@ compras_app.use(pinia);
 compras_app.mount('#compras_app');
 
 import './vue/controllers/store/backend/tiendaks/producto/inicio/inicioApp.js';
+import './vue/controllers/store/backend/tiendaks/producto/producto_por_categoria/productoPorCategoriaApp.js';
 
 const $ = require('jquery');
 require('bootstrap');

@@ -11,8 +11,17 @@ class ProductoController extends AbstractController
 {
     # Vista Inicio
     #[Route('/mostrar/producto/listado', name: 'mostar_producto_listado')]
-    public function mostrarProductoListadoDeApis(): Response
+    public function mostrarProductoListado(): Response
     {
         return $this->render('backend/tiendaks/producto/mostrarProductoListado.html.twig');
+    }
+
+    # Vista Producto por Categoria
+    #[Route('/mostrar/producto/porcategoria', name: 'mostar_producto_porcategoria')]
+    public function mostrarProductoPorCategoria(): Response
+    {
+        return $this->render('backend/tiendaks/producto/mostrarProductoPorCategoria.html.twig', [
+            'categoria' => 'laptops'
+        ]);
     }
 }
