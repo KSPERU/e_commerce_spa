@@ -11,12 +11,15 @@
             </div>
         </div>
     </div>
+    <div>
+        <mostrarVistaCarrito />
+    </div>
 </template>
 
 <script setup>
     import { onMounted, computed } from "vue";
     import { useInicioContenedor } from '../../../inicio/inicioContenedor';
-
+    import mostrarVistaCarrito from '../../../../carrito/mostrarVistaCarrito';
     const inicioContenedor = useInicioContenedor();
 
     const categorias_mas_valoradas = computed(() => {

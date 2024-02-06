@@ -6,8 +6,6 @@ import './bootstrap';
 import { createApp } from "vue";
 import { createPinia } from "pinia";
 
-import App2 from "./vue/controllers/App2";
-
 import Appcarrito from "./vue/controllers/store/backend/tiendaks/carrito/carritoApp"; 
 
 const pinia = createPinia();
@@ -16,10 +14,11 @@ const appcarrito = createApp(Appcarrito);
 appcarrito.use(pinia);
 appcarrito.mount('#appcarrito');
 
-import Approducto from "./vue/controllers/producto"; 
-const approducto = createApp(Approducto); 
-approducto.use(pinia);
-approducto.mount('#approducto');
+// import Appcarritoglobal from "./vue/controllers/store/backend/tiendaks/carrito/mostrarVistaCarrito"; 
+
+// const appcarritoglobal = createApp(Appcarritoglobal); 
+// appcarritoglobal.use(pinia);
+// appcarritoglobal.mount('#appcarritoMostrarVistaCarrito');
 
 import productoApp from "./vue/controllers/store/backend/tiendaks/producto/productoApp";
 const producto_app = createApp(productoApp);

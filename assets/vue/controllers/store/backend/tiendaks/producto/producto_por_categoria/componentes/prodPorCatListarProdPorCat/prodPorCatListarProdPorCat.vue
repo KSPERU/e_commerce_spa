@@ -53,6 +53,7 @@
                 <th scope="col">Descripción</th>
                 <th scope="col">Categoria</th>
                 <th scope="col">Precio</th>
+                <th scope="col">Operacion</th>
             </tr>
         </thead>
         <tbody>
@@ -62,15 +63,29 @@
                 <td>{{ dato.pr_descripcion }}</td>
                 <td>{{ dato.pr_categoria }}</td>
                 <td>{{ dato.pr_precio }}</td>
+                <td><button @click="agregarProducto(dato.id, 1)">Agregar al Carrito</button></td>
             </tr>
         </tbody>
     </table>
+    <div>
+        <mostrarVistaCarrito />
+    </div>
 </template>
+
 <script setup>
     import { onMounted, computed } from "vue";
+    import mostrarVistaCarrito from '../../../../carrito/mostrarVistaCarrito';
     import { useProductoPorCategoriaContenedor } from '../../../producto_por_categoria/productoPorCategoriaContenedor';
     import { ref } from 'vue';
-
+    import { carritoStore  } from "../../../../carrito/carritoContenedor" 
+    
+    const carrito = carritoStore();
+    const agregarProducto = async (id, cantidad) => {
+        await carrito.agregarProducto({
+            id_producto: id,
+            cantidad: cantidad,
+        })
+    };
     const productoPorCategoriaContenedor = useProductoPorCategoriaContenedor();
 
     const busqueda = null;

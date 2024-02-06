@@ -22,6 +22,8 @@
                             <div v-for="n in 5" :key="n" class="barra" :class="{ 'rellena': n <= Math.round(producto.valoracion) }"></div>
                         </div>
                         </div>
+                        <input v-model="cantidad[producto.id]"  type="number" placeholder="Cantidad" pattern="[0-9]+" />
+                    <td><button @click="agregarProducto(producto.id)">Agregar al Carrito</button></td>
                     </div>
                     </div>
                     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
@@ -32,6 +34,7 @@
                     <span class="carousel-control-next-icon" aria-hidden="true"></span>
                     <span class="visually-hidden">Siguiente</span>
                     </button>
+                   
                 </div>
                 </div>
             </div>
@@ -44,7 +47,9 @@
     <div class="mt-3">
         <verProdProdListarProdPorCat />
     </div>
-    
+    <div>
+        <mostrarVistaCarrito />
+    </div>
 </template>
 <style>
     .valoracion {
@@ -70,15 +75,23 @@
 </style>
 <script setup>
     import verProdProdListarProdPorCat from '../verProdProdListarProdPorCat/verProdProdListarProdPorCat';
-
+    import mostrarVistaCarrito from '../../../../carrito/mostrarVistaCarrito';
     import { onMounted, computed } from "vue";
     import { useVerProductoContenedor } from '../../../ver_producto/verProductoContenedor';
     import { ref } from 'vue';
+    import { carritoStore  } from "../../../../carrito/carritoContenedor" 
 
     const producto_id = ref('');
 
     const verProductoContenedor = useVerProductoContenedor();
-
+    const cantidad = ref({});
+    const carrito = carritoStore();
+    const agregarProducto = async (id) => {
+        await carrito.agregarProducto({
+            id_producto: id,
+            cantidad: cantidad.value[id],
+        })
+    };
     const mostrar_producto_por_id = computed(() => {
         return verProductoContenedor.MOSTRARPRODUCTOPORID
     });

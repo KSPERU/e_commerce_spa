@@ -12,7 +12,8 @@
                         <p v-if="producto.pr_descuento > 0" class="card-text">Ahorras: S/. {{ (producto.pr_precio * producto.pr_descuento).toFixed(2) }}</p>
                         <p v-if="producto.pr_descuento > 0" class="card-text">Precio Final: S/. {{ producto.pr_preciofinal.toFixed(2) }}</p>
                     </div>
-                </div>
+                    <button @click="agregarProducto(producto.id, 1)">Agregar al Carrito</button>
+                </div>             
             </div>
         </div>
     </div>
@@ -21,6 +22,15 @@
     import { onMounted, computed } from "vue";
     import { useInicioContenedor } from '../../../inicio/inicioContenedor';
 
+    import { carritoStore  } from "../../../../carrito/carritoContenedor" 
+    
+    const carrito = carritoStore();
+    const agregarProducto = async (id, cantidad) => {
+        await carrito.agregarProducto({
+            id_producto: id,
+            cantidad: cantidad,
+        })
+    };
     const inicioContenedor = useInicioContenedor();
 
     const productos_limitado_a_cuatro = computed(() => {
