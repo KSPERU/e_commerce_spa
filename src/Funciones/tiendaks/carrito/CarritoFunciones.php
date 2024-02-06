@@ -189,10 +189,10 @@ class CarritoFunciones
     private function AgregarProductoOperacion(int $tipo,usuario $usuario, Carrito $carrito,detallecarrito $detallecarrito, Producto $producto, int $cantidad)
     {
         $importe = $cantidad * $producto->getPrPrecio();
-        $stockfinal = $producto->getPrStock() - $cantidad;
+        
         try{
 
-            if($tipo == 1){
+            if($tipo == 1){         
                 $carrito->setCCantidadtotal($cantidad);
                 $carrito->setCImportetotal($importe);
                 $carrito->setUsuario($usuario);
@@ -235,6 +235,7 @@ class CarritoFunciones
         if ($usuario === null) {
             return $this->visualizarCarritosession();
         } else {
+            $this->entityManager->refresh($usuario);
             $carrito = $usuario->getCarrito();
             if ($carrito === null || $carrito->getDetallescarrito()->isEmpty()) {
                 return ['success' => true, 'carrito' => '', 'detallescarrito' => ''];

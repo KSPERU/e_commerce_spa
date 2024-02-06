@@ -8,7 +8,7 @@ import { createPinia } from "pinia";
 
 //import App2 from "./vue/controllers/App2";
 
-import Appcarrito from "./vue/controllers/carrito"; 
+import Appcarrito from "./vue/controllers/store/backend/tiendaks/carrito/carritoApp"; 
 
 import Approducto from "./vue/controllers/producto"; 
 // import App from "./vue/controllers/App"; //Componente Principal en donde estarán todos los hijos.

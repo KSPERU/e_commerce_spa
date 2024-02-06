@@ -65,7 +65,7 @@
 
 <script setup>
     import { onMounted, computed, ref } from "vue";
-    import { carritoStore  } from "./prodStore" 
+    import { carritoStore  } from "../carrito/carritoContenedor" 
 
     
     const carrito = carritoStore();

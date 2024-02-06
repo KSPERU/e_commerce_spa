@@ -66,7 +66,7 @@ export const carritoStore = defineStore('carrito', {
         },
         async ListarProducto() {
             try {
-                const response = await axios.get('/api/producto/listado');
+                const response = await axios.get('/api/carrito/listar/productos/prueba');
                 this.productos = response.data;
                 console.log('producto ', this.productos)
             } catch (error) {

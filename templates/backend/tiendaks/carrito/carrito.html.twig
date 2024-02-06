@@ -4,21 +4,22 @@
 
 {% block body %}
 
-<form method="post"> 
-    <button type="submit">Realizar compra</button>
-</form>
-{% if iniciarSesion %}
-    <div class="alert alert-success">
-        Se necesita iniciar sesion para realizar la compra, redireccionando ...
-    </div>
-    <script>
-        setTimeout(() => {
-            window.location.href = "{{ path('app_login') }}";
-        }, 5000); 
-    </script> 
-{% else %}
-
-    
+{% if app.session.get('comprar') %}
+    {% if app.session.get('iniciarsesion') %}
+        <div class="alert alert-success">
+            Se necesita iniciar sesion para realizar la compra, redireccionando ...
+        </div>
+        <script>
+            setTimeout(() => {
+                window.location.href = "{{ path('app_login') }}";
+            }, 5000); 
+        </script>  
+    {% else %}
+    <div id="appcarrito" metodo-compra=""></div>
+    {% endif %}
+    {% else %}
+    {% if app.session.get('comprar') is null %}
+        <div id="appcarrito"></div>
+    {% endif %}
 {% endif %}
-<div id="appcarrito"></div>
 {% endblock %}
