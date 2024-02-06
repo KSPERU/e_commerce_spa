@@ -1,0 +1,10 @@
+<div {{ attributes }} >
+  <h1>Editar producto</h1>
+  {{ form_start(form) }}
+    {{ form_row(form._token) }}
+    {{ form_label(form.pr_nombre, 'Nombre') }}
+    {{ form_widget(form.pr_nombre) }}
+    {{ form_label(form.pr_categoria, 'Categoria') }}
+    {{ form_widget(form.pr_categoria) }}
+  {{ form_end(form) }}
+</div>

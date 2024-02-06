@@ -45,7 +45,7 @@ class PruebaController extends AbstractController
     }
 
     #[Route('/tienda/user/{id}', name: 'app_tienda_user_profile')]
-    public function profile(int $id, UsuarioRepository $usuarioRepository): Response
+    public function profile(int $id, UsuarioRepository $usuarioRepository, Request $request, EntityManagerInterface $entityManager): Response
     {
         $perfil = $usuarioRepository->findOneBy(['id' => $id]);
         $usuarioActual = $this->getUser();
@@ -54,17 +54,7 @@ class PruebaController extends AbstractController
         } else {
             $PerfilPropio = false;
         }
-
-        return $this->render('tienda_user/index.html.twig', [
-            'usuario' => $perfil,
-            'perfil'=> $PerfilPropio,
-        ]);
-    }
-
-    #[Route('/tienda/user/{id}/nuevo-producto', name: 'app_tienda_nuevo_producto')]
-    public function nuevoProducto(int $id, Request $request, EntityManagerInterface $entityManager): Response
-    {
-        $usuarioActual = $this->getUser();
+        $productos = $perfil->getProductos();
         $producto = new producto();
         $form = $this->createForm(ProductoType::class, $producto);
         $form->handleRequest($request);
@@ -76,8 +66,12 @@ class PruebaController extends AbstractController
             return $this->redirectToRoute('app_tienda_user_profile', ['id' => $id]);
         }
 
-        return $this->render('tienda_user/nuevo_producto.html.twig', [
+        return $this->render('tienda_user/index.html.twig', [
+            'usuario' => $perfil,
+            'perfil'=> $PerfilPropio,
             'form' => $form,
+            'producto' => $producto,
+            'productos' => $productos,
         ]);
     }
 
@@ -92,17 +86,18 @@ class PruebaController extends AbstractController
         ]);
     }
 
-    #[Route('/tienda/user/{id}/editar-productos', name: 'app_tienda_editar_productos')]
-    public function edit(Request $request, EntityManagerInterface $entityManager, producto $producto, productoRepository $productoRepository): Response
+    #[Route('/tienda/user/editar-productos/{id}', name: 'app_tienda_editar_productos')]
+    public function edit(Request $request, EntityManagerInterface $entityManager, producto $producto): Response
     {
+        $usuarioActual = $this->getUser();
         $form = $this->createForm(ProductoType::class, $producto);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $producto->setUsuario($usuarioActual);
             $entityManager->persist($producto);
             $entityManager->flush();
-
-            return $this->redirectToRoute('app_tienda_user_profile', ['id' => $producto->getUsuario()->getId()], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_tienda_user_profile', ['id' => $producto->getUsuario()->getId()]);
         }
 
         return $this->render('tienda_user/editar_producto.html.twig', [
