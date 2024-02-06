@@ -6,9 +6,12 @@ import './bootstrap';
 import { createApp } from "vue";
 import { createPinia } from "pinia";
 
+import App2 from "./vue/controllers/App2";
+
+import Appcarrito from "./vue/controllers/store/backend/tiendaks/carrito/carritoApp"; 
+
 const pinia = createPinia();
 
-import Appcarrito from "./vue/controllers/carrito"; 
 const appcarrito = createApp(Appcarrito); 
 appcarrito.use(pinia);
 appcarrito.mount('#appcarrito');

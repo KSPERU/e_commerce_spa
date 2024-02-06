@@ -25,4 +25,20 @@ class ComprasController extends AbstractController
         $compras = ($datos !== null) ? $comprasFunciones->obtenerComprasTodos($datos) : $comprasFunciones->obtenerComprasTodos();
         return $this->json($compras, Response::HTTP_OK,[]);
     }
+
+    #[Route('/comprar/carrito', name: 'comprar_carrito')]
+    public function comprarCarrito(Request $request, ComprasFunciones $comprasFunciones): Response
+    {
+        if ($request->isMethod('POST')) {
+            $respuesta = $comprasFunciones->comprarCarrito();
+            if ($respuesta['success']) {
+                $url = $this->generateUrl('app_api_compras_mostar_compras_listadodeapis');
+                return new JsonResponse(['url' => $url]);
+            } else {
+                return new JsonResponse(['message' => $respuesta['message']]);
+            }
+        }
+       
+        
+    }
 }

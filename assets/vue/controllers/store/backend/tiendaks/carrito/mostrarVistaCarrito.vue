@@ -1,5 +1,6 @@
 <template>
     <div>
+        <button @click="realizarCompra">Continuar compra</button>
         <h3>Mi carrito </h3>
         <div v-if="carritoAdvertencia" class="alert alert-primary">
             {{ carritoAdvertencia }}
@@ -25,7 +26,7 @@
                     <td>{{ dato.prStock }}</td>
                     <td>
                         <input v-model="cantidad[dato.id]"  type="number" placeholder="Cantidad" pattern="[0-9]+" />
-                        <button @click="modificarProducto(dato.id, cantidad[dato.id], dato.prStock)">Guardar</button>
+                        <button @click="modificarProducto(dato.id, dato.prStock, dato.dcCantidad)">Guardar</button>
                     </td>
                     <td><button @click="eliminarProducto(dato.id)">X</button></td>
                 </tr>
@@ -41,8 +42,8 @@
 
 <script setup>
     import { onMounted, computed, ref } from "vue";
-    import { carritoStore  } from "./prodStore" 
-
+    import { carritoStore  } from "../carrito/carritoContenedor" 
+    import axios from 'axios';
     
     const carrito = carritoStore();
     const carritoAdvertencia = ref('');
@@ -58,10 +59,10 @@
             id_detalle_carrito: id_eliminar,
         })
     };
-    const modificarProducto = async (id_modificar, prStock) => {
+    const modificarProducto = async (id_modificar, prStock, cantidadaux) => {
         const mensaje = await carrito.modificarProducto({
             id_detalle_carrito: id_modificar,
-            cantidad: cantidad.value[id_modificar] !== undefined ? cantidad.value[id_modificar] : null,
+            cantidad: cantidad.value[id_modificar] !== undefined && cantidad.value[id_modificar] !== "" ? cantidad.value[id_modificar] : cantidadaux,
         })
         
         if (mensaje) {
@@ -73,6 +74,23 @@
             carritoAdvertencia.value = "";
         }
     
+        }
+    };
+    const fd = new FormData();
+
+    const realizarCompra = async () => {
+        try {
+        const response = await axios.post('/tiendaks/carrito',fd);
+        console.log(response.data);
+
+        // Extraer la URL de la respuesta
+        const url = response.data.url;
+
+        // Redirigir a la nueva URL
+        window.location.href = url;
+        } catch (error) {
+        // Manejar errores aquí
+        console.error('Error al realizar la compra', error);
         }
     };
     const detallesCarrito = computed(() => {

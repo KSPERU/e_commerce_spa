@@ -2,12 +2,9 @@
 
 namespace App\Funciones\tiendaks\usuario;
 
-
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\SecurityBundle\Security;
 use App\Repository\Usuario\usuarioRepository;
 use Exception;
-use PhpParser\Node\Stmt\TryCatch;
 
 class UsuarioFunciones
 {
@@ -33,7 +30,7 @@ class UsuarioFunciones
                 'u_correo' => $user->getUserIdentifier()
             ]);
             // $usuario = $this->usuarioRepository->findOneBy([
-            //     'id' => 2
+            //     'id' => 1
             // ]);
 
         }catch(Exception $e){
@@ -46,7 +43,7 @@ class UsuarioFunciones
     private function verificarUsuarioSesion(){
         $user = $this->security->getUser();
         if ($user === null) {
-            return null; // Si el usuario no está autenticado, retorna null
+            return null;
         }
         return $user;
     }
