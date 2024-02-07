@@ -1,19 +1,342 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>">
-        
-        {% block stylesheets %}
-            {{ encore_entry_link_tags('app') }}
-        {% endblock %}
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-        {% block javascripts %}
-            {{ encore_entry_script_tags('app') }}
-        {% endblock %}
-    </head>
-    <body>
-        {% block body %}{% endblock %}
-    </body>
+    <title>
+      {% block title %}
+        Welcome!
+      {% endblock %}
+    </title>
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>" />
+
+    {% block stylesheets %}
+      {{ encore_entry_link_tags('app') }}
+
+    {% endblock %}
+
+    {% block css %}
+
+    {% endblock %}
+
+    {% block javascripts %}
+      {{ encore_entry_script_tags('app') }}
+    {% endblock %}
+  </head>
+  <body>
+    {% block body %}
+      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+      <style>
+        .menu-contaner{
+          height: 126px;
+        }
+        .menu-bg{
+          background-color: var(--color-azul-oscuro);
+          height: 78px;
+        }
+        .submenu-bg{
+          background-color: #fff;
+          height: 48px;
+          color: #0f0f0f;
+        }
+
+        /* busqueda */
+        .form-width{
+          width: 580px;
+        }
+
+        .line-height-48{
+          line-height: 48px;
+        }
+        .line-height-48 li a{
+          color: black;
+        }
+
+        #ingresar {
+            background-color: white !important;
+            width: 124px;
+            color: black;
+        }
+        #ingresar:hover {
+            background-color: #ebebeb !important;
+        }
+
+        #registrar {
+            background-color: var(--color-azul-oscuro) !important;
+            color: white;
+            width: 124px;
+            border: 1px solid white;
+        }
+        #registrar:hover {
+            background-color: #ebebeb !important;
+            color: black;    
+        }
+
+        #ingresar-mobile, #registrar-mobile, #btn-toggler-mobile, #btn-toggler{
+          transition: transform 0.2s ease-in-out;
+        }
+        #ingresar-mobile:active, #registrar-mobile:active, #btn-toggler-mobile:active, #btn-toggler:active{
+          transform: scale(1.1);
+        }
+        #ingresar-mobile:focus,#registrar-mobile:focus{ border: 1px solid #ebebeb; }
+        #ingresar-mobile:hover,#registrar-mobile:hover{
+          color: var(--color-azul-oscuro);
+        }
+
+        .btn-ingresar, .btn-ingresar:focus, .btn-ingresar:hover{
+          background-color: var(--color-azul-oscuro) !important; 
+          color: white !important;
+        }
+
+
+        @media (max-width: 767.98px) {
+          /* .form-width{
+            width: auto !important;
+          } */
+         }
+        @media (max-width: 1025.00px) { 
+          .form-width{
+            width: 360px;
+          }
+        }
+
+        @media (max-width: 1190.00px) { 
+          .form-width{
+            width: 385px;
+          }
+        }
+
+        @media (max-width: 991.98px) { 
+          .menu-bg{
+            height: 64px;
+          }
+          .submenu-bg{
+            height: 38px;
+          }
+
+          .line-height-48{
+          line-height: 38px;
+        }
+        }
+      </style>
+
+      {% set logged = false %}
+
+      {# Aqui irá el navbar #}
+      <div class="menu-container text-white">
+        <div class="menu-bg d-flex justify-content-between align-items-center px-3 px-md-5">
+          <figure class="m-0">
+            <img src="{{ asset('img/tiendaks/logo.png') }}" alt="logo" class="w-100 h-100 d-none d-sm-block" style="max-height: 52px;"/>
+            <img src="{{ asset('img/tiendaks/logo-mobile.png') }}" alt="logo" class="w-100 h-100 d-block d-sm-none pe-2" style="max-height: 52px;"/>
+          </figure>
+          {# <h1 class="m-0 size-22">LOGO</h1> #}
+          <form class="d-flex form-width" role="search">
+            <input class="form-control me-2 size-16" type="search" placeholder="Buscar" aria-label="Search">
+            <button class="btn btn-outline-light size-16" type="submit">
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+          </form>
+          {% if logged == true %}
+            <div class="d-none d-lg-block">
+              <div class="d-flex justify-content-center align-items-center">
+                <div class="">
+                  <i class="fa-solid fa-user me-3" style="font-size: 28px"></i> 
+                </div>
+                <div class="d-block" style="line-height: 14px;">
+                  <h5 class="size-16 m-0">Jean Carlos Torres Armas</h5>
+                  <span class="size-12 m-0">jeantorresa@gmail.com</span>
+                </div>
+              </div>
+            </div>
+          {% else %}
+            <div class="d-none d-lg-block">
+              <button type="button"  class="btn mx-1 fw-semibold" id="ingresar" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                <i class="fa-solid fa-user me-1"></i> 
+                Ingresar
+              </button>
+              <button type="button"  class="btn mx-1 fw-semibold" id="registrar"  data-bs-toggle="modal" data-bs-target="#modalRegistrar">
+                <i class="fa-solid fa-user-pen me-1"></i>
+                Registrar
+              </button>
+            </div>
+
+          {% endif %}
+        </div>
+
+
+        <div class="submenu-bg d-flex justify-content-between align-items-center px-3 px-md-5 d-none d-lg-block">
+          <ul class="list-inline m-0 line-height-48 overflow-hidden d-flex justify-content-start d-xxl-flex justify-content-xxl-center">
+            <li class="list-inline-item me-3"><a href="#" class="text-decoration-none fw-semibold d-inline" style="white-space: nowrap;">Inicio</a></li>
+            <li class="list-inline-item mx-3"><a href="#" class="text-decoration-none fw-semibold d-inline" style="white-space: nowrap;">Laptops</a></li>
+            <li class="list-inline-item mx-3"><a href="#" class="text-decoration-none fw-semibold d-inline" style="white-space: nowrap;">Hogar y muebles</a></li>
+            <li class="list-inline-item mx-3"><a href="#" class="text-decoration-none fw-semibold d-inline" style="white-space: nowrap;">Deporte</a></li>
+            <li class="list-inline-item mx-3"><a href="#" class="text-decoration-none fw-semibold d-inline" style="white-space: nowrap;">Electrodomésticos</a></li>
+            <li class="list-inline-item mx-3"><a href="#" class="text-decoration-none fw-semibold d-inline" style="white-space: nowrap;">Cuidado Personal</a></li>
+            <li class="list-inline-item mx-3"><a href="#" class="text-decoration-none fw-semibold d-inline" style="white-space: nowrap;">Juegos</a></li>
+            <li class="list-inline-item mx-3"><a href="#" class="text-decoration-none fw-semibold d-inline" style="white-space: nowrap;">Salud</a></li>
+            <li class="list-inline-item mx-3"><a href="#" class="text-decoration-none fw-semibold d-inline" style="white-space: nowrap;">Vender</a></li>
+            <li class="list-inline-item mx-3"><a href="#" class="text-decoration-none fw-semibold d-inline" style="white-space: nowrap;">Ver más</a></li>
+            <li class="list-inline-item ms-3"><a href="#" class="text-decoration-none fw-semibold">Vender</a></li>
+          </ul>
+        </div>
+          
+          {% if logged == true %}
+          <nav class="navbar navbar-expand-lg bg-light d-block d-lg-none" style="background-color: white !important;">
+              <div class="container-fluid d-flex justify-content-between px-3">
+                <h6 class="m-0 size-16" style="color:black;">Bienvenido, <span class="fw-bold">Jean Carlos Torres</span></h6>
+                <button style="font-size:10px;" class="navbar-toggler p-1 shadow-none" id="btn-toggler"type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon" ></span>
+                </button>
+                <div class="collapse navbar-collapse mt-2" id="navbarSupportedContent">
+                  <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item px-3 size-16">
+                      <a class="nav-link active" aria-current="page" href="#">
+                      <i class="fa-solid fa-house me-2"></i>
+                      Inicio
+                      </a>
+                    </li>
+                    <li class="nav-item px-3 size-16">
+                      <a class="nav-link" href="#">
+                      <i class="fa-solid fa-circle-user me-2"></i>
+                      Mi cuenta
+                      </a>
+                    </li>
+                    <li class="nav-item px-3 size-16">
+                      <a class="nav-link" href="#">
+                      <i class="fa-solid fa-list me-2"></i>
+                      Categorias
+                      </a>
+                    </li>
+                    <li class="nav-item px-3 size-16">
+                      <a class="nav-link" href="#">
+                      <i class="fa-solid fa-box-open me-2"></i>
+                      Vender
+                      </a>
+                    </li>
+                    <li class="nav-item px-3 size-16">
+                      <a class="nav-link" href="#">
+                      <i class="fa-solid fa-ticket me-2"></i>
+                      Ofertas
+                      </a>
+                    </li>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </nav>
+          {% else %}
+            <nav class="navbar navbar-expand-lg bg-light d-block d-lg-none" style="background-color: white !important;">
+              <div class="container-fluid d-flex justify-content-between px-3 px-md-5">
+                <div class="d-block d-lg-none">
+                  <button class="btn btn-sm mx-3 mx-md-1" id="ingresar-mobile" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                    <i class="fa-solid fa-user me-1"></i> 
+                    Ingresar
+                  </button>
+                  <button class="btn btn-sm mx-3 mx-md-1" id="registrar-mobile"  data-bs-toggle="modal" data-bs-target="#modalRegistrar">
+                    <i class="fa-solid fa-user-pen me-1"></i>
+                    Registrar
+                  </button>
+                </div>
+                <button style="font-size:10px;" class="navbar-toggler p-1 shadow-none" id="btn-toggler-mobile"type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                  <span class="navbar-toggler-icon" ></span>
+                </button>
+                <div class="collapse navbar-collapse mt-2" id="navbarSupportedContent">
+                  <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+                    <li class="nav-item px-3 size-16">
+                      <a class="nav-link active" aria-current="page" href="#">
+                      <i class="fa-solid fa-house me-2"></i>
+                      Inicio
+                      </a>
+                    </li>
+                    <li class="nav-item px-3 size-16">
+                      <a class="nav-link" href="#">
+                      <i class="fa-solid fa-list me-2"></i>
+                      Categorias
+                      </a>
+                    </li>
+                    <li class="nav-item px-3 size-16">
+                      <a class="nav-link" href="#">
+                      <i class="fa-solid fa-ticket me-2"></i>
+                      Ofertas
+                      </a>
+                    </li>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </nav>
+          {% endif %}
+      </div>
+    {% endblock %}
+    <!-- Modal Ingresar -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="position-absolute top-0 end-0 p-3" style="z-index: 100;">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body p-4">
+            <h1 class="modal-title fs-5 fw-semibold size-22 text-center mt-3 mb-2" id="exampleModalLabel">Ingresa a tu cuenta</h1>
+            <div class="mb-3 px-3">
+              <label for="correo" class="form-label size-16">Correo</label>
+              <input type="email" class="form-control size-16" id="correo" placeholder="name@example.com">
+            </div>
+            <div class="mb-3 px-3">
+              <label for="password" class="form-label size-16">Contraseña</label>
+              <input type="password" class="form-control size-16" id="password" placeholder="*********">
+            </div>
+            <div class="px-3 pb-2 mt-2">
+              <button type="button" class="btn btn-ingresar w-100">Ingresar</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Modal Registrar -->
+    <div class="modal fade" id="modalRegistrar" tabindex="-1" aria-labelledby="modalRegistrarLabel" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-scrollable">
+        <div class="modal-content">
+          <div class="position-absolute top-0 end-0 p-3" style="z-index: 100;">
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body p-4">
+            <h1 class="modal-title fs-5 fw-semibold size-22 text-center mt-3 mb-2" id="exampleModalLabel">¡Bienvenido a TIENDA KS!</h1>
+            <p class="fw-semibold size-16 pt-2 px-3">Completa el siguiente formulario:</p>
+            <div class="mb-3 px-3">
+              <label for="correo" class="form-label size-16">Correo</label>
+              <input type="email" class="form-control size-16" id="correo" placeholder="">
+            </div>
+            <div class="mb-3 px-3">
+              <label for="password" class="form-label size-16">Contraseña</label>
+              <input type="password" class="form-control size-16" id="password" placeholder="">
+            </div>
+            <div class="mb-3 px-3">
+              <label for="nombres" class="form-label size-16">Nombres</label>
+              <input type="email" class="form-control size-16" id="nombres" placeholder="">
+            </div>
+            <div class="mb-3 px-3">
+              <label for="ape_paterno" class="form-label size-16">Apellido Paterno</label>
+              <input type="password" class="form-control size-16" id="ape_paterno" placeholder="">
+            </div>
+            <div class="mb-3 px-3">
+              <label for="ape_materno" class="form-label size-16">Apellido Materno</label>
+              <input type="email" class="form-control size-16" id="ape_materno" placeholder="">
+            </div>
+            <div class="mb-3 px-3">
+              <label for="dni" class="form-label size-16">DNI</label>
+              <input type="number" class="form-control size-16" id="dni" placeholder="8 digitos">
+            </div>
+            <div class="mb-3 px-3">
+              <label for="telefono" class="form-label size-16">Telefono</label>
+              <input type="number" class="form-control size-16" id="telefono" placeholder="999 999 999">
+            </div>
+            <div class="px-3 py-2">
+              <button type="button" class="btn btn-ingresar w-100">Registrarse</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </body>
 </html>

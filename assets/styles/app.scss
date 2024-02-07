@@ -1,4 +1,75 @@
 @import "~bootstrap/scss/bootstrap";
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&family=Nunito:wght@200;300;400;500;600;700;800;900;1000&family=Odor+Mean+Chey&display=swap');
 body {
-    background-color: lightgray;
+    background-color: #EBEBEB;
 }
+
+p, h1, h2, h3, span, h4, h5, h6 {
+    font-family: 'Inter', sans-serif;
+}
+
+.size-22{
+    font-size: 22px;
+}
+.size-18{
+    font-size: 1.125rem;
+}
+.size-16{
+    font-size: 16px;
+}
+.size-15{
+    font-size: 0.938rem;
+}
+.size-14{
+    font-size: 0.875rem;
+}
+.size-12{
+    font-size: 12px;
+}
+.size-10{
+    font-size: 10px;
+}
+
+.size-12-10{
+    font-size: 12px;
+}
+.size-16-12{
+    font-size: 16px;
+}
+
+:root{
+    --color-azul-oscuro: #17172B;
+}
+
+@media (max-width: 320.98px) {
+    .size-12-10{
+        font-size: 10px;
+    }
+    .size-14{
+        font-size: 11px;
+    }
+    .size-22{
+        font-size: 16px;
+    }
+
+    .size-16 {
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 575.98px) {
+    .size-22{
+        font-size: 16px;
+    }
+
+    .size-16-12{
+        font-size: 12px;
+    }
+}
+
+@media (max-width: 767.98px) { 
+
+}
+
+@media (max-width: 991.98px) { }

@@ -3,6 +3,7 @@
 {% block title %}Hello LoginController!{% endblock %}
 
 {% block body %}
+
     {% if error %}
         <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
     {% endif %}
@@ -29,4 +30,7 @@
             <img src="{{ asset('image/google.png') }}" width="60px" height="60px" alt="">
         </a>
     </div>
+
+<div {{ vue_component('App', { 'name': 'app.user.fullName' }) }}></div>
+
 {% endblock %}
