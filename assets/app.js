@@ -31,8 +31,11 @@ const approducto = createApp(Approducto);
 appcarrito.use(pinia);
 appcarrito.mount('#appcarrito');
 
-approducto.use(pinia);
-approducto.mount('#approducto');
+// import Appcarritoglobal from "./vue/controllers/store/backend/tiendaks/carrito/mostrarVistaCarrito"; 
+
+// const appcarritoglobal = createApp(Appcarritoglobal); 
+// appcarritoglobal.use(pinia);
+// appcarritoglobal.mount('#appcarritoMostrarVistaCarrito');
 
 import productoApp from "./vue/controllers/store/backend/tiendaks/producto/productoApp";
 const producto_app = createApp(productoApp);
@@ -43,6 +46,10 @@ import comprasApp from "./vue/controllers/store/backend/tiendaks/compras/compras
 const compras_app = createApp(comprasApp);
 compras_app.use(pinia);
 compras_app.mount('#compras_app');
+
+import './vue/controllers/store/backend/tiendaks/producto/inicio/inicioApp.js';
+import './vue/controllers/store/backend/tiendaks/producto/producto_por_categoria/productoPorCategoriaApp.js';
+import './vue/controllers/store/backend/tiendaks/producto/ver_producto/verProductoApp.js';
 
 const $ = require('jquery');
 require('bootstrap');

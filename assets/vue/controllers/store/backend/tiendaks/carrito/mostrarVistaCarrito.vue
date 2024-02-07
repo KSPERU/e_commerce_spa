@@ -1,6 +1,7 @@
 <template>
     <div>
-        <h3>Mi carrito</h3>
+        <button @click="realizarCompra">Continuar compra</button>
+        <h3>Mi carrito </h3>
         <div v-if="carritoAdvertencia" class="alert alert-primary">
             {{ carritoAdvertencia }}
         </div>
@@ -36,37 +37,13 @@
                 </tr>
             </tbody>
         </table>
-
-        <h3>Lista de productos en tienda</h3>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th scope="col">ID</th>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Descripción</th>
-                    <th scope="col">Categoria</th>
-                    <th scope="col">Precio</th>
-                    <th scope="col">Agregar</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr v-for="dato in productos">
-                    <th scope="row">{{ dato.id }}</th>
-                    <td>{{ dato.pr_nombre }}</td>
-                    <td>{{ dato.pr_descripcion }}</td>
-                    <td>{{ dato.pr_categoria }}</td>
-                    <td>{{ dato.pr_precio }}</td>
-                    <td><button @click="agregarProducto(dato.id, 1)">Agregar al Carrito</button></td>
-                </tr>
-            </tbody>
-        </table>
     </div>
 </template>
 
 <script setup>
     import { onMounted, computed, ref } from "vue";
-    import { carritoStore  } from "./prodStore" 
-
+    import { carritoStore  } from "../carrito/carritoContenedor" 
+    import axios from 'axios';
     
     const carrito = carritoStore();
     const carritoAdvertencia = ref('');
@@ -82,28 +59,42 @@
             id_detalle_carrito: id_eliminar,
         })
     };
-    const modificarProducto = async (id_modificar, prStock,dcCantidad) => {
+    const modificarProducto = async (id_modificar, prStock, cantidadaux) => {
         const mensaje = await carrito.modificarProducto({
             id_detalle_carrito: id_modificar,
-            cantidad: cantidad.value[id_modificar] !== undefined ? cantidad.value[id_modificar] : dcCantidad,
+            cantidad: cantidad.value[id_modificar] !== undefined && cantidad.value[id_modificar] !== "" ? cantidad.value[id_modificar] : cantidadaux,
         })
         
         if (mensaje) {
             carritoAdvertencia.value = `${mensaje.error} Stock actual: ${prStock}`;
         } else {
-            if(cantidad.value[id_modificar]==undefined){
+            if(!cantidad.value[id_modificar]){
             carritoAdvertencia.value = `El campo no debe estar vacío`;
-            }else{
-                carritoAdvertencia.value = "";
-            }
+        }else{
+            carritoAdvertencia.value = "";
+        }
+    
+        }
+    };
+    const fd = new FormData();
+
+    const realizarCompra = async () => {
+        try {
+        const response = await axios.post('/tiendaks/carrito',fd);
+        console.log(response.data);
+
+        // Extraer la URL de la respuesta
+        const url = response.data.url;
+
+        // Redirigir a la nueva URL
+        window.location.href = url;
+        } catch (error) {
+        // Manejar errores aquí
+        console.error('Error al realizar la compra', error);
         }
     };
     const detallesCarrito = computed(() => {
         return carrito.DETALLESCARRITOS
-    })
-
-    const productos = computed(() => {
-        return carrito.PRODUCTOS
     })
 
     const carritos = computed(() => {
@@ -112,7 +103,6 @@
 
     onMounted(() => {
         carrito.visualizarCarrito();
-        carrito.ListarProducto();
     })
 
 </script>

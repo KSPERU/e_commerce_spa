@@ -6,12 +6,12 @@ use App\Entity\Carrito\carrito;
 use App\Entity\Usuario\usuario;
 use App\Entity\Producto\producto;
 use App\Entity\Carrito\detallecarrito;
-use App\Funciones\tiendaks\producto\ProductoFunciones;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Funciones\tiendaks\usuario\UsuarioFunciones;
-use App\Repository\Carrito\detallecarritoRepository;
 use Doctrine\Common\Collections\Collection;
 use Symfony\Component\HttpFoundation\RequestStack;
+use App\Funciones\tiendaks\usuario\UsuarioFunciones;
+use App\Repository\Carrito\detallecarritoRepository;
+use App\Funciones\tiendaks\producto\ProductoFunciones;
 
 class CarritoFunciones
 {
@@ -43,7 +43,7 @@ class CarritoFunciones
     private function agregarProductoCasos(int $idproducto, int $cantidad){
     
         $usuario = $this->usuario;
-        $producto = $this->funcionesproducto->verProducto($idproducto);
+        $producto = $this->funcionesproducto->obtenerProductoPorId($idproducto);
         if ($producto->getPrStock() < $cantidad) {
             return ['success' => false, 'message' => 'El producto actualmente no está disponible.'];
         } else {
@@ -189,10 +189,10 @@ class CarritoFunciones
     private function AgregarProductoOperacion(int $tipo,usuario $usuario, Carrito $carrito,detallecarrito $detallecarrito, Producto $producto, int $cantidad)
     {
         $importe = $cantidad * $producto->getPrPrecio();
-        $stockfinal = $producto->getPrStock() - $cantidad;
+        
         try{
 
-            if($tipo == 1){
+            if($tipo == 1){         
                 $carrito->setCCantidadtotal($cantidad);
                 $carrito->setCImportetotal($importe);
                 $carrito->setUsuario($usuario);
@@ -235,6 +235,7 @@ class CarritoFunciones
         if ($usuario === null) {
             return $this->visualizarCarritosession();
         } else {
+            $this->entityManager->refresh($usuario);
             $carrito = $usuario->getCarrito();
             if ($carrito === null || $carrito->getDetallescarrito()->isEmpty()) {
                 return ['success' => true, 'carrito' => '', 'detallescarrito' => ''];
@@ -419,7 +420,5 @@ class CarritoFunciones
             'carrito' => $this->visualizarCarrito()['carrito'],
             'detallescarrito' => $this->visualizarCarrito()['detallescarrito'],
         ];
-    }
-    
-    
+    } 
 }

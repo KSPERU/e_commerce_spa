@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h3>Mi carrito </h3>
+        <h3>Mi carrito</h3>
         <div v-if="carritoAdvertencia" class="alert alert-primary">
             {{ carritoAdvertencia }}
         </div>
@@ -25,7 +25,7 @@
                     <td>{{ dato.prStock }}</td>
                     <td>
                         <input v-model="cantidad[dato.id]"  type="number" placeholder="Cantidad" pattern="[0-9]+" />
-                        <button @click="modificarProducto(dato.id, cantidad[dato.id], dato.prStock)">Guardar</button>
+                        <button @click="modificarProducto(dato.id, dato.prStock, dato.dcCantidad)">Guardar</button>
                     </td>
                     <td><button @click="eliminarProducto(dato.id)">X</button></td>
                 </tr>
@@ -36,12 +36,36 @@
                 </tr>
             </tbody>
         </table>
+
+        <h3>Lista de productos en tienda</h3>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th scope="col">ID</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Descripción</th>
+                    <th scope="col">Categoria</th>
+                    <th scope="col">Precio</th>
+                    <th scope="col">Agregar</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="dato in productos">
+                    <th scope="row">{{ dato.id }}</th>
+                    <td>{{ dato.pr_nombre }}</td>
+                    <td>{{ dato.pr_descripcion }}</td>
+                    <td>{{ dato.pr_categoria }}</td>
+                    <td>{{ dato.pr_precio }}</td>
+                    <td><button @click="agregarProducto(dato.id, 1)">Agregar al Carrito</button></td>
+                </tr>
+            </tbody>
+        </table>
     </div>
 </template>
 
 <script setup>
     import { onMounted, computed, ref } from "vue";
-    import { carritoStore  } from "./prodStore" 
+    import { carritoStore  } from "../carrito/carritoContenedor" 
 
     
     const carrito = carritoStore();
@@ -58,25 +82,31 @@
             id_detalle_carrito: id_eliminar,
         })
     };
-    const modificarProducto = async (id_modificar, prStock) => {
+    const modificarProducto = async (id_modificar, prStock,dcCantidad) => {
         const mensaje = await carrito.modificarProducto({
             id_detalle_carrito: id_modificar,
-            cantidad: cantidad.value[id_modificar] !== undefined ? cantidad.value[id_modificar] : null,
+            cantidad: cantidad.value[id_modificar] !== undefined ? cantidad.value[id_modificar] : dcCantidad,
         })
         
         if (mensaje) {
             carritoAdvertencia.value = `${mensaje.error} Stock actual: ${prStock}`;
         } else {
-            if(!cantidad.value[id_modificar]){
+            if(cantidad.value[id_modificar]==undefined){
             carritoAdvertencia.value = `El campo no debe estar vacío`;
-        }else{
-            carritoAdvertencia.value = "";
-        }
-    
+            }else{
+                carritoAdvertencia.value = "";
+            }
+        // }else{
+        //     carritoAdvertencia.value = "";
+        // }
         }
     };
     const detallesCarrito = computed(() => {
         return carrito.DETALLESCARRITOS
+    })
+
+    const productos = computed(() => {
+        return carrito.PRODUCTOS
     })
 
     const carritos = computed(() => {
@@ -85,6 +115,7 @@
 
     onMounted(() => {
         carrito.visualizarCarrito();
+        carrito.ListarProducto();
     })
 
 </script>
