@@ -9,32 +9,32 @@
                 <div class="m-4">
                     
                     <div class="row gy-3 mb-4 flex flex-md-row align-items-center text-center">
-                    <div class="col-md-7">
-                        <div class="me-md-3">
-                            <div class="d-flex flex-md-row flex-column align-items-center">
-                                <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-shopping-carts/img1.webp" class="border rounded me-3" style="width: 96px; height: 96px; margin-right: 10px;" />
+                        <div class="col-md-7">
+                            <div class="me-md-3">
                                 <div class="d-flex flex-md-row flex-column align-items-center">
-                                    <div class="flex-grow-1 text-md-left w-100" style="color: #17172B;">
-                                        <span class="mb-2">Shark Matrix Self-Empty Robot Vacuum & Mop with No Spots Missed, Bagless 30-Day Capacity...</span>
+                                    <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-shopping-carts/img1.webp" class="border rounded me-3" style="width: 96px; height: 96px; margin-right: 10px;" />
+                                    <div class="d-flex flex-md-row flex-column align-items-center">
+                                        <div class="flex-grow-1 text-md-left w-100" style="color: #17172B;">
+                                            <span class="mb-2">Shark Matrix Self-Empty Robot Vacuum & Mop with No Spots Missed, Bagless 30-Day Capacity...</span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-5">
-                        <div class="d-flex flex-md-row align-items-center justify-content-md-center">
-                            <div class="me-md-3">
-                                <input type="number" class="form-control me-2" style="width: 60px; color: #17172B;" value="2" min="1">
-                            </div>
-                            <div class="flex-md-row flex-column w-100 text-md-start" style="color: #17172B;">
-                                <text class="h6">S/. 13 555.00</text> <br />
-                                <small class="text-muted text-nowrap">Unidad: S/. 13 555.00</small>
+                        <div class="col-md-5">
+                            <div class="d-flex flex-md-row align-items-center justify-content-md-center">
+                                <div class="me-md-3">
+                                    <input type="number" class="form-control me-2" style="width: 60px; color: #17172B;" value="2" min="1">
+                                </div>
+                                <div class="flex-md-row flex-column w-100 text-md-start" style="color: #17172B;">
+                                    <text class="h6">S/. 13 555.00</text> <br />
+                                    <small class="text-muted text-nowrap">Unidad: S/. 13 555.00</small>
+                                </div>  
+                                <div class="ms-md-3">
+                                    <a class="btn" style="color: #17172B;"><font-awesome-icon icon="trash" /></a>
+                                </div>
                             </div>  
-                            <div class="ms-md-3">
-                                <a class="btn" style="color: #17172B;"><font-awesome-icon icon="trash" /></a>
-                            </div>
-                        </div>  
-                    </div>
+                        </div>
                     </div>
                 
                     <hr />
@@ -140,3 +140,14 @@
 <script>
 export default {};
 </script>
+<style scoped>
+    
+    @media (max-width: 990px) {
+        .col-md-8,
+        .col-md-4 {
+            flex-basis: 100%;
+            max-width: 100%;
+        }
+    }
+
+</style>
