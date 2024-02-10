@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Productos - Categoria{% endblock %}
+
+{% block body %}
+  {{ parent() }}
+  {% include './frontend/layout/slider.html.twig' %}
+
+  <div class="container">
+    <div class="row mt-3">
+        <div class="col-12 col-sm-12 col-md-12 col-lg-3">
+            {# Filtros Avanzados #}
+            <div id="card_filtros_avanzados"></div>
+        </div>
+        <div class="col-12 col-sm-12 col-md-12 col-lg-9">
+            <div id="productos_categoria"></div>
+        </div>
+    </div>
+  </div>
+
+{% endblock %}

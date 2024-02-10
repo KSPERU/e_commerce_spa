@@ -39,6 +39,13 @@ class FrontendController extends AbstractController
         return $this->render('frontend/perfil_usuario.html.twig', []);
     }
 
+    #[Route('/productos-categoria', name: 'app_frontend_productos_categoria')]
+    public function productos_categoria(): Response
+    {
+        return $this->render('frontend/productos_categoria.html.twig', []);
+    }
+
+
 }
 
 
