@@ -1,7 +1,28 @@
 <template>
-    <div class="row row-cols-2 row-cols-md-3 p-2">
-        <div v-for="product in products" :key="product.id" class="p-1 p-sm-2">
-            <Cards :product="product" />
+    <div class="productos-venta-head d-flex justify-content-between">
+        <div class="d-flex align-items-start align-items-md-center flex-column flex-md-row">
+            <h1 class="size-22 fw-bolder m-0">Productos en venta</h1>
+            <span class="ms-0 ms-md-3 text-secondary size-14">{{ products.length}} resultados</span>
+        </div>
+        <div class="d-flex align-items-center flex-column flex-md-row">
+            <p class="m-0 text-secondary w-100 size-14 d-none d-md-block">Ordenar por:</p>
+            <select class="form-select form-select-sm" aria-label=".form-select-sm example" style="min-width: 132px">
+                <option selected>Más relevante</option>
+                <option value="1">Menor precio</option>
+                <option value="2">Mayor precio</option>
+            </select>
+        </div>
+    </div>
+    <button class="btn btn-light btn-sm d-block d-lg-none w-100 my-2" @click="toggleFiltros">
+        <font-awesome-icon icon="filter" />
+        Aplicar filtros avanzado
+    </button>
+
+    <div class="productos-venta-body overflow-hidden">
+        <div class="row row-cols-2 row-cols-md-3 p-2">
+            <div v-for="product in products" :key="product.id" class="p-1 p-sm-2">
+                <Cards :product="product" />
+            </div>
         </div>
     </div>
 </template>
@@ -17,7 +38,7 @@
 }
 
 .card:hover {
-    background-color: rgb(23, 23, 43, 0.2);
+    background-color: #17172b33;
     z-index: 1;
     transition: background-color 300ms ease-out;
 }
@@ -74,5 +95,15 @@ export default {
             ]
         };
     },
+    methods: {
+        toggleFiltros() {
+            const cardFiltros = document.getElementById('card-filtros');
+            if (cardFiltros.style.display === 'none') {
+                cardFiltros.style.display = 'block';
+            } else {
+                cardFiltros.style.display = 'none';
+            }
+        }
+    }
 };
 </script>

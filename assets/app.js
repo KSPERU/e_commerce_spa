@@ -26,18 +26,9 @@ import Tarjetas_Ofertas from "./vue/controllers/components/index-usuario/Tarjeta
 import Categorias_Populares from "./vue/controllers/components/index-usuario/Categorias_Populares";
  /// Fin
 
-// Perfil - Usuario:
-import Info_PerfilUsuario from "./vue/controllers/components/perfil-usuario/Info_PerfilUsuario";
-import Btns_Config from "./vue/controllers/components/perfil-usuario/Btns_Config";
-import Cards_Perfil_Usuario from "./vue/controllers/components/perfil-usuario/Cards_Perfil_Usuario";
-import Head_ProductosVenta from "./vue/controllers/components/perfil-usuario/Head_ProductosVenta";
-// Fin
+import Productos_Categoria_Main from "./vue/controllers/components/productos-categoria/Main";
+import Perfil_Usuario_Main from "./vue/controllers/components/perfil-usuario/Main";
 
-import Card_FiltrosAvanzados from "./vue/controllers/components/perfil-usuario/Card_FiltrosAvanzados";
-
-// Productos x Categoria:
-import Main from "./vue/controllers/components/productos-categoria/Main";
-//
 
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
@@ -64,14 +55,8 @@ const Carrito_vacio = createApp(carrito_vacio);
 const Carrito = createApp(carrito);
 const Checkout = createApp(checkout)
 
-const info_perfil_usuario = createApp(Info_PerfilUsuario);
-const btns_config_perfil_usuario = createApp(Btns_Config);
-
-const cards_perfil_usuario = createApp(Cards_Perfil_Usuario);
-const head_productos_venta = createApp(Head_ProductosVenta);
-const card_filtros_avanzados = createApp(Card_FiltrosAvanzados);
-
-const productos_categoria = createApp(Main);
+const productos_categoria = createApp(Productos_Categoria_Main );
+const perfil_usuario = createApp(Perfil_Usuario_Main);
 
 app.use(pinia);
 app.mount('#app');
@@ -113,24 +98,9 @@ Checkout.use(pinia);
 Checkout.component('font-awesome-icon', FontAwesomeIcon);
 Checkout.mount('#checkout');
 
-info_perfil_usuario.use(pinia);
-info_perfil_usuario.component('font-awesome-icon', FontAwesomeIcon);
-info_perfil_usuario.mount('#info_perfil_usuario');
-
-btns_config_perfil_usuario.use(pinia);
-btns_config_perfil_usuario.component('font-awesome-icon', FontAwesomeIcon);
-btns_config_perfil_usuario.mount('#btns_config_perfil_usuario');
-
-cards_perfil_usuario.use(pinia);
-cards_perfil_usuario.mount("#cards_perfil_usuario");
-
-head_productos_venta.use(pinia);
-head_productos_venta.component('font-awesome-icon', FontAwesomeIcon);
-head_productos_venta.mount('#head_productos_venta');
-
-card_filtros_avanzados.use(pinia);
-card_filtros_avanzados.component('font-awesome-icon', FontAwesomeIcon);
-card_filtros_avanzados.mount('#card_filtros_avanzados');
+perfil_usuario.use(pinia);
+perfil_usuario.component('font-awesome-icon', FontAwesomeIcon);
+perfil_usuario.mount('#perfil_usuario');
 
 productos_categoria.use(pinia);
 productos_categoria.component('font-awesome-icon', FontAwesomeIcon);
