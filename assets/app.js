@@ -26,6 +26,10 @@ import Tarjetas_Ofertas from "./vue/controllers/components/index-usuario/Tarjeta
 import Categorias_Populares from "./vue/controllers/components/index-usuario/Categorias_Populares";
  /// Fin
 
+// Menu - Perfil Usuario Settings
+import Menu from './vue/controllers/components/perfil-usuario-settings/Menu'
+// Fin
+
 import Productos_Categoria_Main from "./vue/controllers/components/productos-categoria/Main";
 import Perfil_Usuario_Main from "./vue/controllers/components/perfil-usuario/Main";
 
@@ -57,6 +61,9 @@ const Checkout = createApp(checkout)
 
 const productos_categoria = createApp(Productos_Categoria_Main );
 const perfil_usuario = createApp(Perfil_Usuario_Main);
+
+const menu_perfil_usuario_settings = createApp(Menu);
+
 
 app.use(pinia);
 app.mount('#app');
@@ -105,6 +112,11 @@ perfil_usuario.mount('#perfil_usuario');
 productos_categoria.use(pinia);
 productos_categoria.component('font-awesome-icon', FontAwesomeIcon);
 productos_categoria.mount('#productos_categoria');
+
+menu_perfil_usuario_settings.use(pinia);
+menu_perfil_usuario_settings.component('font-awesome-icon', FontAwesomeIcon);
+menu_perfil_usuario_settings.mount('#menu_perfil_usuario_settings');
+
 
 const $ = require('jquery');
 // this "modifies" the jquery module: adding behavior to it
