@@ -3,7 +3,7 @@
     <div class="content-popup-carrito position-fixed bottom-0 end-0 card border-0 rounded-3">
       <div class="card-header d-flex justify-content-between align-items-center py-3 content-popup-carrito-card-header rounded-3 rounded-bottom-0">
         <h6 class="my-0 mx-1 size-22">Carrito de compras</h6>
-        <button @click="closePopup" class="border-0 bg-transparent">
+        <button @click="$emit('closePopup')" class="border-0 bg-transparent">
           <font-awesome-icon icon="angle-down" color="white" size="xl"/>
         </button>
       </div>
@@ -11,25 +11,26 @@
         <div class="content-popup-carrito-card-body-products mb-2">
           <div class="overflow-hidden m-0 w-100 card-body-products-height" >
             <!--  -->
-            <div class="popup-carrito-product row overflow-hidden d-flex align-items-center pb-3">
+            <div v-for="producto in detallesCarrito" class="popup-carrito-product row overflow-hidden d-flex align-items-center pb-3">
               <div class="col-3 h-100">
                 <figure class="m-0 w-100 h-100">
-                  <img class="w-100 h-100 object-fit-cover" src="../../img/producto-prueba.png" alt="producto-"/>
+                  <img class="w-100 h-100 object-fit-cover" :src="producto.prImagenes[0]" alt="producto-"/>
                 </figure>
               </div>
               <div class="col-3 h-100 px-0">
-                <p class="m-0 size-12-10 line-clamp-4">Shark Matrix Self-Empty Robot Vacuum & Mop with no</p>
+                <p class="m-0 size-12-10 line-clamp-4">{{producto.prNombre}}</p>
               </div>
               <div class="col-2 h-100 d-flex flex-column align-items-center justify-content-center">
-                <button id="increment" @click="stepper('increment')"><font-awesome-icon icon="angle-up" color="#D9D9D9"/></button>
-                <input disabled type="number" class="input-cantidad" v-model="cantidad" readonly :min="min" :max="max">
-                <button id="decrement" @click="stepper('decrement')"><font-awesome-icon icon="angle-down" color="#D9D9D9"/></button>
+                <button id="increment" @click="stepper('increment', producto.id, producto.prStock,(producto.dcCantidad))"><font-awesome-icon icon="angle-up" color="#D9D9D9"/></button>
+                <input type="number" class="input-cantidad" :value="producto.dcCantidad" :min="min" :max="max">
+                <button id="decrement" @click="stepper('decrement', producto.id,producto.prStock, (producto.dcCantidad))"><font-awesome-icon icon="angle-down" color="#D9D9D9"/></button>
+
               </div>
               <div class="col-3 h-100 px-0 text-center">
-                <span class="m-0 size-12-10">S/. 13 555.00</span>
+                <span class="m-0 size-12-10">S/. {{producto.dcImporte}}</span>
               </div>
               <div class="col-1 h-100 px-0">
-                <button class="popup-carrito-product-eliminar ps-2">
+                <button @click="eliminarProducto(producto.id)" class="popup-carrito-product-eliminar ps-2">
                   <font-awesome-icon icon="trash" />
                 </button>
               </div>
@@ -40,7 +41,7 @@
         <div class="content-popup-carrito-card-body-resume size-16 pt-3">
             <div>
               <p class="float-start d-inline m-0">Subtotal</p>
-              <p class="float-end d-inline m-0">S/. 14 065.00</p>
+              <p class="float-end d-inline m-0">S/. {{carritos.cImportetotal}}</p>
             </div>
             <div class="clearfix"></div>
             <div class="text-secondary">
@@ -50,11 +51,11 @@
             <div class="clearfix"></div>
             <div class="resume-total">
               <p class="float-start d-inline m-0">TOTAL</p>
-              <p class="float-end d-inline m-0">S/. 14 065.00</p>
+              <p class="float-end d-inline m-0">S/. {{carritos.cImportetotal}}</p>
             </div>
             <div class="clearfix"></div>
             <div class="mt-3">
-              <button class="btn btn-resume-popup-carrito">Continuar compra</button>
+              <button @click="realizarCompra" class="btn btn-resume-popup-carrito">Continuar compra</button>
             </div>
         </div>
       </div>
@@ -67,30 +68,75 @@
   </div>
 </template>
 
-  <script>
-  export default {
-    data() {
-      return {
-        cantidad: 1,
-        min: 1,
-        max: 99,
-        step: 1
-      };
-    },
-    methods: {
-      stepper(action) {
-        let calcStep = action === 'increment' ? this.step : -this.step;
-        let newValue = parseInt(this.cantidad) + calcStep;
-  
-        if (newValue >= this.min && newValue <= this.max) {
-          this.cantidad = newValue;
+  <script setup>
+  import { onMounted, computed, ref } from "vue";
+    import { carritoStore  } from "../../components/carritoContenedor" 
+    import axios from 'axios';
+    
+    const carrito = carritoStore();
+    const carritoAdvertencia = ref('');
+    const cantidad = ref({});
+    const eliminarProducto = async (id_eliminar) => {
+        await carrito.eliminarProducto({
+            id_detalle_carrito: id_eliminar,
+        })
+    };
+    const stepper = async(action,id_modificar, prStock, cantidad) => {
+        if (action === 'increment') {
+          cantidad += 1;
+        } else {
+          cantidad -= 1;
         }
-      },
-      closePopup() {
-        this.$emit('closePopup');
-      },
-    }
-  };
+        await modificarProducto(id_modificar, prStock, cantidad);
+    };
+
+    const modificarProducto = async (id_modificar, prStock, cantidad) => {
+        const mensaje = await carrito.modificarProducto({
+            id_detalle_carrito: id_modificar,
+            cantidad: cantidad
+        })
+        
+        if (mensaje) {
+            carritoAdvertencia.value = `${mensaje.error} Stock actual: ${prStock}`;
+        } else {
+            
+            carritoAdvertencia.value = "";
+        
+
+        }
+    };
+    const fd = new FormData();
+
+    const realizarCompra = async () => {
+        try {
+        const response = await axios.post('/tiendaks/carrito',fd);
+        console.log(response.data);
+
+        // Extraer la URL de la respuesta
+        const url = response.data.url;
+
+        // Redirigir a la nueva URL
+        window.location.href = url;
+        } catch (error) {
+        // Manejar errores aquí
+        console.error('Error al realizar la compra', error);
+        }
+    };
+    // const closePopup = async function() {
+    //     this.$emit('closePopup');
+    // }
+
+    const detallesCarrito = computed(() => {
+        return carrito.DETALLESCARRITOS
+    })
+
+    const carritos = computed(() => {
+        return carrito.CARRITOS
+    })
+
+    onMounted(() => {
+        carrito.visualizarCarrito();
+    })
   </script>
   
   <style scoped>

@@ -14,13 +14,13 @@
             <div class="mt-3 d-flex justify-content-center">
                 <div class="mt-3 text-center">
                     <a href="#" class="btn btn-lg d-block mb-1" style="background-color: #17172B; color:#F5F5F5;">Explorar Productos</a>
-                    <a href="#" class="btn btn-lg d-block mb-1" style="background-color: #F5F5F5; color:#17172B;">Iniciar Sesión</a>
+                    <a href="/" class="btn btn-lg d-block mb-1" style="background-color: #F5F5F5; color:#17172B;">Iniciar Sesión</a>
                 </div>
             </div>
             </div>
         </div>
-    </div>
+    </div> 
 </template>
-<script>
-export default {};
+<script setup>
+
 </script>

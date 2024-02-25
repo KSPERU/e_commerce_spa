@@ -8,9 +8,9 @@ import { createPinia } from "pinia";
 
 //import App2 from "./vue/controllers/App2";
 
-import Appcarrito from "./vue/controllers/carrito"; 
+import Appcarrito from "./vue/controllers/store/backend/tiendaks/carrito/carritoApp"; 
 
-import Approducto from "./vue/controllers/producto"; 
+import Approducto from "./vue/controllers/store/backend/tiendaks/carrito/listarProductoPrueba"; 
 // import App from "./vue/controllers/App"; //Componente Principal en donde estarán todos los hijos.
 // import App2 from "./vue/controllers/en_desuso/App2";
 // import App3 from "./vue/controllers/en_desuso/App3";
@@ -25,7 +25,7 @@ import Approducto from "./vue/controllers/producto";
 // import app from "./vue/controllers/App";
 import PopupCarrito from "./vue/controllers/components/popup-carrito/Btn_PopupCarrito";
 import carrito_vacio from "./vue/controllers/components/carrito_vacio";
-import carrito from "./vue/controllers/components/carrito";
+import carrito from "./vue/controllers/components/CarritoApp";
 import checkout from "./vue/controllers/components/checkout.vue"
 
 
@@ -57,10 +57,10 @@ const pinia = createPinia();
 const appcarrito = createApp(Appcarrito); 
 const approducto = createApp(Approducto); 
 
-const app = createApp(App);
-const app2 = createApp(App2); //Ver componentes de Listar productos
-const app3 = createApp(App3); 
-const app4 = createApp(App4); 
+// const app = createApp(App);
+// const app2 = createApp(App2); //Ver componentes de Listar productos
+// const app3 = createApp(App3); 
+// const app4 = createApp(App4); 
 
 const popup_carrito = createApp(PopupCarrito); 
 
@@ -81,6 +81,8 @@ const card_filtros_avanzados = createApp(Card_FiltrosAvanzados)
 
 appcarrito.use(pinia);
 appcarrito.mount('#appcarrito');
+approducto.use(pinia);
+approducto.mount('#approducto');
 
 // import Appcarritoglobal from "./vue/controllers/store/backend/tiendaks/carrito/mostrarVistaCarrito"; 
 
@@ -88,10 +90,10 @@ appcarrito.mount('#appcarrito');
 // appcarritoglobal.use(pinia);
 // appcarritoglobal.mount('#appcarritoMostrarVistaCarrito');
 
-import productoApp from "./vue/controllers/store/backend/tiendaks/producto/productoApp";
-const producto_app = createApp(productoApp);
-producto_app.use(pinia);
-producto_app.mount('#producto_app');
+// import productoApp from "./vue/controllers/store/backend/tiendaks/producto/productoApp";
+// const producto_app = createApp(productoApp);
+// producto_app.use(pinia);
+// producto_app.mount('#producto_app');
 
 import comprasApp from "./vue/controllers/store/backend/tiendaks/compras/comprasApp";
 const compras_app = createApp(comprasApp);
@@ -103,8 +105,8 @@ import './vue/controllers/store/backend/tiendaks/producto/producto_por_categoria
 import './vue/controllers/store/backend/tiendaks/producto/ver_producto/verProductoApp.js';
 
 
-app4.use(pinia);
-app4.mount('#app4');
+// app4.use(pinia);
+// app4.mount('#app4');
 
 popup_carrito.use(pinia);
 popup_carrito.component('font-awesome-icon', FontAwesomeIcon);

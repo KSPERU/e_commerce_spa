@@ -7,18 +7,18 @@
         <div class="px-2 px-sm-3 px-md-4 px-lg-1 px-xl-3 px-xxl-5">
             <div class="my-0 my-lg-2 ">
                 <h6 class="text-start text-md-center size-22">
-                    Roberto Manuel 
-                    Perez Alcantara
+                    {{ usuario.nombres }}
+                    {{ usuario.apellidos }}
                 </h6>
             </div>
             <div class="text-start">
                 <div class="m-0 text-truncate email-phone-width-truncate d-flex align-items-center my-1">
                     <font-awesome-icon icon="envelope" />
-                    <span class="mx-2 size-14 ">roberto.perez@gmail.com</span>
+                    <span class="mx-2 size-14 ">{{ usuario.correo }}</span>
                 </div>
                 <div class="m-0 text-truncate email-phone-width-truncate d-flex align-items-center my-1">
                     <font-awesome-icon icon="square-phone" />
-                    <span class="mx-2 size-14 ">+51 999 888 777</span>
+                    <span class="mx-2 size-14 ">+51 {{ usuario.telefono }}</span>
                 </div>
             </div>
         </div>
@@ -26,7 +26,18 @@
 </template>
 
 <script>
-export default {};
+    export default {
+        data() {
+            return {
+                usuario: {
+                    "nombres": "Roberto Manuel",
+                    "apellidos": "Perez Alcantara",
+                    "correo": "roberto.perez@gmail.com",
+                    "telefono": "999 888 776"
+                }
+            };
+        }
+    };
 </script>
 
 <style scoped>

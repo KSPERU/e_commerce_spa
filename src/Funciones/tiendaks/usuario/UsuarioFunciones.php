@@ -29,9 +29,7 @@ class UsuarioFunciones
             $usuario = $this->usuarioRepository->findOneBy([
                 'u_correo' => $user->getUserIdentifier()
             ]);
-            // $usuario = $this->usuarioRepository->findOneBy([
-            //     'id' => 1
-            // ]);
+            // $usuario = $this->usuarioRepository->findOneBy(['id' => 2]);
 
         }catch(Exception $e){
             echo 'Error al buscar el usuario en la base de datos: ' . $e->getMessage();
@@ -46,6 +44,15 @@ class UsuarioFunciones
             return null;
         }
         return $user;
+    }
+
+    public function obtenerIdUsuarioLogueado(){
+        $usuarioactual = $this->obtenerUsuario();
+        $idusuario = $usuarioactual->getId();
+        return [
+            'success' => true,
+            'idusuario' => $idusuario,
+        ];
     }
 
 }

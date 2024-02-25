@@ -179,7 +179,11 @@ class CarritoFunciones
         $session = $this->requestStack->getSession();
         $carrito = $session->get('carrito', []);
         $detallesCarrito = $session->get('detallescarrito', []);
-    
+        if(count($detallesCarrito)>0){
+            $session->get('existencia_carrito',true);
+        }else{
+            $session->get('existencia_carrito',false);
+        }
         return [
             'carrito' => $carrito,
             'detallescarrito' => $detallesCarrito,
@@ -230,7 +234,7 @@ class CarritoFunciones
 
     public function visualizarCarrito()
     {
-
+        $session = $this->requestStack->getSession();
         $usuario = $this->usuario;
         if ($usuario === null) {
             return $this->visualizarCarritosession();
@@ -238,9 +242,10 @@ class CarritoFunciones
             $this->entityManager->refresh($usuario);
             $carrito = $usuario->getCarrito();
             if ($carrito === null || $carrito->getDetallescarrito()->isEmpty()) {
-                return ['success' => true, 'carrito' => '', 'detallescarrito' => ''];
+                $session->set('existencia_carrito',false);
+                return ['success' => true, 'carrito' => [], 'detallescarrito' => []];
             } else {
-
+                $session->set('existencia_carrito',true);
                 $detallescarrito = $carrito->getDetallescarrito();
                 return $this->especificarDatos($carrito,$detallescarrito);
             }
@@ -392,25 +397,25 @@ class CarritoFunciones
         if ($detallecarrito->getDcCantidad() <= 0) {
             $carrito->removeDetallescarrito($detallecarrito);
             $this->entityManager->flush();
-            $carritoVisualizado = $this->visualizarCarrito();
-            $response = [
-                'success' => true,
-                'message' => 'Producto eliminado del carrito exitosamente.',
-            ];
+            // $carritoVisualizado = $this->visualizarCarrito();
+            // $response = [
+            //     'success' => true,
+            //     'message' => 'Producto eliminado del carrito exitosamente.',
+            // ];
 
-            if ($carrito->getDetallescarrito()->isEmpty()) {
-                $response['estado'] = 'El carrito está vacío';
-                $response['carrito'] = [
-                    'id' => $carrito->getId(),
-                    'cImportetotal' => $carrito->getCImportetotal()
-                ];
+            // if ($carrito->getDetallescarrito()->isEmpty()) {
+            //     $response['estado'] = 'El carrito está vacío';
+            //     $response['carrito'] = [
+            //         'id' => $carrito->getId(),
+            //         'cImportetotal' => $carrito->getCImportetotal()
+            //     ];
 
-            } else {
-                $response['carrito'] = $carritoVisualizado['carrito'];
-                $response['detallescarrito'] = $carritoVisualizado['detallescarrito'];
-            }
+            // } else {
+            //     $response['carrito'] = $carritoVisualizado['carrito'];
+            //     $response['detallescarrito'] = $carritoVisualizado['detallescarrito'];
+            // }
 
-            return $response;
+            return $this->visualizarCarrito();
         }
 
         $this->entityManager->flush();
@@ -420,5 +425,9 @@ class CarritoFunciones
             'carrito' => $this->visualizarCarrito()['carrito'],
             'detallescarrito' => $this->visualizarCarrito()['detallescarrito'],
         ];
-    } 
+    }
+    
+    public function DevolverEstadoCarrito(){
+        
+    }
 }

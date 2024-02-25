@@ -19,20 +19,21 @@ class CarritoController extends AbstractController
         $session = $request->getSession();
         if($session->get('comprar')){
 
-            if($session->get('pasarcarrito') && $session->get('detallescarrito')){
+            if($session->get('pasarcarrito')){
                 $session->remove('iniciarsesion');
                 $operacion = $carritoFunciones->importarCarrito();
                 if($operacion){
-                    return $this->redirectToRoute('app_carrito_mostrar_vista_carrito');
+                    $session->remove('pasarcarrito');
+                    
                 }else{
                     return $this->redirectToRoute('app_carrito_mostrar_productos_global');
                 }
-            }else{
-                return $this->render('backend/tiendaks/producto/listarProductoGlobal.html.twig', [
-                ]);
             }
+            return $this->redirectToRoute('app_checkout');
             
         }else{
+            // return $this->render('frontend/index.html.twig', [
+            // ]);
             return $this->render('backend/tiendaks/producto/listarProductoGlobal.html.twig', [
             ]);
         }
@@ -47,12 +48,12 @@ class CarritoController extends AbstractController
             $session = $request->getSession();
             if(empty($this->getUser())){           
                 $session->set('pasarcarrito',true);
-                $session->set('comprar',true);
-                $session->set('iniciarsesion',true);
+                
                 $url = $this->generateUrl('app_login');
             }else{
-                $url = $this->generateUrl('app_carrito_mostrar_vista_carrito');
+                $url = $this->generateUrl('app_carrito_mostrar_productos_global');
             }
+            $session->set('comprar',true);
             return new JsonResponse(['url' => $url]);
             
         }

@@ -2,9 +2,10 @@
 
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class FrontendController extends AbstractController
 {
@@ -27,11 +28,10 @@ class FrontendController extends AbstractController
     }
 
     #[Route('/checkout', name: 'app_checkout')]
-    public function checkout(): Response
+    public function checkout(Request $request): Response
     {
         return $this->render('frontend/checkout.html.twig', []);
     }
-
 
     #[Route('/perfil-usuario', name: 'app_frontend_perfil_usuario')]
     public function perfil_usuario(): Response

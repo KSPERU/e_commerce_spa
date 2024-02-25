@@ -15,7 +15,7 @@
                   <!-- Pago con Tarjeta -->
                   <div class="accordion-item">
                     <h2 class="accordion-header">
-                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne" style="background-color: transparent !important; border: none !important; box-shadow: none !important; color:#17172B">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" @click="cambiarMetodoPago('tarjeta')" data-bs-target="#flush-collapseOne" aria-expanded="false" aria-controls="flush-collapseOne" style="background-color: transparent !important; border: none !important; box-shadow: none !important; color:#17172B">
                         <font-awesome-icon icon="credit-card" style="font-size: 200%;"/>
                         <div style="display: flex; flex-direction: column; padding-left: 10px;">
                           <div style="font-size: 16px;">
@@ -27,7 +27,7 @@
                     </h2>
                     <div id="flush-collapseOne" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
                       <div class="accordion-body">  
-                        <form style="font-size: 16px">
+                        <form id="formPagoTarjeta" @submit.prevent="submitForm" style="font-size: 16px">
                           <!-- Fila 1: Nombre y Apellido -->
                           <div class="row mb-3">
                               <div class="col-md-6">
@@ -88,7 +88,7 @@
                   <!-- Pago en Efectivo -->
                   <div class="accordion-item">
                     <h2 class="accordion-header">
-                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo" style="background-color: transparent !important; border: none !important; box-shadow: none !important; color:#17172B">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" @click="cambiarMetodoPago('efectivo')" data-bs-target="#flush-collapseTwo" aria-expanded="false" aria-controls="flush-collapseTwo" style="background-color: transparent !important; border: none !important; box-shadow: none !important; color:#17172B">
                           <font-awesome-icon icon="money-bill" style="font-size: 200%"/>
                           <div style="display: flex; flex-direction: column; padding-left: 10px;">
                               <div style="font-size: 16px;">
@@ -100,7 +100,7 @@
                     </h2>
                       <div id="flush-collapseTwo" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
                         <div class="accordion-body">
-                              <form>
+                              <form id="formPagoEfectivo" @submit.prevent="submitForm">
                                 <!-- Fila 1: Nombre y Apellido -->  
                                 <div class="row mb-3">
                                   <div class="col-md-6">
@@ -146,7 +146,7 @@
                   <!-- Transferencia Bancaria -->
                   <div class="accordion-item">
                     <h2 class="accordion-header">
-                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree" style="background-color: transparent !important; border: none !important; box-shadow: none !important; color:#17172B">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" @click="cambiarMetodoPago('transferencia')" data-bs-target="#flush-collapseThree" aria-expanded="false" aria-controls="flush-collapseThree" style="background-color: transparent !important; border: none !important; box-shadow: none !important; color:#17172B">
                           <font-awesome-icon icon="city" style="font-size: 200%;"/>
                           <div style="display: flex; flex-direction: column; padding-left: 6px;">
                               <div style="font-size: 16px;">
@@ -158,7 +158,7 @@
                     </h2>
                       <div id="flush-collapseThree" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
                         <div class="accordion-body">
-                          <form>
+                          <form id="formPagoTransferencia" @submit.prevent="submitForm">
                             <!-- Fila 1: Nombre y Apellido -->  
                             <div class="row mb-3">
                               <div class="col-md-6">
@@ -209,7 +209,7 @@
                   <!-- Yape/Plin -->
                   <div class="accordion-item">
                     <h2 class="accordion-header">
-                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour" style="background-color: transparent !important; border: none !important; box-shadow: none !important; color:#17172B">
+                      <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" @click="cambiarMetodoPago('yape/plin')" data-bs-target="#flush-collapseFour" aria-expanded="false" aria-controls="flush-collapseFour" style="background-color: transparent !important; border: none !important; box-shadow: none !important; color:#17172B">
                           <font-awesome-icon icon="mobile" style="font-size: 200%; padding-left: 0.5%"/>
                           <div style="display: flex; flex-direction: column; padding-left: 19px;">
                               <div style="font-size: 16px;">
@@ -221,7 +221,7 @@
                     </h2>
                       <div id="flush-collapseFour" class="accordion-collapse collapse" data-bs-parent="#accordionFlushExample">
                           <div class="accordion-body">
-                            <form>
+                            <form id="formPagoYapePlin" @submit.prevent="submitForm">
                               <!-- Fila 1: Nombre y Apellido -->  
                               <div class="row mb-3">
                                 <div class="col-md-6">
@@ -272,16 +272,13 @@
               </div>
             </div>
           </div>
-          <!-- FIN CARRITO -->
-
-          <!-- PRECIO -->
           <div class="col-md-4" style="font-size: 16px;">
             <h4 class="card-title mb-4" style="font-weight: 600;  padding-top:10px">RESUMEN</h4>
             <div class="card shadow-0 border">
               <div class="card-body">
                 <div class="d-flex justify-content-between">
                   <p class="mb-2">Subtotal:</p>
-                  <p class="mb-2">S/. 14 065.00</p>
+                  <p class="mb-2">S/. {{carritocompra.cImportetotal}}</p>
                 </div>
                 <div class="d-flex justify-content-between">
                   <p class="mb-2">Envio:</p>
@@ -290,7 +287,7 @@
                 <hr />
                 <div class="d-flex justify-content-between">
                   <p class="mb-2">Total:</p>
-                  <p class="mb-2 fw-bold">S/. 14 065.00</p>
+                  <p class="mb-2 fw-bold">S/. {{carritocompra.cImportetotal}}</p>
                 </div>
               </div>
             </div>
@@ -305,8 +302,51 @@
       </div>
     </section>
 </template>
-<script>
+<script setup>
+import { ref, computed, onMounted } from "vue";
+import axios from 'axios';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { carritoStore  } from "../components/carritoContenedor" 
+const carrito = carritoStore();
+const metodopago = ref('');
+const cambiarMetodoPago = (metodo) => {
+    metodopago.value = metodo;
+  };
 
-    export default{ components: { FontAwesomeIcon } };
+    const submitForm = () => {
+    const data = {
+      metpago : metodopago.value
+    };
+    if (data.metpago) {
+      //console.log(data.metpago);
+      confirmarCompra(data);
+    } else {
+      console.log('Por favor, complete todos los campos requeridos.');
+    }
+  };
+
+  const confirmarCompra = async (data) => {
+    try {
+    const response = await axios.post('/api/compras/comprar/carrito', data);
+    console.log(response.data);
+
+    if (response.data.url) {
+        const url = response.data.url;
+        window.location.href = url;
+    } else {
+        console.error('Error al realizar la compra:', response.data.message);
+    }
+} catch (error) {
+
+    console.error('Error al realizar la compra', error);
+}
+};
+
+    const carritocompra = computed(() => {
+        return carrito.CARRITOS
+    })
+
+    onMounted(() => {
+        carrito.visualizarCarrito();
+    })
 </script>

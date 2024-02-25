@@ -55,22 +55,27 @@
 <script setup>
     import { onMounted, computed } from "vue";
     import { useComprasContenedor } from '../compras/comprasContenedor';
+    import { useUsuarioContenedor } from '../usuario/usuarioContenedor';
     import { ref } from 'vue';
 
     const currentURL = window.location.href;
-    const segments = currentURL.split("/");
-    const usuario_id = segments[segments.length - 1];
+    // const segments = currentURL.split("/");
+    // const usuario_id = segments[segments.length - 1];
     const comprasContenedor = useComprasContenedor();
-
+    const usuarioContenedor = useUsuarioContenedor();
+    const usuarioid = computed(() =>{
+        return usuarioContenedor.IDUSUARIO
+    })
     const compras = computed(() => {
         return comprasContenedor.COMPRAS
     })
     
-    onMounted(() => {
+    onMounted(async () => {
+        await usuarioContenedor.obtenerIdUsuarioLogueado();
         comprasContenedor.getListarComprasConCriterios({
             "ParamsCompraList": {
-                "usuario_id": usuario_id
+            "usuario_id": usuarioid.value
             }
+        });
         })
-    })
 </script>
