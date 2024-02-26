@@ -34,4 +34,12 @@ class ProductoController extends AbstractController
         $categorias = ($datos !== null) ? $productoFunciones->obtenerProductoListadoCategoriasConOrden($datos) : $productoFunciones->obtenerProductoListadoCategoriasConOrden();
         return $this->json($categorias, Response::HTTP_OK,[]);
     }
+
+    #[Route('/api/productos', name: 'api_productos_add', methods: ['POST'])]
+    public function addProducto(Request $request, ProductoFunciones $productoFunciones): JsonResponse
+    {
+        $data = json_decode($request->getContent(), true);
+        $respuesta = $productoFunciones->añadirproducto($data);
+        return $this->json($respuesta, Response::HTTP_OK,[]);
+    }
 }

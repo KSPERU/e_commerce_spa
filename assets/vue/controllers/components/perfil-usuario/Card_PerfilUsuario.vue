@@ -7,26 +7,43 @@
         <div class="px-2 px-sm-3 px-md-4 px-lg-1 px-xl-3 px-xxl-5">
             <div class="my-0 my-lg-2 ">
                 <h6 class="text-start text-md-center size-22">
-                    Roberto Manuel 
-                    Perez Alcantara
+                    {{ usuario.u_nombres }}
+                    {{ usuario.u_apepat }} {{ usuario.u_apemat }}
                 </h6>
             </div>
             <div class="text-start">
                 <div class="m-0 text-truncate email-phone-width-truncate d-flex align-items-center my-1">
                     <font-awesome-icon icon="envelope" />
-                    <span class="mx-2 size-14 ">roberto.perez@gmail.com</span>
+                    <span class="mx-2 size-14 ">{{ usuario.u_correo }}</span>
                 </div>
                 <div class="m-0 text-truncate email-phone-width-truncate d-flex align-items-center my-1">
                     <font-awesome-icon icon="square-phone" />
-                    <span class="mx-2 size-14 ">+51 999 888 777</span>
+                    <span class="mx-2 size-14 ">{{ usuario.u_telefono }}</span>
                 </div>
             </div>
         </div>
     </div>
 </template>
 
-<script>
-export default {};
+<script setup>
+    import { ref, onMounted } from 'vue'
+    import axios from 'axios'
+    const usuario = ref({})
+    onMounted(() => {
+        const currentURL = window.location.href
+        const segments = currentURL.split("/")
+        const idusuario = parseInt(segments[segments.length - 1])
+        obtenerPerfilUsuario(idusuario)
+    })
+    async function obtenerPerfilUsuario(idusuario) {
+        try {
+            console.log(idusuario)
+            const response = await axios.post('/api/carrito/listar/usuario', { id_usuario: idusuario })
+            usuario.value = response.data[0]
+        } catch (error) {
+            console.log(error)
+        }
+    }
 </script>
 
 <style scoped>

@@ -2,17 +2,27 @@
 
 namespace App\Funciones\tiendaks\producto;
 
-use App\Entity\Producto\producto;
-use App\Repository\Producto\productoRepository;
-use App\Funciones\tiendaks\producto\ProductoTestFunciones;
-use App\Repository\Usuario\usuarioRepository;
 use Exception;
+use App\Entity\Producto\producto;
+use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\Usuario\usuarioRepository;
+use App\Repository\Producto\productoRepository;
+use App\Funciones\tiendaks\usuario\UsuarioFunciones;
+use App\Funciones\tiendaks\producto\ProductoTestFunciones;
 
 class ProductoFunciones 
 {
     private $productoRepository;
     private $productoTestFunciones;
     private $usuarioRepository;
+    private $entityManager;
+    private $usuario;
+
+    public function __construct(EntityManagerInterface $entityManager, UsuarioFunciones $usuarioFunciones)
+    {
+        $this->entityManager = $entityManager;
+        $this->usuario = $usuarioFunciones->obtenerUsuario();
+    }
 
     public function setProductoRepository(productoRepository $productoRepository){
         $this->productoRepository = $productoRepository;
@@ -402,5 +412,23 @@ class ProductoFunciones
            //No hecer nada
         }
         return $extracto;
+    }
+
+    public function añadirproducto(array $data){
+        try {
+            $usuario = $this->usuario;
+            $producto = new producto();
+            $producto->setPrNombre($data['pr_nombre']);
+            $producto->setPrCategoria($data['pr_categoria']);
+            $producto->setPrStock($data['pr_stock']);
+            $producto->setPrPrecio($data['pr_precio']);
+            $producto->setPrDescripcion($data['pr_descripcion']);
+            $producto->setUsuario($usuario);
+            $this->entityManager->persist($producto);
+            $this->entityManager->flush();
+            return ['success' => true, 'producto' => $producto];
+        } catch (Exception $e) {
+            return ['success' => false, 'error' => $e->getMessage()];
+        }
     }
 }

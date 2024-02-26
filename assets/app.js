@@ -8,9 +8,9 @@ import { createPinia } from "pinia";
 
 //import App2 from "./vue/controllers/App2";
 
-import Appcarrito from "./vue/controllers/carrito"; 
+//import Appcarrito from "./vue/controllers/carrito"; 
 
-import Approducto from "./vue/controllers/producto"; 
+//import Approducto from "./vue/controllers/producto"; 
 // import App from "./vue/controllers/App"; //Componente Principal en donde estarán todos los hijos.
 // import App2 from "./vue/controllers/en_desuso/App2";
 // import App3 from "./vue/controllers/en_desuso/App3";
@@ -54,13 +54,13 @@ library.add(faCartShopping, faAngleDown, faAngleUp, faTrash, faEnvelope, faPhone
 const pinia = createPinia();
 
 //const app2 = createApp(App2); 
-const appcarrito = createApp(Appcarrito); 
-const approducto = createApp(Approducto); 
+//const appcarrito = createApp(Appcarrito); 
+//const approducto = createApp(Approducto); 
 
-const app = createApp(App);
-const app2 = createApp(App2); //Ver componentes de Listar productos
-const app3 = createApp(App3); 
-const app4 = createApp(App4); 
+//const app = createApp(App);
+// const app2 = createApp(App2); //Ver componentes de Listar productos
+// const app3 = createApp(App3); 
+// const app4 = createApp(App4); 
 
 const popup_carrito = createApp(PopupCarrito); 
 
@@ -79,8 +79,8 @@ const card_component = createApp(Card_Component);
 const head_productos_venta = createApp(Head_ProductosVenta);
 const card_filtros_avanzados = createApp(Card_FiltrosAvanzados)
 
-appcarrito.use(pinia);
-appcarrito.mount('#appcarrito');
+//appcarrito.use(pinia);
+//sappcarrito.mount('#appcarrito');
 
 // import Appcarritoglobal from "./vue/controllers/store/backend/tiendaks/carrito/mostrarVistaCarrito"; 
 
@@ -103,8 +103,8 @@ import './vue/controllers/store/backend/tiendaks/producto/producto_por_categoria
 import './vue/controllers/store/backend/tiendaks/producto/ver_producto/verProductoApp.js';
 
 
-app4.use(pinia);
-app4.mount('#app4');
+// app4.use(pinia);
+// app4.mount('#app4');
 
 popup_carrito.use(pinia);
 popup_carrito.component('font-awesome-icon', FontAwesomeIcon);
