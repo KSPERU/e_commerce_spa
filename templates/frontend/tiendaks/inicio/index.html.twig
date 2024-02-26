@@ -3,9 +3,9 @@
 {% block title %}Inicio - TiendaKS!{% endblock %}
 
 {% block css %}
-  {# <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" /> #}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
   <link rel="stylesheet" href="{{ asset('css/tiendaks/inicio/componentes/slider/slider.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/tiendaks/inicio/inicio.css') }}">
+  <link rel="stylesheet" href="{{ asset('css/tiendaks/inicio/inicio.css') }}">
 {% endblock %}
 
 {% block body %}
@@ -148,4 +148,11 @@
             }
         }
     }) }}
+
+    <div class="container mt-4">
+        <div class="d-flex justify-content-start align-items-baseline mb-4">
+            <span class="fs-4 fw-semibold me-2">Categorias Populares</span>
+        </div>
+        <div id="inicio_ver_categoria_listado_populares"></div>
+    </div>
 {% endblock %}

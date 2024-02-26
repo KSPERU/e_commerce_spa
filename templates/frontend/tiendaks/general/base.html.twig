@@ -94,6 +94,81 @@
       },
     }) }}
     {% block body %}{% endblock %}
+    {{ component('General:FooterComponent', {
+      contenido: {
+        'redes': {
+          'github': {
+            'enlace': '#'
+          },
+          'instagram': {
+            'enlace': '#'
+          },
+          'google': {
+            'enlace': '#'
+          },
+          'facebook': {
+            'enlace': '#'
+          },
+          'twitter': {
+            'enlace': '#'
+          }
+        },
+        'categorias': {
+          'valores': configuracionEntorno.categorias,
+          'especificiones': {
+            'listable': false,
+            'atributo': 'ct_nombre'
+          }
+        },
+        'contacto': {
+          'direccion': {
+            'valor': 'Av. La molina 32-A ,Perú'
+          },
+          'correo': {
+            'valor': 'info@ksperu.com'
+          },
+          'telefono': {
+            'valor': '936543645'
+          }
+        }, 
+        'vinculos': {
+          'vinculo_1': {
+            'nombre':  'Ofertas',
+            'enlace': {
+              'tipo': 'url',
+              'valor': '#'
+            }
+          },
+          'vinculo_2': {
+            'nombre':  'Productos',
+            'enlace': {
+              'tipo': 'url',
+              'valor': '#'
+            }
+          },
+          'vinculo_3': {
+            'nombre':  'Métodos de Pago',
+            'enlace': {
+              'tipo': 'url',
+              'valor': '#'
+            }
+          },
+          'vinculo_4': {
+            'nombre':  'Ayuda',
+            'enlace': {
+              'tipo': 'url',
+              'valor': '#'
+            }
+          }
+        },
+        'comunidad': {
+            'enlace': {
+                'nombre': 'ksperu.com',
+                'valor': 'https://www.ksperu.com/inicio'
+            }
+        }
+      }
+    }) }}
     {% block js %}{% endblock %}
   </body>
 </html>
