@@ -1,0 +1,46 @@
+<div {{ attributes }}>
+    {{ form_start(form, {
+        attr: {
+            'data-action': 'live#action',
+            'data-action-name': 'prevent|guardar'
+        }
+    }) }}
+        <h1 class="modal-title fs-5 fw-semibold size-22 text-center mt-3 mb-2" id="exampleModalLabel">¡Bienvenido a TIENDA KS!</h1>
+        <p class="fw-semibold size-16 pt-2 px-3">Completa el siguiente formulario:</p>
+        <div class="mb-3 px-3">
+            <label for="{{ form.u_correo.vars.id }}" class="form-label size-16">Correo</label>
+            {{ form_widget(form.u_correo, {attr: {class: 'form-control size-16'}}) }} 
+        </div>
+        <div class="mb-3 px-3">
+            <label for="{{ form.plainPassword.vars.id }}" class="form-label size-16">Contraseña</label>
+            {{ form_widget(form.plainPassword, {attr: {class: 'form-control size-16'}}) }} 
+        </div>
+        <div class="mb-3 px-3">
+            <label for="{{ form.u_nombres.vars.id }}" class="form-label size-16">Nombres</label>
+            {{ form_widget(form.u_nombres, {attr: {class: 'form-control size-16'}}) }} 
+        </div>
+        <div class="mb-3 px-3">
+            <label for="{{ form.u_apepat.vars.id }}" class="form-label size-16">Apellido Paterno</label>
+            {{ form_widget(form.u_apepat, {attr: {class: 'form-control size-16'}}) }} 
+        </div>
+        <div class="mb-3 px-3">
+            <label for="{{ form.u_apemat.vars.id }}" class="form-label size-16">Apellido Materno</label>
+            {{ form_widget(form.u_apemat, {attr: {class: 'form-control size-16'}}) }} 
+        </div>
+        <div class="mb-3 px-3">
+            <label for="{{ form.u_dni.vars.id }}" class="form-label size-16">DNI</label>
+            {{ form_widget(form.u_dni, {attr: {class: 'form-control size-16'}}) }} 
+        </div>
+        <div class="mb-3 px-3">
+            <label for="{{ form.u_telefono.vars.id }}" class="form-label size-16">Telefono</label>
+            {{ form_widget(form.u_telefono, {attr: {class: 'form-control size-16'}}) }} 
+        </div>
+        <div class="mb-3 px-3">
+            {{ form_widget(form.agreeTerms, {attr: {class: 'form-check-input' }}) }}
+            <label class="form-check-label size-14" for="{{ form.agreeTerms.vars.id }}">Acepto los <a href="#">términos y condiciones</a></label>
+        </div>
+        <div class="px-3 py-2">
+            <button type="submit" class="btn btn-ingresar w-100">Registrarse</button>
+        </div>
+    {{ form_end(form) }}
+</div>

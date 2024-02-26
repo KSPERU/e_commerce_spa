@@ -1,0 +1,151 @@
+{% extends 'frontend/tiendaks/general/base.html.twig' %}
+
+{% block title %}Inicio - TiendaKS!{% endblock %}
+
+{% block css %}
+  {# <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" /> #}
+  <link rel="stylesheet" href="{{ asset('css/tiendaks/inicio/componentes/slider/slider.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/tiendaks/inicio/inicio.css') }}">
+{% endblock %}
+
+{% block body %}
+    {# Variables #}
+    {% set enlace_productos = '#' %}
+    {% set enlace_ofertas = '#' %}
+
+    {{ component('Inicio:SliderComponent', {
+        'imagenes': {
+            'imagen_1': {
+                'nombre': 'slider-1',
+                'ruta': 'img/tiendaks/producto/slider1.png',
+                'activa': true
+            },
+            'imagen_2': {
+                'nombre': 'slider-2',
+                'ruta': 'img/tiendaks/producto/slider2.png',
+                'activa': false
+            },
+            'imagen_3': {
+                'nombre': 'slider-3',
+                'ruta': 'img/tiendaks/producto/slider3.png',
+                'activa': false
+            },
+            'imagen_4': {
+                'nombre': 'slider-4',
+                'ruta': 'img/tiendaks/producto/slider4.png',
+                'activa': false
+            }
+        }
+    }) }}
+    <div class="container mt-4">
+        <div class="d-flex justify-content-start align-items-baseline mb-4">
+        <span class="fs-4 fw-semibold me-2">Productos</span>
+        <span><a href="{{ enlace_productos }}" class="fs-6 fw-semibold">Ver mas</a></span>
+        </div>
+        <div id="inicio_ver_producto_listado"></div>
+    </div>
+
+    <div class="container mt-4">
+        <div class="d-flex justify-content-start align-items-baseline mb-4">
+            <span class="fs-4 fw-semibold me-2">Ofertas</span>
+            <span><a href="{{ enlace_ofertas }}" class="fs-6 fw-semibold">Ver todas las Ofertas</a></span>
+        </div>
+        <div id="inicio_ver_producto_listado_ofertados"></div>
+    </div>
+
+    {{ component('Inicio:ConsigueloAquiComponent', {
+        'contenido': {
+            'bloque_1': {
+                'imagen': 'img/tiendaks/producto/baños.jpg',
+                'titulo': 'Mejora tu espacio , mejora tu bienestar',
+                'enlace': {
+                    'tipo': 'url',
+                    'valor': '#'
+                }
+            },
+            'bloque_2': {
+                'imagen': 'img/tiendaks/producto/cocina.jpg',
+                'titulo': 'Cocina con facilidad y estilo',
+                'enlace': {
+                    'tipo': 'url',
+                    'valor': '#'
+                }
+            },
+            'bloque_3': {
+                'imagen': 'img/tiendaks/producto/electrodomesticos.jpg',
+                'titulo': 'Disfruta mas de tu hogar',
+                'enlace': {
+                    'tipo': 'url',
+                    'valor': '#'
+                }
+            },
+            'bloque_4': {
+                'imagen': 'img/tiendaks/producto/ropadeportivamujer.jpg',
+                'titulo': 'Siéntete cómoda y segura',
+                'enlace': {
+                    'tipo': 'url',
+                    'valor': '#'
+                }
+            },
+            'bloque_5': {
+                'imagen': 'img/tiendaks/producto/zapatoscalle.jpg',
+                'titulo': 'Luce elegante y siéntete bien',
+                'enlace': {
+                    'tipo': 'url',
+                    'valor': '#'
+                }
+            }
+        }
+    }) }}
+
+    <div class="container mt-4">    
+        <div class="col">
+            <a><button type="button" class="button-login-index btn fw-semibold size-22 text-white col-12 border border-0" data-bs-toggle="modal" data-bs-target="#exampleModal"><p class="p-0 m-0">Ingresa con tu Cuenta para recibir mejores recomendaciones</p></button></a>
+        </div>
+    </div>
+
+    {{ component('Inicio:MejoresMarcasComponent', {
+        'contenido': {
+            'marca_1': {
+                'logo': 'img/tiendaks/producto/marcahuawei.jpeg',
+                'nombre': 'Huawei',
+                'descripcion': 'llevar lo digital a cada persona, hogar y organización para un mundo completamente conectado llevar lo digital a cada persona, hogar y organización para un mundo completamente conectado',
+                'imagenes': ['img/tiendaks/producto/meme.jpg', 'img/tiendaks/producto/meme.jpg', 'img/tiendaks/producto/meme.jpg'],
+                'enlace': {
+                    'tipo': 'url',
+                    'valor': '#'
+                }
+            },
+            'marca_2': {
+                'logo': 'img/tiendaks/producto/SamsungLogo.jpg',
+                'nombre': 'Samsung',
+                'descripcion': 'llevar lo digital a cada persona, hogar y organización para un mundo completamente conectado llevar lo digital a cada persona, hogar y organización para un mundo completamente conectado',
+                'imagenes': ['img/tiendaks/producto/meme.jpg', 'img/tiendaks/producto/meme.jpg', 'img/tiendaks/producto/meme.jpg'],
+                'enlace': {
+                    'tipo': 'url',
+                    'valor': '#'
+                }
+            },
+            'marca_3': {
+                'logo': 'img/tiendaks/producto/LGLogo.jpg',
+                'nombre': 'LG Corporation',
+                'descripcion': 'Queremos conservar nuestra reputación, obtenida a base de esfuerzo, como Queremos conservar nuestra reputación, obtenida a base de esfuerzo, como',
+                'imagenes': ['img/tiendaks/producto/meme.jpg', 'img/tiendaks/producto/meme.jpg', 'img/tiendaks/producto/meme.jpg'],
+                'enlace': {
+                    'tipo': 'url',
+                    'valor': '#'
+                }
+            },
+            'marca_4': {
+                'logo': 'img/tiendaks/producto/BalayLogo.jpg',
+                'nombre': 'Balay',
+                'descripcion': 'Ser uno de los principales fabricantes de electrodomésticos del mundo, que ser uno de los principales fabricantes de electrodomésticos del mundo, que',
+                'imagenes': ['img/tiendaks/producto/meme.jpg', 'img/tiendaks/producto/meme.jpg', 'img/tiendaks/producto/meme.jpg'],
+                'enlace': {
+                    'tipo': 'url',
+                    'valor': '#'
+                }
+            }
+        }
+    }) }}
+{% endblock %}

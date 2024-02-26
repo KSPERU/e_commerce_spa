@@ -1,55 +1,39 @@
-import { registerVueControllerComponents } from '@symfony/ux-vue';
 import './styles/app.scss';
 import './bootstrap.js';
 import './bootstrap';
 
+import { registerVueControllerComponents } from '@symfony/ux-vue';
 import { createApp } from "vue";
 import { createPinia } from "pinia";
+import { library } from '@fortawesome/fontawesome-svg-core';
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import { faCartShopping, faAngleDown, faAngleUp, faTrash, faEnvelope, faPhoneSquare, faAngleRight, faFilter, faMobileScreen,faTv,faHeadphones,faKeyboard,faTabletAlt,faLaptop,faMoneyBillWave,faStar,faEye ,faCreditCard, faCity, faMobile, faMoneyBill} from '@fortawesome/free-solid-svg-icons';
 
-//import App2 from "./vue/controllers/App2";
-
-import Appcarrito from "./vue/controllers/store/backend/tiendaks/carrito/carritoApp"; 
-
-import Approducto from "./vue/controllers/store/backend/tiendaks/carrito/listarProductoPrueba"; 
-// import App from "./vue/controllers/App"; //Componente Principal en donde estarán todos los hijos.
-// import App2 from "./vue/controllers/en_desuso/App2";
-// import App3 from "./vue/controllers/en_desuso/App3";
-
-
-// import App from "./vue/controllers/App"; //Componente Principal en donde estarán todos los hijos.
-// import App2 from "./vue/controllers/App2";
-// import App3 from "./vue/controllers/App3";
-// import App4 from "./vue/controllers/App4";
-// import App2 from "./vue/controllers/App2"; //Ver componente de Listar productos
-// import App3 from "./vue/controllers/carrito"; //Ver componente de Listar productos
-// import app from "./vue/controllers/App";
 import PopupCarrito from "./vue/controllers/components/popup-carrito/Btn_PopupCarrito";
 import carrito_vacio from "./vue/controllers/components/carrito_vacio";
 import carrito from "./vue/controllers/components/CarritoApp";
 import checkout from "./vue/controllers/components/checkout.vue"
-
-
-// Grupo Index - Usuario
 import Tarjetas_VistaGeneral from "./vue/controllers/components/index-usuario/Tarjetas_VistaGeneral";
 import Tarjetas_Ofertas from "./vue/controllers/components/index-usuario/Tarjetas_Ofertas";
 import Categorias_Populares from "./vue/controllers/components/index-usuario/Categorias_Populares";
- /// Fin
-
-// Agrupar si es necesario:
 import Card_PerfilUsuario from "./vue/controllers/components/perfil-usuario/Card_PerfilUsuario";
 import Btns_Config from "./vue/controllers/components/perfil-usuario/Btns_Config";
-// Fin
-
 import Card_Component from "./vue/controllers/components/Card_Component";
 import Head_ProductosVenta from "./vue/controllers/components/perfil-usuario/Head_ProductosVenta";
 import Card_FiltrosAvanzados from "./vue/controllers/components/perfil-usuario/Card_FiltrosAvanzados";
+import productoApp from "./vue/controllers/store/backend/tiendaks/producto/productoApp";
+import comprasApp from "./vue/controllers/store/backend/tiendaks/compras/comprasApp";
+import './vue/controllers/store/backend/tiendaks/producto/inicio/inicioApp.js';
+import './vue/controllers/store/backend/tiendaks/producto/producto_por_categoria/productoPorCategoriaApp.js';
+import './vue/controllers/store/backend/tiendaks/producto/ver_producto/verProductoApp.js';
+import './vue/controllers/store/backend/tiendaks/general/generalApp.js';
+import './vue/controllers/store/backend/tiendaks/inicio/inicioApp.js';
 
-import { library } from '@fortawesome/fontawesome-svg-core';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+const $ = require('jquery');
+require('bootstrap');
 
-import { faCartShopping, faAngleDown, faAngleUp, faTrash, faEnvelope, faPhoneSquare, faAngleRight, faFilter, faMobileScreen,faTv,faHeadphones,faKeyboard,faTabletAlt,faLaptop,faMoneyBillWave,faStar,faEye ,faCreditCard, faCity, faMobile, faMoneyBill} from '@fortawesome/free-solid-svg-icons';
+registerVueControllerComponents(require.context('./vue/controllers', true, /\.vue$/));
 library.add(faCartShopping, faAngleDown, faAngleUp, faTrash, faEnvelope, faPhoneSquare, faAngleRight, faFilter,faMobileScreen,faTv,faHeadphones,faKeyboard,faTabletAlt,faLaptop,faMoneyBillWave,faStar,faEye,faCreditCard, faCity, faMobile, faMoneyBill);
-
 
 const pinia = createPinia();
 
@@ -63,20 +47,22 @@ const approducto = createApp(Approducto);
 // const app4 = createApp(App4); 
 
 const popup_carrito = createApp(PopupCarrito); 
-
 const TarjetasProductos = createApp(Tarjetas_VistaGeneral);
 const TarjetasOfertas = createApp(Tarjetas_Ofertas);
 const CategoriasPopulares = createApp(Categorias_Populares);  
-
 const Carrito_vacio = createApp(carrito_vacio);
 const Carrito = createApp(carrito);
-const Checkout = createApp(checkout)
-
+const Checkout = createApp(checkout);
 const card_perfil_usuario = createApp(Card_PerfilUsuario);
 const btns_config_perfil_usuario = createApp(Btns_Config);
-
 const card_component = createApp(Card_Component);
 const head_productos_venta = createApp(Head_ProductosVenta);
+const card_filtros_avanzados = createApp(Card_FiltrosAvanzados);
+const producto_app = createApp(productoApp);
+const compras_app = createApp(comprasApp);
+
+producto_app.use(pinia);
+producto_app.mount('#producto_app');
 const card_filtros_avanzados = createApp(Card_FiltrosAvanzados)
 
 appcarrito.use(pinia);
@@ -95,18 +81,8 @@ approducto.mount('#approducto');
 // producto_app.use(pinia);
 // producto_app.mount('#producto_app');
 
-import comprasApp from "./vue/controllers/store/backend/tiendaks/compras/comprasApp";
-const compras_app = createApp(comprasApp);
 compras_app.use(pinia);
 compras_app.mount('#compras_app');
-
-import './vue/controllers/store/backend/tiendaks/producto/inicio/inicioApp.js';
-import './vue/controllers/store/backend/tiendaks/producto/producto_por_categoria/productoPorCategoriaApp.js';
-import './vue/controllers/store/backend/tiendaks/producto/ver_producto/verProductoApp.js';
-
-
-// app4.use(pinia);
-// app4.mount('#app4');
 
 popup_carrito.use(pinia);
 popup_carrito.component('font-awesome-icon', FontAwesomeIcon);
@@ -154,11 +130,3 @@ card_filtros_avanzados.use(pinia);
 card_filtros_avanzados.component('font-awesome-icon', FontAwesomeIcon);
 card_filtros_avanzados.mount('#card_filtros_avanzados')
 
-const $ = require('jquery');
-require('bootstrap');
-
-$(document).ready(function() {
-    $('[data-toggle="popover"]').popover();
-});
-
-registerVueControllerComponents(require.context('./vue/controllers', true, /\.vue$/));

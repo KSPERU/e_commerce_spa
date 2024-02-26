@@ -4,25 +4,18 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>
-      {% block title %}
-        Welcome!
-      {% endblock %}
-    </title>
+    <title>{% block title %}Bienvenidos - TiendaKS!{% endblock %}</title>
     <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text></svg>" />
 
     {% block stylesheets %}
       {{ encore_entry_link_tags('app') }}
-
-    {% endblock %}
-
-    {% block css %}
-
     {% endblock %}
 
     {% block javascripts %}
       {{ encore_entry_script_tags('app') }}
     {% endblock %}
+
+    {% block css %}{% endblock %}
   </head>
   <body>
     {% block body %}
@@ -45,7 +38,6 @@
         .form-width{
           width: 580px;
         }
-
         .line-height-48{
           line-height: 48px;
         }
@@ -54,25 +46,23 @@
         }
 
         #ingresar {
-            background-color: white !important;
-            width: 124px;
-            color: black;
+          background-color: white !important;
+          width: 124px;
+          color: black;
         }
         #ingresar:hover {
-            background-color: #ebebeb !important;
+          background-color: #ebebeb !important;
         }
-
         #registrar {
-            background-color: var(--color-azul-oscuro) !important;
-            color: white;
-            width: 124px;
-            border: 1px solid white;
+          background-color: var(--color-azul-oscuro) !important;
+          color: white;
+          width: 124px;
+          border: 1px solid white;
         }
         #registrar:hover {
-            background-color: #ebebeb !important;
-            color: black;    
+          background-color: #ebebeb !important;
+          color: black;    
         }
-
         #ingresar-mobile, #registrar-mobile, #btn-toggler-mobile, #btn-toggler{
           transition: transform 0.2s ease-in-out;
         }
@@ -83,13 +73,10 @@
         #ingresar-mobile:hover,#registrar-mobile:hover{
           color: var(--color-azul-oscuro);
         }
-
         .btn-ingresar, .btn-ingresar:focus, .btn-ingresar:hover{
           background-color: var(--color-azul-oscuro) !important; 
           color: white !important;
         }
-
-
         @media (max-width: 767.98px) {
           /* .form-width{
             width: auto !important;
@@ -100,28 +87,26 @@
             width: 360px;
           }
         }
-
         @media (max-width: 1190.00px) { 
           .form-width{
             width: 385px;
           }
         }
-
         @media (max-width: 991.98px) { 
           .menu-bg{
-            height: 64px;
+              height: 64px;
           }
           .submenu-bg{
-            height: 38px;
+              height: 38px;
           }
 
           .line-height-48{
-          line-height: 38px;
-        }
+            line-height: 38px;
+          }
         }
       </style>
 
-      {% set logged = false %}
+      {% set logged = true %}
 
       {# Aqui irá el navbar #}
       <div class="menu-container text-white">
