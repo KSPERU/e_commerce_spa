@@ -28,5 +28,5 @@ class LoginController extends AbstractController
     public function logout(): void
     {
         throw new \LogicException('Este método puede ser invisible, ¡será interceptado por la llave de cierre en tu firewall como un ninja de la ciberseguridad!');
-    }
+    } 
 }

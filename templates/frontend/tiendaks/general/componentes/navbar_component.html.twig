@@ -1,0 +1,216 @@
+<div class="menu-container text-white">
+  <div class="menu-bg d-flex justify-content-between align-items-center px-3 px-md-5">
+    <figure class="m-0">
+      <img src="{{ asset('img/tiendaks/logo.png') }}" alt="logo" class="w-100 h-100 d-none d-sm-block" style="max-height: 52px;"/>
+      <img src="{{ asset('img/tiendaks/logo-mobile.png') }}" alt="logo" class="w-100 h-100 d-block d-sm-none pe-2" style="max-height: 52px;"/>
+    </figure>
+    {# <h1 class="m-0 size-22">LOGO</h1> #}
+    <form class="d-flex form-width" role="search">
+      <input class="form-control me-2 size-16" type="search" placeholder="Buscar" aria-label="Search">
+      <button class="btn btn-outline-light size-16" type="submit">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </button>
+    </form>
+    {% if usuario.logged == true %}
+      <div class="d-none d-lg-block">
+        <div class="d-flex justify-content-center align-items-center">
+          <div class="">
+            <i class="fa-solid fa-user me-3" style="font-size: 28px"></i> 
+          </div>
+          <div class="d-block" style="line-height: 14px;">
+            <h5 class="size-16 m-0">{{ usuario.valor.unombres }} {{ usuario.valor.uapepat }} {{ usuario.valor.uapemat }}</h5>
+            <span class="size-12 m-0">{{ usuario.valor.ucorreo }}</span>
+          </div>
+        </div>
+      </div>
+    {% else %}
+      <div class="d-none d-lg-block">
+        <button type="button" class="btn mx-1 fw-semibold" id="ingresar" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          <i class="fa-solid fa-user me-1"></i> 
+          Ingresar
+        </button>
+        <button type="button" class="btn mx-1 fw-semibold" id="registrar" data-bs-toggle="modal" data-bs-target="#modalRegistrar">
+          <i class="fa-solid fa-user-pen me-1"></i>
+          Registrar
+        </button>
+      </div>
+    {% endif %}
+  </div>
+
+  <div class="submenu-bg d-flex justify-content-between align-items-center px-3 px-md-5 d-none d-lg-block">
+    <ul class="list-inline m-0 line-height-48 overflow-hidden d-flex justify-content-start d-xxl-flex justify-content-xxl-center">
+      {% if subnavbar.frente is defined %}
+        {% set enlace_frente = '#' %}
+        {% if subnavbar.frente.enlace.tipo == 'ruta' %}
+            {% set enlace_frente = path(subnavbar.frente.enlace.valor) %} 
+        {% elseif subnavbar.frente.enlace.tipo == 'url' %}
+            {% set enlace_frente = subnavbar.frente.enlace.valor %}
+        {% endif %}
+        <li class="list-inline-item me-3"><a href="{{ enlace_frente }}" class="text-decoration-none fw-semibold d-inline" style="white-space: nowrap;">{{ subnavbar.frente.nombre }}</a></li>
+      {% endif %}
+      {% for elemento in subnavbar.contenido.valores %}
+        {% if subnavbar.contenido.especificiones.listable == false %}
+            {% set llave = subnavbar.contenido.especificiones.atributo %}
+        {% endif %}
+        <li class="list-inline-item mx-3"><a href="#" class="text-decoration-none fw-semibold d-inline" style="white-space: nowrap;">
+            {{ elemento is iterable ? attribute(elemento, llave|default(''))|capitalize : elemento|capitalize }}
+        </a></li>
+      {% endfor %}
+      {% if subnavbar.auxiliar is defined %}
+        {% set enlace_auxiliar = '#' %}
+        {% if subnavbar.auxiliar.enlace.tipo == 'ruta' %}
+            {% set enlace_auxiliar = path(subnavbar.auxiliar.enlace.valor) %}
+        {% elseif subnavbar.auxiliar.enlace.tipo == 'url' %}
+            {% set enlace_auxiliar = subnavbar.auxiliar.enlace.valor %}
+        {% endif %}
+        <li class="list-inline-item mx-3"><a href="{{ enlace_auxiliar }}" class="text-decoration-none fw-semibold d-inline" style="white-space: nowrap;">{{ subnavbar.auxiliar.nombre }}</a></li>
+      {% endif %}
+      {% if subnavbar.final is defined %}
+        {% set enlace_final = '#' %}
+        {% if subnavbar.final.enlace.tipo == 'ruta' %}
+            {% set enlace_final = path(subnavbar.final.enlace.valor) %}
+        {% elseif subnavbar.final.enlace.tipo == 'url' %}
+            {% set enlace_final = subnavbar.final.enlace.valor %}
+        {% endif %}
+        <li class="list-inline-item ms-3"><a href="{{ enlace_final }}" class="text-decoration-none fw-semibold">{{ subnavbar.final.nombre }}</a></li>     
+      {% endif %}
+    </ul>
+  </div>
+
+  {% if usuario.logged == true %}
+  <nav class="navbar navbar-expand-lg bg-light d-block d-lg-none" style="background-color: white !important;">
+    <div class="container-fluid d-flex justify-content-between px-3">
+      <h6 class="m-0 size-16" style="color:black;">Bienvenido, <span class="fw-bold">{{ usuario.valor.unombres }} {{ usuario.valor.uapepat }} {{ usuario.valor.uapemat }}</span></h6>
+      <button style="font-size:10px;" class="navbar-toggler p-1 shadow-none" id="btn-toggler"type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon" ></span>
+      </button>
+      <div class="collapse navbar-collapse mt-2" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          {% if subnavbar.resposive.frente is defined %}
+            {% set enlace_resposive_frente = '#' %}
+            {% if subnavbar.resposive.frente.enlace.tipo == 'ruta' %}
+                {% set enlace_resposive_frente = path(subnavbar.resposive.frente.enlace.valor) %} 
+            {% elseif subnavbar.resposive.frente.enlace.tipo == 'url' %}
+                {% set enlace_resposive_frente = subnavbar.resposive.frente.enlace.valor %}
+            {% endif %}
+            <li class="nav-item px-3 size-16"><a class="nav-link active" aria-current="page" href="{{ enlace_resposive_frente }}"><i class="fa-solid fa-house me-2"></i>{{ subnavbar.resposive.frente.nombre }}</a></li>
+          {% endif %}
+          {% if subnavbar.resposive.sucundario is defined %}
+            {% set enlace_resposive_sucundario = '#' %}
+            {% if subnavbar.resposive.sucundario.enlace.tipo == 'ruta' %}
+                {% set enlace_resposive_sucundario = path(subnavbar.resposive.sucundario.enlace.valor) %} 
+            {% elseif subnavbar.resposive.sucundario.enlace.tipo == 'url' %}
+                {% set enlace_resposive_sucundario = subnavbar.resposive.sucundario.enlace.valor %}
+            {% endif %}
+            <li class="nav-item px-3 size-16"><a class="nav-link" href="{{ enlace_resposive_sucundario }}"><i class="fa-solid fa-circle-user me-2"></i>{{ subnavbar.resposive.sucundario.nombre }}</a></li>
+          {% endif %}
+          {% if subnavbar.resposive.contenido is defined %}
+            {% set enlace_resposive_contenido = '#' %}
+            {% if subnavbar.resposive.contenido.enlace.tipo == 'ruta' %}
+                {% set enlace_resposive_contenido = path(subnavbar.resposive.contenido.enlace.valor) %}
+            {% elseif subnavbar.resposive.contenido.enlace.tipo == 'url' %}
+                {% set enlace_resposive_contenido = subnavbar.resposive.contenido.enlace.valor %}
+            {% endif %}  
+            <li class="nav-item px-3 size-16"><a class="nav-link" href="{{ enlace_resposive_contenido }}"><i class="fa-solid fa-list me-2"></i>{{ subnavbar.resposive.contenido.nombre }}</a></li>
+          {% endif %}
+          {% if subnavbar.resposive.auxiliar is defined %}
+            {% set enlace_resposive_auxiliar = '#' %}
+            {% if subnavbar.resposive.auxiliar.enlace.tipo == 'ruta' %}
+                {% set enlace_resposive_auxiliar = path(subnavbar.resposive.auxiliar.enlace.valor) %}
+            {% elseif subnavbar.resposive.auxiliar.enlace.tipo == 'url' %}
+                {% set enlace_resposive_auxiliar = subnavbar.resposive.auxiliar.enlace.valor %}
+            {% endif %}  
+            <li class="nav-item px-3 size-16"><a class="nav-link" href="{{ enlace_resposive_auxiliar }}"><i class="fa-solid fa-box-open me-2"></i>{{ subnavbar.resposive.auxiliar.nombre }}</a></li>
+          {% endif %}
+          {% if subnavbar.resposive.final is defined %}
+            {% set enlace_resposive_final = '#' %}
+            {% if subnavbar.resposive.final.enlace.tipo == 'ruta' %}
+                {% set enlace_resposive_final = path(subnavbar.resposive.final.enlace.valor) %}
+            {% elseif subnavbar.resposive.final.enlace.tipo == 'url' %}
+                {% set enlace_resposive_final = subnavbar.resposive.final.enlace.valor %}
+            {% endif %}
+            <li class="nav-item px-3 size-16"><a class="nav-link" href="{{ enlace_resposive_final }}"><i class="fa-solid fa-ticket me-2"></i>{{ subnavbar.resposive.final.nombre }}</a></li>     
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+  {% else %}
+  <nav class="navbar navbar-expand-lg bg-light d-block d-lg-none" style="background-color: white !important;">
+    <div class="container-fluid d-flex justify-content-between px-3 px-md-5">
+      <div class="d-block d-lg-none">
+        <button class="btn btn-sm mx-3 mx-md-1" id="ingresar-mobile" data-bs-toggle="modal" data-bs-target="#exampleModal">
+          <i class="fa-solid fa-user me-1"></i> 
+          Ingresar
+        </button>
+        <button class="btn btn-sm mx-3 mx-md-1" id="registrar-mobile" data-bs-toggle="modal" data-bs-target="#modalRegistrar">
+          <i class="fa-solid fa-user-pen me-1"></i>
+          Registrar
+        </button>
+      </div>
+      <button style="font-size:10px;" class="navbar-toggler p-1 shadow-none" id="btn-toggler-mobile"type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon" ></span>
+      </button>
+      <div class="collapse navbar-collapse mt-2" id="navbarSupportedContent">
+        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+          {% if subnavbar.resposive.frente is defined %}
+            {% set enlace_resposive_frente = '#' %}
+            {% if subnavbar.resposive.frente.enlace.tipo == 'ruta' %}
+                {% set enlace_resposive_frente = path(subnavbar.resposive.frente.enlace.valor) %} 
+            {% elseif subnavbar.resposive.frente.enlace.tipo == 'url' %}
+                {% set enlace_resposive_frente = subnavbar.resposive.frente.enlace.valor %}
+            {% endif %}
+            <li class="nav-item px-3 size-16"><a class="nav-link active" aria-current="page" href="{{ enlace_resposive_frente }}"><i class="fa-solid fa-house me-2"></i>{{ subnavbar.resposive.frente.nombre }}</a></li>
+          {% endif %}
+          {% if subnavbar.resposive.contenido is defined %}
+            {% set enlace_resposive_contenido = '#' %}
+            {% if subnavbar.resposive.contenido.enlace.tipo == 'ruta' %}
+                {% set enlace_resposive_contenido = path(subnavbar.resposive.contenido.enlace.valor) %}
+            {% elseif subnavbar.resposive.contenido.enlace.tipo == 'url' %}
+                {% set enlace_resposive_contenido = subnavbar.resposive.contenido.enlace.valor %}
+            {% endif %}  
+            <li class="nav-item px-3 size-16"><a class="nav-link" href="{{ enlace_resposive_contenido }}"><i class="fa-solid fa-list me-2"></i>{{ subnavbar.resposive.contenido.nombre }}</a></li>
+          {% endif %}
+          {% if subnavbar.resposive.final is defined %}
+            {% set enlace_resposive_final = '#' %}
+            {% if subnavbar.resposive.final.enlace.tipo == 'ruta' %}
+                {% set enlace_resposive_final = path(subnavbar.resposive.final.enlace.valor) %}
+            {% elseif subnavbar.resposive.final.enlace.tipo == 'url' %}
+                {% set enlace_resposive_final = subnavbar.resposive.final.enlace.valor %}
+            {% endif %}
+            <li class="nav-item px-3 size-16"><a class="nav-link" href="{{ enlace_resposive_final }}"><i class="fa-solid fa-ticket me-2"></i>{{ subnavbar.resposive.final.nombre }}</a></li>     
+          {% endif %}
+        </ul>
+      </div>
+    </div>
+  </nav>
+  {% endif %}
+</div>
+
+<!-- Modal Ingresar -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="position-absolute top-0 end-0 p-3" style="z-index: 100;">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body p-4">
+        <div id="general_acceder_general"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Modal Registrar -->
+<div class="modal fade" id="modalRegistrar" tabindex="-1" aria-labelledby="modalRegistrarLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="position-absolute top-0 end-0 p-3" style="z-index: 100;">
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body p-4">
+        {{ component('General:RegisterComponent') }}
+      </div>
+    </div>
+  </div>
+</div>

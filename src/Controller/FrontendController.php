@@ -6,6 +6,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
+#[Route('/frontend', name: 'app_test_frontend_')]
 class FrontendController extends AbstractController
 {
     #[Route('/', name: 'app_frontend')]

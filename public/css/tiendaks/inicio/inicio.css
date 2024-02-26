@@ -1,0 +1,44 @@
+.button-enlace:hover {
+  border-color: #17172B !important;
+  background-color: #17172B;
+}
+.piepagina {
+  background-color: rgba(0, 0, 0, 0.05) !important;
+}
+
+.button-login-index {
+  background-color: #17172b;
+}
+
+.button-login-index:hover {
+  background-color: #ffff;
+  box-shadow: 0px 5px 5px 0px gray;
+}
+
+.img-marca {
+  height: 9.375rem;
+}
+
+.button-login-index:hover p {
+  color: #17172b;
+}
+.config-truncate {
+  text-align: justify;
+  display: -webkit-box;
+  -webkit-line-clamp: 4;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+@media (max-width: 426.8px) {
+  .img-marca {
+    height: 90px;
+  }
+  .contenido-marca {
+    padding: 0px;
+  }
+  .config-truncate {
+    font-size: 14px;
+    -webkit-line-clamp: 8;
+  }
+}
