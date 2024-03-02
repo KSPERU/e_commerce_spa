@@ -9,9 +9,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class AjustesController extends AbstractController
 {
     # Redireccion
-    #[Route('/', name: 'app_frontend_rediccion_inicio')]
+    #[Route('/', name: 'app_tiendaks_frontend_inicio_ajustes_rediccion')]
     public function redireccionInicio(): Response
     {
-        return $this->redirectToRoute('app_frontend_inicio_mostrar_inicio');
+        return $this->redirectToRoute('app_tiendaks_frontend_inicio_inicio_mostrarinicio');
     }
 }

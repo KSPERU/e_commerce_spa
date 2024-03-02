@@ -28,6 +28,7 @@ import './vue/controllers/store/backend/tiendaks/producto/producto_por_categoria
 import './vue/controllers/store/backend/tiendaks/producto/ver_producto/verProductoApp.js';
 import './vue/controllers/store/backend/tiendaks/general/generalApp.js';
 import './vue/controllers/store/backend/tiendaks/inicio/inicioApp.js';
+import './vue/controllers/store/backend/tiendaks/articulo/articuloApp.js';
 
 const $ = require('jquery');
 require('bootstrap');

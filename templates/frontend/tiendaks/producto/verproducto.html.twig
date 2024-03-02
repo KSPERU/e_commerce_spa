@@ -1,0 +1,13 @@
+{% extends 'frontend/tiendaks/general/base.html.twig' %}
+
+{% block title %}Ver Producto - TiendaKS!{% endblock %}
+
+{% block body %}
+    <div id="articulo_ver_producto_por_id" data-producto-id="{{ producto_id }}"></div>
+    <div class="container mt-4">
+        <div class="d-flex justify-content-start align-items-baseline mb-4">
+            <span class="fs-4 fw-semibold me-2">Otros productos del vendedor</span>
+        </div>
+        <div id="articulo_ver_producto_listado_vendedor_populares"></div>
+    </div>
+{% endblock %}  

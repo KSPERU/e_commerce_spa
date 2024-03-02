@@ -1,19 +1,20 @@
 <?php
 
-namespace App\Controller\tiendaks\frontend\inicio;
+namespace App\Controller\tiendaks\frontend\producto;
 
+use App\Entity\Producto\producto;
 use App\Funciones\tiendaks\producto\ProductoFunciones;
 use App\Repository\Usuario\usuarioRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/inicio', name: 'app_tiendaks_frontend_inicio_inicio_')]
-class InicioController extends AbstractController
+#[Route('/producto', name: 'app_tiendaks_frontend_producto_producto_')]
+class ProductoController extends AbstractController
 {
-    # Vista Inicio
-    #[Route(name: 'mostrarinicio')]
-    public function mostrarInicio(ProductoFunciones $productoFunciones, usuarioRepository $usuarioRepository): Response
+    # Ver Producto
+    #[Route('/{producto_id}', name: 'verproducto')]
+    public function redireccionInicio(int $producto_id, ProductoFunciones $productoFunciones, usuarioRepository $usuarioRepository): Response
     {
         #Configuracion de usuario
         $user = $this->getUser();
@@ -29,14 +30,15 @@ class InicioController extends AbstractController
         #Configuracion de entorno
         $categorias = $productoFunciones->obtenerProductoListadoCategoriasConOrden();
 
-        return $this->render('frontend/tiendaks/inicio/index.html.twig', [
+        return $this->render('frontend/tiendaks/producto/verproducto.html.twig', [
             'usuarioLogeado' => [
                 'logged' => $logged,
                 'valor' => $usuario,
             ],
             'configuracionEntorno' => [
                 'categorias' => $categorias,
-            ]
+            ],
+            'producto_id' => $producto_id
         ]);
     }
 }
