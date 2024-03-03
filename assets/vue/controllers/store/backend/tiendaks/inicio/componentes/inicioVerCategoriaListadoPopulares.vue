@@ -1,20 +1,24 @@
 <template>
     <div class="row align-items-start bg-white justify-content-center">
             <div v-for="categoria in categorias_populares" :key="categoria.ct_nombre" class="col-2 d-grid justify-content-center align-content-center p-5 categorias-populares">
-                <div class="col-12">
-                    <font-awesome-icon id="my-icon-popular" :icon="obtenerIcono(categoria.ct_nombre)"  class="mx-auto d-block" />
-                </div>
-                <div class="col-12">
-                    <p class="text-categoria-populares fw-normal text-center mt-3">{{ categoria.ct_nombre.charAt(0).toUpperCase() + categoria.ct_nombre.slice(1) }}</p>
-                </div>
+                <a :href="'/producto/catalogo?categoria=' + categoria.ct_nombre" class="text-decoration-none text-black">
+                    <div class="col-12">
+                        <font-awesome-icon id="my-icon-popular" :icon="obtenerIcono(categoria.ct_nombre)"  class="mx-auto d-block" />
+                    </div>
+                    <div class="col-12">
+                        <p class="text-categoria-populares fw-normal text-center mt-3">{{ categoria.ct_nombre.charAt(0).toUpperCase() + categoria.ct_nombre.slice(1) }}</p>
+                    </div>
+                </a>
             </div>
             <div v-for="categoria in categorias_populares" :key="categoria.ct_nombre" class="col-2 d-grid justify-content-center align-content-center p-5 categorias-populares">
-                <div class="col-12">
-                    <font-awesome-icon id="my-icon-popular" :icon="obtenerIcono(categoria.ct_nombre)" class="mx-auto d-block" />
-                </div>
-                <div class="col-12">
-                    <p class="text-categoria-populares fw-normal text-center mt-3">{{ categoria.ct_nombre.charAt(0).toUpperCase() + categoria.ct_nombre.slice(1) }}</p>
-                </div>
+                <a :href="'/producto/catalogo?categoria=' + categoria.ct_nombre" class="text-decoration-none text-black">
+                    <div class="col-12">
+                        <font-awesome-icon id="my-icon-popular" :icon="obtenerIcono(categoria.ct_nombre)" class="mx-auto d-block" />
+                    </div>
+                    <div class="col-12">
+                        <p class="text-categoria-populares fw-normal text-center mt-3">{{ categoria.ct_nombre.charAt(0).toUpperCase() + categoria.ct_nombre.slice(1) }}</p>
+                    </div>
+                </a>
             </div>
     </div>
 </template>

@@ -24,7 +24,8 @@
                         {% if contenido.categorias.especificiones.listable == false %}
                             {% set llave = contenido.categorias.especificiones.atributo %}
                         {% endif %}
-                        <p><a href="#" class="text-reset">{{ cat is iterable ? attribute(cat, llave|default(''))|capitalize : cat|capitalize }}</a></p>
+                        {% set atributo_valor = cat is iterable ? attribute(cat, llave|default(''))|lower : cat|lower %}
+                        <p><a href="{{ '/producto/catalogo?categoria=' ~ atributo_valor }}" class="text-reset">{{ cat is iterable ? attribute(cat, llave|default(''))|capitalize : cat|capitalize }}</a></p>
                     {% endfor %}
                 </div>
                 <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">

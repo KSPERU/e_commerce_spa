@@ -48,7 +48,10 @@
             {
                 "optionsOrdenProdList": {
                     "stock": "si",
-                    "descuento": "si",
+                    "descuento": {
+                        "hayDescuento": "si",
+                        "direccion": "ascendente"
+                    },
                 }
             }
         )

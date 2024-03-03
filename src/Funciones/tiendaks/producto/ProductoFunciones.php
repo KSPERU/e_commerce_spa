@@ -62,14 +62,28 @@ class ProductoFunciones
             }
         }
 
-        if (isset($criterios['optionsOrdenProdList']['descuento'])){
-            if ('si' === $criterios['optionsOrdenProdList']['descuento']){
-                $productos = $this->ordenarProductoListadoConDescuento($productos);
+        if (isset($criterios['optionsOrdenProdList']['descuento']['hayDescuento'])){
+            if ('si' === $criterios['optionsOrdenProdList']['descuento']['hayDescuento']){
+                $productos = $this->ordenarProductoListadoConDescuentoPositivo($productos);
             }
+        }
+
+        if (isset($criterios['optionsOrdenProdList']['valoracion']['hayValoracion'])){
+            if ('si' === $criterios['optionsOrdenProdList']['valoracion']['hayValoracion']){
+                $productos = $this->ordenarProductoListadoConValoracionPositiva($productos);
+            }
+        }
+
+        if (isset($criterios['optionsOrdenProdList']['descuento']['direccion'])){
+            $productos = $this->ordenarProductoListadoConDescuentoConDireccion($criterios['optionsOrdenProdList']['descuento']['direccion'], $productos);
         }
 
         if (isset($criterios['optionsOrdenProdList']['precio']['direccion'])){
             $productos = $this->ordenarProductoListadoPorPrecioConDireccion($criterios['optionsOrdenProdList']['precio']['direccion'], $productos);
+        }
+
+        if (isset($criterios['optionsOrdenProdList']['valoracion']['direccion'])){
+            $productos = $this->ordenarProductoListadoConValoracionConDireccion($criterios['optionsOrdenProdList']['valoracion']['direccion'], $productos);
         }
         
         if(isset($criterios['optionsOrdenProdList']['pagina']) && isset($criterios['optionsOrdenProdList']['cantidad_productos'])){
@@ -112,6 +126,10 @@ class ProductoFunciones
             'pr_precio' => $precio,
             'pr_descuento' => $descuento,
             'pr_preciofinal' => $precio - $precio * $descuento,
+            'pr_usuario' => [
+                "usu_id" => $producto->getUsuario()->getId(),
+                "usu_correo" => $producto->getUsuario()->getUCorreo()
+            ],
             'valoracion' => $valoracion,
             'cantidadvaloracion' => $cantvaloraciones
         ];
@@ -207,6 +225,38 @@ class ProductoFunciones
         return $extracto;
     }
 
+    private function ordenarProductoListadoConDescuentoPositivo(array $productos){
+        try {
+            $extracto = array_filter($productos, 
+                function($articulo) {
+                    if(is_null($articulo->getDescuento())){
+                        return false;
+                    }
+                    return true;
+                }
+            );
+        } catch (Exception $e) {
+            //No hecer nada
+        }
+        return $extracto;
+    }
+
+    private function ordenarProductoListadoConValoracionPositiva(array $productos){
+        try {
+            $extracto = array_filter($productos, 
+                function($articulo) {
+                    if($articulo->getValoraciones()->isEmpty()){
+                        return false;
+                    }
+                    return true;
+                }
+            );
+        } catch (Exception $e) {
+            //No hecer nada
+        }
+        return $extracto;
+    }
+
     private function ordenarProductoListadoPorRangoDePrecio(float $precio_inicio, float $precio_fin, array $productos){
         try {
             $extracto = array_filter($productos, 
@@ -271,18 +321,98 @@ class ProductoFunciones
         return $extracto;
     }
 
-    private function ordenarProductoListadoConDescuento(array $productos){
+    private function ordenarProductoListadoConDescuentoConDireccion(string $direccion, array $productos){
+        if ($direccion === 'ascendente'){
+                $productos = $this->ordenarProductoListadoConDescuentoAscendente($productos);
+        } elseif ($direccion === 'descendente') {
+                $productos = $this->ordenarProductoListadoConDescuentoDescendente($productos);
+        }
+        
+        return $productos;
+    }
+
+    private function ordenarProductoListadoConDescuentoAscendente(array $productos){
+        $longitud = count($productos);
+        $extracto = array_values($productos);
         try {
-            $extracto = array_filter($productos, 
-                function($articulo) {
-                    if(is_null($articulo->getDescuento())){
-                        return false;
+            for ($i=0; $i < $longitud; $i++) { 
+                for ($j=0; $j < $longitud - 1; $j++) { 
+                    if(($extracto[$j]->getPrPrecio() - ($extracto[$j]->getPrPrecio() * (($extracto[$j]->getDescuento() !== null) ? $extracto[$j]->getDescuento()->getDsValor() : 0))) > ($extracto[$j + 1]->getPrPrecio() - ($extracto[$j + 1]->getPrPrecio() * (($extracto[$j + 1]->getDescuento() !== null) ? $extracto[$j + 1]->getDescuento()->getDsValor() : 0)))){
+                        $temporal = $extracto[$j];
+                        $extracto[$j] = $extracto[$j + 1];
+                        $extracto[$j + 1] = $temporal;
                     }
-                    return true;
                 }
-            );
+            }
         } catch (Exception $e) {
             //No hecer nada
+        }
+        return $extracto;
+    }
+
+    private function ordenarProductoListadoConDescuentoDescendente(array $productos){
+        $longitud = count($productos);
+        $extracto = array_values($productos);
+        try {
+            for ($i=0; $i < $longitud; $i++) { 
+                for ($j=0; $j < $longitud - 1; $j++) { 
+                    if(($extracto[$j]->getPrPrecio() - ($extracto[$j]->getPrPrecio() * (($extracto[$j]->getDescuento() !== null) ? $extracto[$j]->getDescuento()->getDsValor() : 0))) < ($extracto[$j + 1]->getPrPrecio() - ($extracto[$j + 1]->getPrPrecio() * (($extracto[$j + 1]->getDescuento() !== null) ? $extracto[$j + 1]->getDescuento()->getDsValor() : 0)))){
+                        $temporal = $extracto[$j];
+                        $extracto[$j] = $extracto[$j + 1];
+                        $extracto[$j + 1] = $temporal;
+                    }
+                }
+            }
+        } catch (Exception $e) {
+           //No hecer nada
+        }
+        return $extracto;
+    }
+
+    private function ordenarProductoListadoConValoracionConDireccion(string $direccion, array $productos){
+        if ($direccion === 'ascendente'){
+                $productos = $this->ordenarProductoListadoConValoracionAscendente($productos);
+        } elseif ($direccion === 'descendente') {
+                $productos = $this->ordenarProductoListadoConValoracionDescendente($productos);
+        }
+        
+        return $productos;
+    }
+
+    private function ordenarProductoListadoConValoracionAscendente(array $productos){
+        $longitud = count($productos);
+        $extracto = array_values($productos);
+        try {
+            for ($i=0; $i < $longitud; $i++) { 
+                for ($j=0; $j < $longitud - 1; $j++) { 
+                    if(($this->obtenerProductoValoracion($extracto[$j]))['valoracion'] > ($this->obtenerProductoValoracion($extracto[$j + 1]))['valoracion']){
+                        $temporal = $extracto[$j];
+                        $extracto[$j] = $extracto[$j + 1];
+                        $extracto[$j + 1] = $temporal;
+                    }
+                }
+            }
+        } catch (Exception $e) {
+            //No hecer nada
+        }
+        return $extracto;
+    }
+
+    private function ordenarProductoListadoConValoracionDescendente(array $productos){
+        $longitud = count($productos);
+        $extracto = array_values($productos);
+        try {
+            for ($i=0; $i < $longitud; $i++) { 
+                for ($j=0; $j < $longitud - 1; $j++) { 
+                    if(($this->obtenerProductoValoracion($extracto[$j]))['valoracion'] < ($this->obtenerProductoValoracion($extracto[$j + 1]))['valoracion']){
+                        $temporal = $extracto[$j];
+                        $extracto[$j] = $extracto[$j + 1];
+                        $extracto[$j + 1] = $temporal;
+                    }
+                }
+            }
+        } catch (Exception $e) {
+           //No hecer nada
         }
         return $extracto;
     }

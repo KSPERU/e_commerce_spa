@@ -6,6 +6,7 @@ use App\Entity\Producto\producto;
 use App\Funciones\tiendaks\producto\ProductoFunciones;
 use App\Repository\Usuario\usuarioRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
@@ -13,8 +14,8 @@ use Symfony\Component\Routing\Annotation\Route;
 class ProductoController extends AbstractController
 {
     # Ver Producto
-    #[Route('/{producto_id}', name: 'verproducto')]
-    public function redireccionInicio(int $producto_id, ProductoFunciones $productoFunciones, usuarioRepository $usuarioRepository): Response
+    #[Route('/ver/{producto_id}', name: 'verproducto')]
+    public function verProducto(int $producto_id, ProductoFunciones $productoFunciones, usuarioRepository $usuarioRepository): Response
     {
         #Configuracion de usuario
         $user = $this->getUser();
@@ -39,6 +40,38 @@ class ProductoController extends AbstractController
                 'categorias' => $categorias,
             ],
             'producto_id' => $producto_id
+        ]);
+    }
+
+    # Ver Productos por categoria
+    #[Route('/catalogo', name: 'vercatalogo')]
+    public function verCatalogo(Request $request, ProductoFunciones $productoFunciones, usuarioRepository $usuarioRepository): Response
+    {
+        $categoria = $request->query->get('categoria');
+
+        #Configuracion de usuario
+        $user = $this->getUser();
+        $logged = false;
+        $usuario = null;
+        if($user){
+            $logged = true;
+            $usuario = $usuarioRepository->findOneBy([
+                'u_correo' => $user->getUserIdentifier(),
+            ]);
+        }
+
+        #Configuracion de entorno
+        $categorias = $productoFunciones->obtenerProductoListadoCategoriasConOrden();
+
+        return $this->render('frontend/tiendaks/producto/vercatalogo.html.twig', [
+            'usuarioLogeado' => [
+                'logged' => $logged,
+                'valor' => $usuario,
+            ],
+            'configuracionEntorno' => [
+                'categorias' => $categorias,
+            ],
+            'categoria' => $categoria
         ]);
     }
 }
