@@ -1,0 +1,41 @@
+{% extends 'frontend/tiendaks/general/base.html.twig' %}
+
+{% block title %}Catalogo - TiendaKS!{% endblock %}
+
+{% block css %}
+    <link rel="stylesheet" href="{{ asset('css/tiendaks/inicio/componentes/slider/slider.css') }}">
+{% endblock %}
+
+{% block body %}
+    {{ component('Inicio:SliderComponent', {
+        'imagenes': {
+            'imagen_1': {
+                'nombre': 'slider-1',
+                'ruta': asset('img/tiendaks/producto/slider1.png'),
+                'activa': true
+            },
+            'imagen_2': {
+                'nombre': 'slider-2',
+                'ruta': asset('img/tiendaks/producto/slider2.png'),
+                'activa': false
+            },
+            'imagen_3': {
+                'nombre': 'slider-3',
+                'ruta': asset('img/tiendaks/producto/slider3.png'),
+                'activa': false
+            },
+            'imagen_4': {
+                'nombre': 'slider-4',
+                'ruta': asset('img/tiendaks/producto/slider4.png'),
+                'activa': false
+            }
+        }
+    }) }}
+
+    <div class="container mt-4">
+        <div class="d-flex justify-content-start align-items-baseline mb-4">
+            <span class="fs-4 fw-semibold me-2">{{ categoria|capitalize }}</span>
+        </div>
+        <div id="general_ver_producto_tarjetario" data-categoria="{{ categoria }}"></div>
+    </div>
+{% endblock %}  

@@ -31,9 +31,9 @@
                     </div>
                 </div>
                 <div class="buttons col-lg-5 col-md-5 col-8">
-                    <button class="btn border border-black border-2 text-black bg-secondary-subtle col-12 mb-3 button-effect">
+                    <a :href="'/producto/ver/' + producto.id"><button class="btn border border-black border-2 text-black bg-secondary-subtle col-12 mb-3 button-effect">
                         <font-awesome-icon icon="eye" class="me-1" />Ver
-                    </button>
+                    </button></a>
                     <button class="btn border border-black border-2 text-black bg-secondary-subtle col-12 mb-3 button-effect" @click="agregarProducto(producto.id, 1)">
                         <font-awesome-icon icon="cart-shopping" class="me-1" />Agregar
                     </button>

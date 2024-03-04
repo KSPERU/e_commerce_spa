@@ -1,0 +1,50 @@
+<footer class="text-center text-lg-start text-muted mt-5" style="background-color: #17172B;">
+    <section class="d-flex justify-content-center justify-content-lg-between p-4 border-bottom">
+        <div class="me-5 d-none d-lg-block">
+            <span class="text-white">Conéctate con nosotros en las redes sociales.</span>
+        </div>
+        <div>
+            <a href="{{ contenido.redes.github.enlace }}" class="mx-3 text-white"><i class="fa fa-github fa-2x" aria-hidden="true"></i></a>
+            <a href="{{ contenido.redes.instagram.enlace }}" class="mx-3 text-white"><i class="fa fa-instagram fa-2x" aria-hidden="true"></i></a>
+            <a href="{{ contenido.redes.google.enlace }}" class="mx-3 text-white"><i class="fa fa-google fa-2x" aria-hidden="true"></i></a>
+            <a href="{{ contenido.redes.facebook.enlace }}" class="mx-3 text-white"><i class="fa fa-facebook fa-2x" aria-hidden="true"></i></a>
+            <a href="{{ contenido.redes.twitter.enlace }}" class="mx-3 text-white"><i class="fa fa-twitter fa-2x" aria-hidden="true"></i></a>
+        </div>
+    </section>
+    <section>
+        <div class="container text-center text-md-start mt-5">
+            <div class="row mt-3 text-white">
+                <div class="col-md-3 col-lg-4 col-xl-3 mx-auto mb-4">
+                    <h6 class="text-uppercase fw-bold mb-4">LOGO</h6>
+                    <p>Somos una empresa confiable enfocada a la venta de productos de todo tipo para poder satisfacer las necesidades del cliente.</p>
+                </div>
+                <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+                    <h6 class="text-uppercase fw-bold mb-4">CATEGORIAS</h6>
+                    {% for cat in contenido.categorias.valores|slice(0, 4) %}
+                        {% if contenido.categorias.especificiones.listable == false %}
+                            {% set llave = contenido.categorias.especificiones.atributo %}
+                        {% endif %}
+                        {% set atributo_valor = cat is iterable ? attribute(cat, llave|default(''))|lower : cat|lower %}
+                        <p><a href="{{ '/producto/catalogo?categoria=' ~ atributo_valor }}" class="text-reset">{{ cat is iterable ? attribute(cat, llave|default(''))|capitalize : cat|capitalize }}</a></p>
+                    {% endfor %}
+                </div>
+                <div class="col-md-3 col-lg-2 col-xl-2 mx-auto mb-4">
+                    <h6 class="text-uppercase fw-bold mb-4">ENLACE</h6>
+                    {% for elemento in contenido.vinculos %}
+                        <p><a href="{{ elemento.enlace.tipo == 'url' ? elemento.enlace.valor : path(elemento.enlace.valor) }}" class="text-reset">{{ elemento.nombre }}</a></p>
+                    {% endfor %}
+                </div>
+                <div class="col-md-3 col-lg-3 col-xl-3 mx-auto mb-md-0 mb-4">
+                    <h6 class="text-uppercase fw-bold mb-4">CONTACTO</h6>
+                    <p><i class="fa fa-home fa-2x text-white" aria-hidden="true"></i> {{ contenido.contacto.direccion.valor }}</p>
+                    <p><i class="fa fa-envelope fa-2x text-white" aria-hidden="true"></i> {{ contenido.contacto.correo.valor }}</p>
+                    <p><i class="fa fa-phone fa-2x text-white" aria-hidden="true"></i> +51 {{ contenido.contacto.telefono.valor }}</p>
+                </div>
+            </div>
+        </div>
+    </section>
+</footer>
+<div class="text-center p-3 piepagina">
+    © 2023 Copyright:
+    <a class="text-reset fw-bold" href="{{ contenido.comunidad.enlace.valor }}">{{ contenido.comunidad.enlace.nombre }}</a>
+</div>

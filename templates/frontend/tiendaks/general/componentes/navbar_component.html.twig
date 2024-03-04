@@ -52,7 +52,8 @@
         {% if subnavbar.contenido.especificiones.listable == false %}
             {% set llave = subnavbar.contenido.especificiones.atributo %}
         {% endif %}
-        <li class="list-inline-item mx-3"><a href="#" class="text-decoration-none fw-semibold d-inline" style="white-space: nowrap;">
+        {% set atributo_valor = elemento is iterable ? attribute(elemento, llave|default(''))|lower : elemento|lower %}
+        <li class="list-inline-item mx-3"><a href="{{ '/producto/catalogo?categoria=' ~ atributo_valor }}" class="text-decoration-none fw-semibold d-inline" style="white-space: nowrap;">
             {{ elemento is iterable ? attribute(elemento, llave|default(''))|capitalize : elemento|capitalize }}
         </a></li>
       {% endfor %}

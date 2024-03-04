@@ -12,3 +12,9 @@ import inicioVerProductoListadoOfertados from "./componentes/inicioVerProductoLi
 const inicio_ver_producto_listado_ofertados = createApp(inicioVerProductoListadoOfertados); 
 inicio_ver_producto_listado_ofertados.use(pinia);
 inicio_ver_producto_listado_ofertados.mount('#inicio_ver_producto_listado_ofertados'); 
+
+
+import inicioVerCategoriaListadoPopulares from "./componentes/inicioVerCategoriaListadoPopulares"; 
+const inicio_ver_categoria_listado_populares = createApp(inicioVerCategoriaListadoPopulares); 
+inicio_ver_categoria_listado_populares.use(pinia);
+inicio_ver_categoria_listado_populares.mount('#inicio_ver_categoria_listado_populares'); 

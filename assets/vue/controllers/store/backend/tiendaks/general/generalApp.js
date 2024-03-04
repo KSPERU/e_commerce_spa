@@ -13,3 +13,8 @@ const general_ver_producto_tarjeta = createApp(generalVerProductoTarjeta);
 general_ver_producto_tarjeta.use(pinia);
 general_ver_producto_tarjeta.mount('#general_ver_producto_tarjeta'); 
 
+import generalVerProductoTarjetario from "./componentes/generalVerProductoTarjetario"; 
+const general_ver_producto_tarjetario = createApp(generalVerProductoTarjetario); 
+general_ver_producto_tarjetario.use(pinia);
+general_ver_producto_tarjetario.mount('#general_ver_producto_tarjetario'); 
+

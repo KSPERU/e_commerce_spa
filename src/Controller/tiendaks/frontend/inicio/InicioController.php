@@ -8,11 +8,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-#[Route('/', name: 'app_frontend_inicio_')]
+#[Route('/inicio', name: 'app_tiendaks_frontend_inicio_inicio_')]
 class InicioController extends AbstractController
 {
     # Vista Inicio
-    #[Route('inicio', name: 'mostrar_inicio')]
+    #[Route(name: 'mostrarinicio')]
     public function mostrarInicio(ProductoFunciones $productoFunciones, usuarioRepository $usuarioRepository): Response
     {
         #Configuracion de usuario
