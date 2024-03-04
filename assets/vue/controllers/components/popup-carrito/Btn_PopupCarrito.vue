@@ -16,28 +16,24 @@
   
 
 
-  <script>
+  <script setup>
+   import { library } from '@fortawesome/fontawesome-svg-core';
+    import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+    import { faCartShopping, faAngleDown, faAngleUp, faTrash, faEnvelope, faPhoneSquare, faAngleRight, faFilter, faMobileScreen,faTv,faHeadphones,faKeyboard,faTabletAlt,faLaptop,faMoneyBillWave,faStar,faEye ,faCreditCard, faCity, faMobile, faMoneyBill} from '@fortawesome/free-solid-svg-icons';
+    library.add(faCartShopping, faAngleDown, faAngleUp, faTrash, faEnvelope, faPhoneSquare, faAngleRight, faFilter,faMobileScreen,faTv,faHeadphones,faKeyboard,faTabletAlt,faLaptop,faMoneyBillWave,faStar,faEye,faCreditCard, faCity, faMobile, faMoneyBill);
+    import {ref, onMounted} from 'vue';
   import Content_PopupCarrito from "./Content_PopupCarrito.vue";
-  
-  export default {
-    components: {
-      Content_PopupCarrito,
-    },
-    data() {
-      return {
-        isOpen: false,
-      };
-    },
-    methods: {
-      openPopup() {
-        this.isOpen = true;
-      },
-      closePopup() {
-        this.isOpen = false;
-      },
-    },
+
+  const isOpen = ref(false); // Variable reactiva para controlar la visibilidad del popup
+
+  const openPopup = () => {
+    isOpen.value = true; // Mostrar el popup
   };
-  </script>
+
+  const closePopup = () => {
+    isOpen.value = false; // Ocultar el popup
+};
+</script>
   
   <style scoped>
   .popup_carrito {

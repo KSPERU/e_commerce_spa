@@ -11,7 +11,7 @@
         <div class="content-popup-carrito-card-body-products mb-2">
           <div class="overflow-hidden m-0 w-100 card-body-products-height" >
             <!--  -->
-            <div v-for="producto in detallesCarrito" class="popup-carrito-product row overflow-hidden d-flex align-items-center pb-3">
+            <div v-for="producto in detallesCarrito" @some-event="productoagregado" class="popup-carrito-product row overflow-hidden d-flex align-items-center pb-3">
               <div class="col-3 h-100">
                 <figure class="m-0 w-100 h-100">
                   <img class="w-100 h-100 object-fit-cover" :src="producto.prImagenes[0]" alt="producto-"/>
@@ -69,6 +69,7 @@
 </template>
 
   <script setup>
+  import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
   import { onMounted, computed, ref } from "vue";
     import { carritoStore  } from "../../components/carritoContenedor" 
     import axios from 'axios';
@@ -136,7 +137,8 @@
 
     onMounted(() => {
         carrito.visualizarCarrito();
-    })
+        })
+
   </script>
   
   <style scoped>

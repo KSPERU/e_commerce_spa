@@ -1,3 +1,5 @@
+
+
 <template>
     <div id="carouselProductos" class="carousel slide">
         <div class="carousel-inner d-flex">
@@ -25,18 +27,17 @@
             <span class="visually-hidden">Next</span>
         </button>
     </div>
+    <div>
+        <butonPopupCarrito/>
+    </div>
 </template>
-<style scoped>
-    .carousel-control-prev,
-    .carousel-control-next {
-        width: 5%;
-    }
-</style>
+
 <script setup>
     import { onMounted, computed } from 'vue';
     import { useInicioContenedor } from '../../inicio/inicioContenedor';
     import generalVerProductoTarjeta from '../../general/componentes/generalVerProductoTarjeta';
-
+    import butonPopupCarrito  from "../../../../../components/popup-carrito/Btn_PopupCarrito.vue"
+    import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
     const inicioContenedor = useInicioContenedor();
 
     const productos = computed(() => {
@@ -53,3 +54,10 @@
         )
     })
 </script>
+
+<style scoped>
+    .carousel-control-prev,
+    .carousel-control-next {
+        width: 5%;
+    }
+</style>

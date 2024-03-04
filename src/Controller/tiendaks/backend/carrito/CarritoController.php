@@ -29,7 +29,7 @@ class CarritoController extends AbstractController
                     return $this->redirectToRoute('app_carrito_mostrar_productos_global');
                 }
             }
-            return $this->redirectToRoute('app_checkout');
+            return $this->redirectToRoute('app_test_frontend_app_checkout');
             
         }else{
             // return $this->render('frontend/index.html.twig', [

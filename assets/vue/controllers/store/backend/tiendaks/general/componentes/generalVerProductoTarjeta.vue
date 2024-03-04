@@ -34,7 +34,7 @@
                     <button class="btn border border-black border-2 text-black bg-secondary-subtle col-12 mb-3 button-effect">
                         <font-awesome-icon icon="eye" class="me-1" />Ver
                     </button>
-                    <button class="btn border border-black border-2 text-black bg-secondary-subtle col-12 mb-3 button-effect">
+                    <button class="btn border border-black border-2 text-black bg-secondary-subtle col-12 mb-3 button-effect" @click="agregarProducto(producto.id, 1)">
                         <font-awesome-icon icon="cart-shopping" class="me-1" />Agregar
                     </button>
                     <button class="btn border border-black border-2 text-black bg-secondary-subtle col-12 mb-3 button-effect">
@@ -55,7 +55,8 @@
     import { library } from '@fortawesome/fontawesome-svg-core';
     import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
     import { faCartShopping, faAngleDown, faAngleUp, faTrash, faEnvelope, faPhoneSquare, faAngleRight, faFilter, faMobileScreen,faTv,faHeadphones,faKeyboard,faTabletAlt,faLaptop,faMoneyBillWave,faStar,faEye ,faCreditCard, faCity, faMobile, faMoneyBill} from '@fortawesome/free-solid-svg-icons';
-
+    import { carritoStore  } from "../../carrito/carritoContenedor" 
+    const carrito = carritoStore();
     library.add(faCartShopping, faAngleDown, faAngleUp, faTrash, faEnvelope, faPhoneSquare, faAngleRight, faFilter,faMobileScreen,faTv,faHeadphones,faKeyboard,faTabletAlt,faLaptop,faMoneyBillWave,faStar,faEye,faCreditCard, faCity, faMobile, faMoneyBill);
     
     const mostrarOferta = ref(window.innerWidth < 426.8);
@@ -66,6 +67,14 @@
 
     const actualizarEstado = () => {
         mostrarOferta.value = window.innerWidth < 426.8;
+    };
+
+    const agregarProducto = async (id, cantidad) => {
+        await carrito.agregarProducto({
+            id_producto: id,
+            cantidad: cantidad,
+        })
+        
     };
 
     onMounted(() => {

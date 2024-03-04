@@ -23,6 +23,8 @@ import Head_ProductosVenta from "./vue/controllers/components/perfil-usuario/Hea
 import Card_FiltrosAvanzados from "./vue/controllers/components/perfil-usuario/Card_FiltrosAvanzados";
 import productoApp from "./vue/controllers/store/backend/tiendaks/producto/productoApp";
 import comprasApp from "./vue/controllers/store/backend/tiendaks/compras/comprasApp";
+import Appcarrito from "./vue/controllers/store/backend/tiendaks/carrito/carritoApp"; 
+import Approducto from "./vue/controllers/store/backend/tiendaks/carrito/listarProductoPrueba"; 
 import './vue/controllers/store/backend/tiendaks/producto/inicio/inicioApp.js';
 import './vue/controllers/store/backend/tiendaks/producto/producto_por_categoria/productoPorCategoriaApp.js';
 import './vue/controllers/store/backend/tiendaks/producto/ver_producto/verProductoApp.js';
@@ -38,14 +40,14 @@ library.add(faCartShopping, faAngleDown, faAngleUp, faTrash, faEnvelope, faPhone
 const pinia = createPinia();
 
 //const app2 = createApp(App2); 
-const appcarrito = createApp(Appcarrito); 
-const approducto = createApp(Approducto); 
+
 
 // const app = createApp(App);
 // const app2 = createApp(App2); //Ver componentes de Listar productos
 // const app3 = createApp(App3); 
 // const app4 = createApp(App4); 
-
+const appcarrito = createApp(Appcarrito); 
+const approducto = createApp(Approducto); 
 const popup_carrito = createApp(PopupCarrito); 
 const TarjetasProductos = createApp(Tarjetas_VistaGeneral);
 const TarjetasOfertas = createApp(Tarjetas_Ofertas);
@@ -63,10 +65,10 @@ const compras_app = createApp(comprasApp);
 
 producto_app.use(pinia);
 producto_app.mount('#producto_app');
-const card_filtros_avanzados = createApp(Card_FiltrosAvanzados)
 
 appcarrito.use(pinia);
 appcarrito.mount('#appcarrito');
+
 approducto.use(pinia);
 approducto.mount('#approducto');
 
@@ -129,4 +131,5 @@ head_productos_venta.mount('#head_productos_venta');
 card_filtros_avanzados.use(pinia);
 card_filtros_avanzados.component('font-awesome-icon', FontAwesomeIcon);
 card_filtros_avanzados.mount('#card_filtros_avanzados')
+
 
