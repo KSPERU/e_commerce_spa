@@ -12,11 +12,60 @@
             <font-awesome-icon icon="angle-right"/>
             </button>
         </div>
+        <div>
+            <form @submit.prevent="submitForm">
+            <div class="form-group">
+                <label for="nombre">Nombre:</label>
+                <input type="text" class="form-control" id="nombre" v-model="producto.pr_nombre" required>
+            </div>
+            <div class="form-group">
+                <label for="categoria">Categoría:</label>
+                <input type="text" class="form-control" id="categoria" v-model="producto.pr_categoria" required>
+            </div>
+            <div class="form-group">
+                <label for="stock">Stock:</label>
+                <input type="number" class="form-control" id="stock" v-model="producto.pr_stock" required>
+            </div>
+            <div class="form-group">
+                <label for="precio">Precio:</label>
+                <input type="number" class="form-control" id="precio" v-model="producto.pr_precio" required>
+            </div>
+            <div class="form-group">
+                <label for="descripcion">Descripción:</label>
+                <textarea class="form-control" id="descripcion" v-model="producto.pr_descripcion"></textarea>
+            </div>
+            <button type="submit" class="btn btn-primary">Agregar Producto</button>
+            </form>
+        </div>
     </div>
 </template>
 
-<script>
-export default {};
+<script setup>
+import { ref } from 'vue';
+import axios from 'axios';
+
+const currentURL = window.location.href
+const segments = currentURL.split("/")
+const idusuario = parseInt(segments[segments.length - 1])
+
+const producto = ref({
+    pr_nombre: '',
+    pr_categoria: '',
+    pr_stock: null,
+    pr_precio: null,
+    pr_descripcion: ''
+});
+
+const submitForm = () => {
+    axios.post('/api/producto/api/productos', producto.value)
+        .then(response => {
+        console.log(response.data);
+        
+        })
+        .catch(error => {
+        console.error('Error al agregar producto:', error);
+        });
+};
 </script>
 
 <style scoped>

@@ -67,8 +67,8 @@ const compras_app = createApp(comprasApp);
 producto_app.use(pinia);
 producto_app.mount('#producto_app');
 
-appcarrito.use(pinia);
-appcarrito.mount('#appcarrito');
+//appcarrito.use(pinia);
+//sappcarrito.mount('#appcarrito');
 
 approducto.use(pinia);
 approducto.mount('#approducto');

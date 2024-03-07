@@ -2,13 +2,15 @@
 
 namespace App\Controller\tiendaks\api\carrito;
 
+use App\Repository\UsuarioRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Funciones\tiendaks\carrito\CarritoFunciones;
-use App\Funciones\tiendaks\producto\en_desuso\ProductoFuncionesRevisado;
+use App\Funciones\tiendaks\usuario\UsuarioFunciones;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use App\Funciones\tiendaks\producto\en_desuso\ProductoFuncionesRevisado;
 
 #[Route('/api/carrito', name: 'app_api_carrito_')]
 class CarritoController extends AbstractController
@@ -57,5 +59,23 @@ class CarritoController extends AbstractController
     {
         $productos = $productoFunciones->especificarProductos($productoFunciones->obtenerProductosProcesado());
         return $this->json($productos, Response::HTTP_OK,[]);
+    }
+
+    #[Route('/listar/usuario', name: 'perfil_usuario', methods:['POST'])]
+    public function profile(Request $request, UsuarioFunciones $usuarioFunciones): Response
+    {
+        $data = json_decode($request->getContent(),true);
+        $idusuario = $data['id_usuario'];
+        $respuesta = $usuarioFunciones->obtenerUsuarioVista($idusuario);
+        return $this->json($respuesta, Response::HTTP_OK,[]);
+    }
+
+    #[Route('/perfil/propio', name: 'perfil_propio', methods:['POST'])]
+    public function ownprofile(Request $request, UsuarioFunciones $usuarioFunciones): Response
+    {
+        $data = json_decode($request->getContent(),true);
+        $idusuario = $data['id_usuario'];
+        $respuesta = $usuarioFunciones->accesoPerfilPropio($idusuario);
+        return $this->json($respuesta, Response::HTTP_OK,[]);
     }
 }
