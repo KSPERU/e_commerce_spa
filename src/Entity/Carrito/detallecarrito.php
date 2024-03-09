@@ -28,6 +28,12 @@ class detallecarrito
     #[ORM\Column]
     private ?float $dc_importe = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?float $dc_descuento = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?float $dc_importefinal = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -77,6 +83,30 @@ class detallecarrito
     public function setDcImporte(float $dc_importe): static
     {
         $this->dc_importe = $dc_importe;
+
+        return $this;
+    }
+
+    public function getDcDescuento(): ?float
+    {
+        return $this->dc_descuento;
+    }
+
+    public function setDcDescuento(?float $dc_descuento): static
+    {
+        $this->dc_descuento = $dc_descuento;
+
+        return $this;
+    }
+
+    public function getDcImportefinal(): ?float
+    {
+        return $this->dc_importefinal;
+    }
+
+    public function setDcImportefinal(?float $dc_importefinal): static
+    {
+        $this->dc_importefinal = $dc_importefinal;
 
         return $this;
     }
