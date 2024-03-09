@@ -31,6 +31,12 @@ class detallecompra
     #[ORM\Column]
     private ?int $dcm_estado = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?float $dcm_descuento = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?float $dcm_importefinal = null;
+
     public function getId(): ?int
     {
         return $this->id;
@@ -92,6 +98,30 @@ class detallecompra
     public function setDcmEstado(int $dcm_estado): static
     {
         $this->dcm_estado = $dcm_estado;
+
+        return $this;
+    }
+
+    public function getDcmDescuento(): ?float
+    {
+        return $this->dcm_descuento;
+    }
+
+    public function setDcmDescuento(?float $dcm_descuento): static
+    {
+        $this->dcm_descuento = $dcm_descuento;
+
+        return $this;
+    }
+
+    public function getDcmImportefinal(): ?float
+    {
+        return $this->dcm_importefinal;
+    }
+
+    public function setDcmImportefinal(?float $dcm_importefinal): static
+    {
+        $this->dcm_importefinal = $dcm_importefinal;
 
         return $this;
     }

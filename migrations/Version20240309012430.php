@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20240218145103 extends AbstractMigration
+final class Version20240309012430 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -20,17 +20,23 @@ final class Version20240218145103 extends AbstractMigration
     public function up(Schema $schema): void
     {
         // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('CREATE TABLE carrito (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, usuario_id INTEGER NOT NULL, c_cantidadtotal INTEGER NOT NULL, c_importetotal DOUBLE PRECISION NOT NULL, CONSTRAINT FK_77E6BED5DB38439E FOREIGN KEY (usuario_id) REFERENCES usuario (id) NOT DEFERRABLE INITIALLY IMMEDIATE)');
+        $this->addSql('CREATE TABLE carrito (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, usuario_id INTEGER NOT NULL, c_cantidadtotal INTEGER NOT NULL, c_importetotal DOUBLE PRECISION NOT NULL, c_descuentototal DOUBLE PRECISION DEFAULT NULL, c_importetotalfinal DOUBLE PRECISION DEFAULT NULL, CONSTRAINT FK_77E6BED5DB38439E FOREIGN KEY (usuario_id) REFERENCES usuario (id) NOT DEFERRABLE INITIALLY IMMEDIATE)');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_77E6BED5DB38439E ON carrito (usuario_id)');
-        $this->addSql('CREATE TABLE compras (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, cliente_id INTEGER NOT NULL, cm_cantidadtotal INTEGER NOT NULL, cm_importetotal DOUBLE PRECISION NOT NULL, cm_fechacompra DATETIME NOT NULL, CONSTRAINT FK_3692E1B7DE734E51 FOREIGN KEY (cliente_id) REFERENCES usuario (id) NOT DEFERRABLE INITIALLY IMMEDIATE)');
+        $this->addSql('CREATE TABLE compras (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, cliente_id INTEGER NOT NULL, cm_cantidadtotal INTEGER NOT NULL, cm_importetotal DOUBLE PRECISION NOT NULL, cm_fechacompra DATETIME NOT NULL, cm_descuentototal DOUBLE PRECISION DEFAULT NULL, cm_importetotalfinal DOUBLE PRECISION DEFAULT NULL, CONSTRAINT FK_3692E1B7DE734E51 FOREIGN KEY (cliente_id) REFERENCES usuario (id) NOT DEFERRABLE INITIALLY IMMEDIATE)');
         $this->addSql('CREATE INDEX IDX_3692E1B7DE734E51 ON compras (cliente_id)');
         $this->addSql('CREATE TABLE descuento (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, ds_codigo VARCHAR(30) NOT NULL, ds_valor DOUBLE PRECISION NOT NULL, ds_estado BOOLEAN NOT NULL)');
-        $this->addSql('CREATE TABLE detallecarrito (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, carrito_id INTEGER NOT NULL, producto_id INTEGER NOT NULL, dc_cantidad INTEGER NOT NULL, dc_importe DOUBLE PRECISION NOT NULL, CONSTRAINT FK_E20DBAF1DE2CF6E7 FOREIGN KEY (carrito_id) REFERENCES carrito (id) NOT DEFERRABLE INITIALLY IMMEDIATE, CONSTRAINT FK_E20DBAF17645698E FOREIGN KEY (producto_id) REFERENCES producto (id) NOT DEFERRABLE INITIALLY IMMEDIATE)');
+        $this->addSql('CREATE TABLE detallecarrito (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, carrito_id INTEGER NOT NULL, producto_id INTEGER NOT NULL, dc_cantidad INTEGER NOT NULL, dc_importe DOUBLE PRECISION NOT NULL, dc_descuento DOUBLE PRECISION DEFAULT NULL, dc_importefinal DOUBLE PRECISION DEFAULT NULL, CONSTRAINT FK_E20DBAF1DE2CF6E7 FOREIGN KEY (carrito_id) REFERENCES carrito (id) NOT DEFERRABLE INITIALLY IMMEDIATE, CONSTRAINT FK_E20DBAF17645698E FOREIGN KEY (producto_id) REFERENCES producto (id) NOT DEFERRABLE INITIALLY IMMEDIATE)');
         $this->addSql('CREATE INDEX IDX_E20DBAF1DE2CF6E7 ON detallecarrito (carrito_id)');
         $this->addSql('CREATE INDEX IDX_E20DBAF17645698E ON detallecarrito (producto_id)');
-        $this->addSql('CREATE TABLE detallecompra (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, compra_id INTEGER NOT NULL, producto_id INTEGER NOT NULL, dcm_cantidad INTEGER NOT NULL, dcm_importe DOUBLE PRECISION NOT NULL, dcm_estado INTEGER NOT NULL, CONSTRAINT FK_CA8F9737F2E704D7 FOREIGN KEY (compra_id) REFERENCES compras (id) NOT DEFERRABLE INITIALLY IMMEDIATE, CONSTRAINT FK_CA8F97377645698E FOREIGN KEY (producto_id) REFERENCES producto (id) NOT DEFERRABLE INITIALLY IMMEDIATE)');
+        $this->addSql('CREATE TABLE detallecompra (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, compra_id INTEGER NOT NULL, producto_id INTEGER NOT NULL, dcm_cantidad INTEGER NOT NULL, dcm_importe DOUBLE PRECISION NOT NULL, dcm_estado INTEGER NOT NULL, dcm_descuento DOUBLE PRECISION DEFAULT NULL, dcm_importefinal DOUBLE PRECISION DEFAULT NULL, CONSTRAINT FK_CA8F9737F2E704D7 FOREIGN KEY (compra_id) REFERENCES compras (id) NOT DEFERRABLE INITIALLY IMMEDIATE, CONSTRAINT FK_CA8F97377645698E FOREIGN KEY (producto_id) REFERENCES producto (id) NOT DEFERRABLE INITIALLY IMMEDIATE)');
         $this->addSql('CREATE INDEX IDX_CA8F9737F2E704D7 ON detallecompra (compra_id)');
         $this->addSql('CREATE INDEX IDX_CA8F97377645698E ON detallecompra (producto_id)');
+        $this->addSql('CREATE TABLE detallefactura (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, factura_id INTEGER NOT NULL, producto_id INTEGER NOT NULL, df_cantidad INTEGER NOT NULL, df_importe DOUBLE PRECISION NOT NULL, df_descuento DOUBLE PRECISION DEFAULT NULL, df_importefinal DOUBLE PRECISION DEFAULT NULL, CONSTRAINT FK_6C00A42DF04F795F FOREIGN KEY (factura_id) REFERENCES factura (id) NOT DEFERRABLE INITIALLY IMMEDIATE, CONSTRAINT FK_6C00A42D7645698E FOREIGN KEY (producto_id) REFERENCES producto (id) NOT DEFERRABLE INITIALLY IMMEDIATE)');
+        $this->addSql('CREATE INDEX IDX_6C00A42DF04F795F ON detallefactura (factura_id)');
+        $this->addSql('CREATE INDEX IDX_6C00A42D7645698E ON detallefactura (producto_id)');
+        $this->addSql('CREATE TABLE factura (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, compra_id INTEGER DEFAULT NULL, cliente_id INTEGER NOT NULL, f_numfactura VARCHAR(16) NOT NULL, f_cantidadtotal INTEGER NOT NULL, f_importetotal DOUBLE PRECISION NOT NULL, f_descuentototal DOUBLE PRECISION DEFAULT NULL, f_importetotalfinal DOUBLE PRECISION DEFAULT NULL, f_fechacreacion DATETIME NOT NULL, CONSTRAINT FK_F9EBA009F2E704D7 FOREIGN KEY (compra_id) REFERENCES compras (id) NOT DEFERRABLE INITIALLY IMMEDIATE, CONSTRAINT FK_F9EBA009DE734E51 FOREIGN KEY (cliente_id) REFERENCES usuario (id) NOT DEFERRABLE INITIALLY IMMEDIATE)');
+        $this->addSql('CREATE UNIQUE INDEX UNIQ_F9EBA009F2E704D7 ON factura (compra_id)');
+        $this->addSql('CREATE INDEX IDX_F9EBA009DE734E51 ON factura (cliente_id)');
         $this->addSql('CREATE TABLE producto (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, usuario_id INTEGER NOT NULL, descuento_id INTEGER DEFAULT NULL, pr_nombre VARCHAR(50) NOT NULL, pr_categoria VARCHAR(50) NOT NULL, pr_stock INTEGER NOT NULL, pr_precio DOUBLE PRECISION NOT NULL, pr_imagenes CLOB DEFAULT NULL, pr_descripcion CLOB DEFAULT NULL, CONSTRAINT FK_A7BB0615DB38439E FOREIGN KEY (usuario_id) REFERENCES usuario (id) NOT DEFERRABLE INITIALLY IMMEDIATE, CONSTRAINT FK_A7BB0615F045077C FOREIGN KEY (descuento_id) REFERENCES descuento (id) NOT DEFERRABLE INITIALLY IMMEDIATE)');
         $this->addSql('CREATE INDEX IDX_A7BB0615DB38439E ON producto (usuario_id)');
         $this->addSql('CREATE INDEX IDX_A7BB0615F045077C ON producto (descuento_id)');
@@ -57,6 +63,8 @@ final class Version20240218145103 extends AbstractMigration
         $this->addSql('DROP TABLE descuento');
         $this->addSql('DROP TABLE detallecarrito');
         $this->addSql('DROP TABLE detallecompra');
+        $this->addSql('DROP TABLE detallefactura');
+        $this->addSql('DROP TABLE factura');
         $this->addSql('DROP TABLE producto');
         $this->addSql('DROP TABLE usuario');
         $this->addSql('DROP TABLE valoracion');

@@ -29,6 +29,12 @@ class carrito
     #[ORM\OneToMany(mappedBy: 'carrito', targetEntity: detallecarrito::class, orphanRemoval: true)]
     private Collection $detallescarrito;
 
+    #[ORM\Column(nullable: true)]
+    private ?float $c_descuentototal = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?float $c_importetotalfinal = null;
+
     public function __construct()
     {
         $this->detallescarrito = new ArrayCollection();
@@ -101,6 +107,30 @@ class carrito
                 $detallescarrito->setCarrito(null);
             }
         }
+
+        return $this;
+    }
+
+    public function getCDescuentototal(): ?float
+    {
+        return $this->c_descuentototal;
+    }
+
+    public function setCDescuentototal(?float $c_descuentototal): static
+    {
+        $this->c_descuentototal = $c_descuentototal;
+
+        return $this;
+    }
+
+    public function getCImportetotalfinal(): ?float
+    {
+        return $this->c_importetotalfinal;
+    }
+
+    public function setCImportetotalfinal(?float $c_importetotalfinal): static
+    {
+        $this->c_importetotalfinal = $c_importetotalfinal;
 
         return $this;
     }
