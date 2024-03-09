@@ -5,6 +5,7 @@ namespace App\Entity\Producto;
 use App\Entity\Carrito\detallecarrito;
 use App\Entity\Compras\detallecompra;
 use App\Entity\Descuento\descuento;
+use App\Entity\Factura\detallefactura;
 use App\Entity\Usuario\usuario;
 use App\Entity\Valoracion\valoracion;
 use App\Repository\Producto\productoRepository;
@@ -55,11 +56,15 @@ class producto
     #[ORM\OneToMany(mappedBy: 'producto', targetEntity: detallecompra::class)]
     private Collection $detallecompras;
 
+    #[ORM\OneToMany(mappedBy: 'producto', targetEntity: detallefactura::class)]
+    private Collection $detallefacturas;
+
     public function __construct()
     {
         $this->detallecarritos = new ArrayCollection();
         $this->valoraciones = new ArrayCollection();
         $this->detallecompras = new ArrayCollection();
+        $this->detallefacturas = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -247,6 +252,36 @@ class producto
             // set the owning side to null (unless already changed)
             if ($detallecompra->getProducto() === $this) {
                 $detallecompra->setProducto(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, detallefactura>
+     */
+    public function getDetallefacturas(): Collection
+    {
+        return $this->detallefacturas;
+    }
+
+    public function addDetallefactura(detallefactura $detallefactura): static
+    {
+        if (!$this->detallefacturas->contains($detallefactura)) {
+            $this->detallefacturas->add($detallefactura);
+            $detallefactura->setProducto($this);
+        }
+
+        return $this;
+    }
+
+    public function removeDetallefactura(detallefactura $detallefactura): static
+    {
+        if ($this->detallefacturas->removeElement($detallefactura)) {
+            // set the owning side to null (unless already changed)
+            if ($detallefactura->getProducto() === $this) {
+                $detallefactura->setProducto(null);
             }
         }
 

@@ -4,6 +4,7 @@ namespace App\Entity\Usuario;
 
 use App\Entity\Carrito\carrito;
 use App\Entity\Compras\compras;
+use App\Entity\Factura\factura;
 use App\Entity\Producto\producto;
 use App\Entity\Valoracion\valoracion;
 use App\Repository\Usuario\usuarioRepository;
@@ -73,11 +74,15 @@ class usuario implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'cliente', targetEntity: compras::class)]
     private Collection $compras;
 
+    #[ORM\OneToMany(mappedBy: 'cliente', targetEntity: factura::class)]
+    private Collection $facturas;
+
     public function __construct()
     {
         $this->productos = new ArrayCollection();
         $this->valoraciones = new ArrayCollection();
         $this->compras = new ArrayCollection();
+        $this->facturas = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -359,6 +364,36 @@ class usuario implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($compra->getCliente() === $this) {
                 $compra->setCliente(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, factura>
+     */
+    public function getFacturas(): Collection
+    {
+        return $this->facturas;
+    }
+
+    public function addFactura(factura $factura): static
+    {
+        if (!$this->facturas->contains($factura)) {
+            $this->facturas->add($factura);
+            $factura->setCliente($this);
+        }
+
+        return $this;
+    }
+
+    public function removeFactura(factura $factura): static
+    {
+        if ($this->facturas->removeElement($factura)) {
+            // set the owning side to null (unless already changed)
+            if ($factura->getCliente() === $this) {
+                $factura->setCliente(null);
             }
         }
 

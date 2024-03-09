@@ -2,6 +2,7 @@
 
 namespace App\Entity\Compras;
 
+use App\Entity\Factura\factura;
 use App\Entity\Usuario\usuario;
 use App\Repository\Compras\comprasRepository;
 use Doctrine\Common\Collections\ArrayCollection;
@@ -32,6 +33,15 @@ class compras
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $cm_fechacompra = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?float $cm_descuentototal = null;
+
+    #[ORM\Column(nullable: true)]
+    private ?float $cm_importetotalfinal = null;
+
+    #[ORM\OneToOne(mappedBy: 'compra', cascade: ['persist', 'remove'])]
+    private ?factura $factura = null;
 
     public function __construct()
     {
@@ -117,6 +127,52 @@ class compras
     public function setCmFechacompra(\DateTimeInterface $cm_fechacompra): static
     {
         $this->cm_fechacompra = $cm_fechacompra;
+
+        return $this;
+    }
+
+    public function getCmDescuentototal(): ?float
+    {
+        return $this->cm_descuentototal;
+    }
+
+    public function setCmDescuentototal(?float $cm_descuentototal): static
+    {
+        $this->cm_descuentototal = $cm_descuentototal;
+
+        return $this;
+    }
+
+    public function getCmImportetotalfinal(): ?float
+    {
+        return $this->cm_importetotalfinal;
+    }
+
+    public function setCmImportetotalfinal(?float $cm_importetotalfinal): static
+    {
+        $this->cm_importetotalfinal = $cm_importetotalfinal;
+
+        return $this;
+    }
+
+    public function getFactura(): ?factura
+    {
+        return $this->factura;
+    }
+
+    public function setFactura(?factura $factura): static
+    {
+        // unset the owning side of the relation if necessary
+        if ($factura === null && $this->factura !== null) {
+            $this->factura->setCompra(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($factura !== null && $factura->getCompra() !== $this) {
+            $factura->setCompra($this);
+        }
+
+        $this->factura = $factura;
 
         return $this;
     }
