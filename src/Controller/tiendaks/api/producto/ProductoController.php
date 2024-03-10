@@ -7,12 +7,14 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use App\Funciones\tiendaks\producto\ProductoFunciones;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/api/producto', name: 'app_api_producto_')]
 class ProductoController extends AbstractController
 {
-    
+    const ATTRIBUTES_TO_SERIALIZE = ['id', 'pr_nombre', 'pr_categoria','pr_stock', 'pr_precio'];
+
     #[Route('/mostrar/producto/listadodeapis', name: 'mostar_producto_listadodeapis')]
     public function mostrarProductoListadoDeApis(): Response
     {
@@ -39,7 +41,10 @@ class ProductoController extends AbstractController
     public function addProducto(Request $request, ProductoFunciones $productoFunciones): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
-        $respuesta = $productoFunciones->añadirproducto($data);
-        return $this->json($respuesta, Response::HTTP_OK,[]);
+        $usuario = $this->getUser();
+        $respuesta = $productoFunciones->añadirproducto($data, $usuario);
+        return $this->json($respuesta, Response::HTTP_CREATED, [], [
+            'attributes' => self::ATTRIBUTES_TO_SERIALIZE
+        ]);
     }
 }

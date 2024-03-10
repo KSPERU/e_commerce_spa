@@ -17,5 +17,14 @@ export const useProductoPorCategoriaContenedor = defineStore('productoPorCategor
             console.log("Un error" + error.response.data)
         }
       },
+      async agregarProducto(producto) {
+        try {
+            const response = await axios.post('/api/producto/api/productos', producto);
+            // Después de agregar el producto, actualizar la lista de productos
+            console.log("Producto agregado:", response.data);
+        } catch (error) {
+            console.error('Error al agregar producto:', error);
+        }
+      },
     },
   });

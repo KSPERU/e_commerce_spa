@@ -322,15 +322,18 @@
 });
 
 const submitForm = () => {
-    axios.post('/api/producto/api/productos', producto.value)
-        .then(response => {
-        console.log(response.data);
-        
-        })
-        .catch(error => {
-        console.error('Error al agregar producto:', error);
-        });
-};
+    productoPorCategoriaContenedor.agregarProducto(producto.value);
+
+    producto.value = {
+        pr_nombre: '',
+        pr_categoria: '',
+        pr_stock: null,
+        pr_precio: null,
+        pr_descripcion: ''
+    };
+    console.log("Hola")
+    actualizarTabla(busqueda, direccion, precio_inicio, precio_fin, categoriasSeleccionadas);
+  };
 </script>
 
 <style scoped>

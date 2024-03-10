@@ -4,6 +4,7 @@ namespace App\Funciones\tiendaks\producto;
 
 use Exception;
 use App\Entity\Producto\producto;
+use App\Entity\Usuario\usuario;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\Usuario\usuarioRepository;
 use App\Repository\Producto\productoRepository;
@@ -414,9 +415,8 @@ class ProductoFunciones
         return $extracto;
     }
 
-    public function añadirproducto(array $data){
+    public function añadirproducto(array $data,usuario $usuario){
         try {
-            $usuario = $this->usuario;
             $producto = new producto();
             $producto->setPrNombre($data['pr_nombre']);
             $producto->setPrCategoria($data['pr_categoria']);
