@@ -49,6 +49,6 @@ class RegisterComponent extends AbstractController
         $entityManager->flush();
 
         $this->addFlash('success', 'Registrado!');
-        return $this->redirectToRoute('app_frontend_inicio_mostrar_inicio');
+        return $this->redirectToRoute('app_tiendaks_frontend_inicio_inicio_mostrarinicio');
     }
 }
