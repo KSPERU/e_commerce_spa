@@ -27,7 +27,7 @@
                                 @change="($event) => onInputChange($event, producto.id, producto.prstock)">
                             </div>
                             <div class="flex-md-row flex-column w-100 text-md-start" style="color: #17172B;">
-                                <text class="h6">S/. {{producto.dcImporte}}</text> <br />  
+                                <text class="h6">S/. {{producto.dcImporteFinal}}</text> <br />  
                                 <small class="text-muted text-nowrap">S/. {{producto.prPrecio}}</small>
                             </div>  
                             <div class="ms-md-3">
@@ -54,13 +54,13 @@
                     <p class="mb-2">S/. {{carritos.cImportetotal}}</p>
                     </div>
                     <div class="d-flex justify-content-between">
-                    <p class="mb-2">Envio:</p>
-                    <p class="mb-2">S/. 0</p>
+                    <p class="mb-2">Descuento total:</p>
+                    <p class="mb-2">S/. {{ carritos.cDescuentos }}</p>
                     </div>
                     <hr />
                     <div class="d-flex justify-content-between">
                     <p class="mb-2">Total:</p>
-                    <p class="mb-2 fw-bold">S/. {{carritos.cImportetotal}}</p>
+                    <p class="mb-2 fw-bold">S/. {{carritos.cImportetotalFinal}}</p>
                     </div>
                 </div>
                 </div>

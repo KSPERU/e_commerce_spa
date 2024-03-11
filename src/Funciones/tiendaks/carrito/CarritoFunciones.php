@@ -12,20 +12,24 @@ use Symfony\Component\HttpFoundation\RequestStack;
 use App\Funciones\tiendaks\usuario\UsuarioFunciones;
 use App\Repository\Carrito\detallecarritoRepository;
 use App\Funciones\tiendaks\producto\ProductoFunciones;
+use App\Repository\Descuento\descuentoRepository;
+use App\Repository\Producto\productoRepository;
 
 class CarritoFunciones
 {
     private $detallecarritoRepository;
+    private $descuentoRepository;
     private $entityManager;
     private $usuario;
     private $funcionesproducto;
 
-    public function __construct(private RequestStack $requestStack,ProductoFunciones $productoFunciones, UsuarioFunciones $usuarioFunciones, detallecarritoRepository $detallecarritoRepository,EntityManagerInterface $entityManager)
+    public function __construct(private RequestStack $requestStack,ProductoFunciones $productoFunciones, UsuarioFunciones $usuarioFunciones, detallecarritoRepository $detallecarritoRepository,descuentoRepository $descuentoRepository, EntityManagerInterface $entityManager)
     {
         $this->detallecarritoRepository = $detallecarritoRepository;
         $this->usuario = $usuarioFunciones->obtenerUsuario();
         $this->entityManager = $entityManager;
         $this->funcionesproducto = $productoFunciones;
+        $this->descuentoRepository = $descuentoRepository;
     }
 
     public function agregarProducto(int $idproducto, int $cantidad){
@@ -99,20 +103,29 @@ class CarritoFunciones
             if(empty($detallescarrito)){
                 return $this->agregarProductoSesionOperacion(2,$cantidad,$producto); 
         }else{
-            $importe = $cantidad*$producto->getPrPrecio();
+            
             $existe = null;
             foreach ($detallescarrito as $key => $detalle) {
                 if ($detalle['id_producto'] == $idproducto) {
-                    $detallescarrito[$key]['dcCantidad'] += $cantidad;
-                    $detallescarrito[$key]['dcImporte'] += $importe;
+                    $cantidadfinal = $cantidad + $detallescarrito[$key]['dcCantidad'];
+                    $importe = $cantidad*$producto->getPrPrecio();
+                    $importeacumulado = $cantidadfinal*$producto->getPrPrecio();
+                    $descuento = ($cantidadfinal)* $this->ObtenerDescuentoProducto($producto);
+                    $descuentototal = $descuento - $detallescarrito[$key]['dcDescuento'];
+                    $detallescarrito[$key]['dcCantidad'] = $cantidadfinal;
+                    $detallescarrito[$key]['dcImporte'] = $importeacumulado;
+                    $detallescarrito[$key]['dcDescuento'] = $descuento;
+                    $detallescarrito[$key]['dcImporteFinal'] = $detallescarrito[$key]['dcImporte'] - $detallescarrito[$key]['dcDescuento'] ;
+                    $carrito['cImportetotal'] += $importe;
+                    $carrito['cCantidad'] += $cantidad;
+                    $carrito['cDescuentos'] += $descuentototal;
+                    $carrito['cImportetotalFinal'] = $carrito['cImportetotal'] - $carrito['cDescuentos'];
                     $existe = true;
                     break;
                 }
             }
             if($existe)
             {
-                    $carrito['cImportetotal'] += $importe;
-                    $carrito['cCantidad'] += $cantidad;
                     $session->set('detallescarrito', $detallescarrito);
                     $session->set('carrito', $carrito);
                     return $this->visualizarCarritosession();
@@ -127,12 +140,17 @@ class CarritoFunciones
 
     private function agregarProductoSesionOperacion(int $tipo,int $cantidad, Producto $producto){
         $importe = $cantidad * $producto->getPrPrecio();
-        $session = $this->requestStack->getSession();
+        $descuento = $cantidad * ($this->ObtenerDescuentoProducto($producto));
         
+        //$descuento = $cantidad * $producto->getDescuento()->getDsValor();
+        $session = $this->requestStack->getSession();
+        $importefinal = $importe - $descuento;
         if($tipo == 1){
             $carrito = [
                 'cImportetotal' => $importe,
                 'cCantidad' => $cantidad,
+                'cDescuentos' => $descuento,
+                'cImportetotalFinal' => $importefinal
             ];
             $detalleCarrito = [
                 [
@@ -143,7 +161,9 @@ class CarritoFunciones
                     'prPrecio' => $producto->getPrPrecio(),
                     'prImagenes' => json_decode($producto->getPrImagenes(), true),
                     'dcCantidad' => $cantidad,
-                    'dcImporte' => $importe
+                    'dcImporte' => $importe,
+                    'dcDescuento' => $descuento,
+                    'dcImporteFinal' => $importefinal
                 ],
                 
             ];
@@ -162,10 +182,14 @@ class CarritoFunciones
                 'prPrecio' => $producto->getPrPrecio(),
                 'prImagenes' => json_decode($producto->getPrImagenes(), true),
                 'dcCantidad' => $cantidad,
-                'dcImporte' => $importe
+                'dcImporte' => $importe,
+                'dcDescuento' => $descuento,
+                'dcImporteFinal' => $importefinal
             ];
             $carrito['cImportetotal'] += $importe;
             $carrito['cCantidad'] += $cantidad;
+            $carrito['cDescuentos'] += $descuento;
+            $carrito['cImportetotalFinal'] += $importefinal;
             $detallesCarrito[]=$nuevoDetalleCarrito;
             $session->set('carrito', $carrito);
             $session->set('detallescarrito',$detallesCarrito);
@@ -193,26 +217,43 @@ class CarritoFunciones
     private function AgregarProductoOperacion(int $tipo,usuario $usuario, Carrito $carrito,detallecarrito $detallecarrito, Producto $producto, int $cantidad)
     {
         $importe = $cantidad * $producto->getPrPrecio();
-        
+        $cantidadtotaldet = $cantidad + $detallecarrito->getDcCantidad();
+        $descuento = $cantidad * $this->ObtenerDescuentoProducto($producto);
+        $descuentototaldet = $cantidadtotaldet * $this->ObtenerDescuentoProducto($producto);
+        $descuentototalcarr= $descuentototaldet - $detallecarrito->getDcDescuento();
         try{
 
             if($tipo == 1){         
                 $carrito->setCCantidadtotal($cantidad);
                 $carrito->setCImportetotal($importe);
                 $carrito->setUsuario($usuario);
+                $carrito->setCDescuentototal($descuento);
+                $carrito->setCImportetotalfinal($carrito->getCImportetotal() - $carrito->getCDescuentototal());
             } else{
                 $carrito->setCCantidadtotal($carrito->getCCantidadtotal() + $cantidad);
                 $carrito->setCImportetotal($carrito->getCImportetotal() + $importe);
+                if($tipo == 3){
+                    $carrito->setCDescuentototal($carrito->getCDescuentototal()+$descuento);
+                    
+                }else{
+                    $carrito->setCDescuentototal($carrito->getCDescuentototal()+$descuentototalcarr);
+                }
+                $carrito->setCImportetotalfinal($carrito->getCImportetotal() - $carrito->getCDescuentototal());
             }
             if($tipo == 1 || $tipo == 3){
                 $detallecarrito->setCarrito($carrito);
                 $detallecarrito->setProducto($producto);
                 $detallecarrito->setDcCantidad($cantidad);
                 $detallecarrito->setDcImporte($importe);
+                $detallecarrito->setDcDescuento($descuento);
+                $detallecarrito->setDcImportefinal($detallecarrito->getDcImporte()-$detallecarrito->getDcDescuento());
                 $carrito->addDetallescarrito($detallecarrito);
+                
             }else{
                 $detallecarrito->setDcCantidad($detallecarrito->getDcCantidad()+$cantidad);
                 $detallecarrito->setDcImporte($detallecarrito->getDcImporte() + $importe);
+                $detallecarrito->setDcDescuento($descuentototaldet);
+                $detallecarrito->setDcImportefinal($detallecarrito->getDcImporte() - $detallecarrito->getDcDescuento());
             }   
             
     
@@ -255,7 +296,10 @@ class CarritoFunciones
     private function especificarDatos(carrito $carrito, Collection $detallescarrito){
         $carritoespecificado = [
             'id' => $carrito->getId(),
-            'cImportetotal' => $carrito->getCImportetotal()
+            'cImportetotal' => $carrito->getCImportetotal(),
+            'cCantidadtotal' => $carrito->getCCantidadtotal(),
+            'cDescuentos' => $carrito->getCDescuentototal(),
+            'cImportetotalFinal' => $carrito->getCImportetotalfinal()
         ];
     
         $detallescarritoespecificado = [];
@@ -270,6 +314,8 @@ class CarritoFunciones
                 'prImagenes' => json_decode($producto->getPrImagenes(), true),
                 'dcCantidad' => $detallecarrito->getDcCantidad(),
                 'dcImporte' => $detallecarrito->getDcImporte(),
+                'dcDescuento' => $detallecarrito->getDcDescuento(),
+                'dcImporteFinal' => $detallecarrito->getDcImportefinal(),
             ];
         }
     
@@ -344,6 +390,9 @@ class CarritoFunciones
         
         foreach ($detallesCarrito as $key => $detalle) {
             if ($detalle['id'] == $idetalle) {
+                $producto = $this->funcionesproducto->obtenerProductoPorId(2);
+                $descuento = ($cantidad)* $this->ObtenerDescuentoProducto($producto);
+                $descuentototal = $descuento - $detalle['dcDescuento'];
                 $difcantidad = $cantidad - $detalle['dcCantidad'];
                 if ($difcantidad == 0) {
                     return $this->visualizarCarritosession();
@@ -353,12 +402,20 @@ class CarritoFunciones
                 $difprecio = $detalle['prPrecio'] * $difcantidad;
                 $carrito['cImportetotal'] += $difprecio;
                 $carrito['cCantidad'] += $difcantidad;
-    
+                $carrito['cDescuentos'] += $descuentototal;
+                if($carrito['cDescuentos'] < 0){
+                    $carrito['cDescuentos'] = 0;
+                }
+                $carrito['cImportetotalFinal'] = $carrito['cImportetotal'] - $carrito['cDescuentos'];
+
                 if ($cantidad == 0) {
                     unset($detallesCarrito[$key]);
                 } else {
                     $detallesCarrito[$key]['dcCantidad'] = $cantidad;
                     $detallesCarrito[$key]['dcImporte'] = $cantidad * $detalle['prPrecio'];
+                    $detallesCarrito[$key]['dcDescuento'] = $descuento;
+                    $detallesCarrito[$key]['dcImporteFinal'] = $detallesCarrito[$key]['dcImporte'] - $detallesCarrito[$key]['dcDescuento'];
+
                 }
     
                 $session->set('detallescarrito', $detallesCarrito);
@@ -378,6 +435,8 @@ class CarritoFunciones
         $producto = $detallecarrito->getProducto();
         $difcantidad = $cantidad - $detallecarrito->getDcCantidad();
         $difprecio = $producto->getPrPrecio() * $difcantidad;
+        $descuento = $cantidad * $this->ObtenerDescuentoProducto($producto);
+        $descuentototalcarr = $descuento - $detallecarrito->getDcDescuento();
         if($difcantidad > $producto->getPrStock()){
             return [
                 'success' => false,
@@ -391,30 +450,16 @@ class CarritoFunciones
         }
         $carrito->setCCantidadtotal($carrito->getCCantidadtotal() + $difcantidad);
         $carrito->setCImportetotal($carrito->getCImportetotal() + $difprecio);
+        $carrito->setCDescuentototal($carrito->getCDescuentototal()+$descuentototalcarr);
+        $carrito->setCImportetotalfinal($carrito->getCImportetotal()-$carrito->getCDescuentototal());
         $detallecarrito->setDcImporte($producto->getPrPrecio() * $cantidad);
         $detallecarrito->setDcCantidad($cantidad);
+        $detallecarrito->setDcDescuento($descuento);
+        $detallecarrito->setDcImportefinal($detallecarrito->getDcImporte()-$detallecarrito->getDcDescuento());
 
         if ($detallecarrito->getDcCantidad() <= 0) {
             $carrito->removeDetallescarrito($detallecarrito);
             $this->entityManager->flush();
-            // $carritoVisualizado = $this->visualizarCarrito();
-            // $response = [
-            //     'success' => true,
-            //     'message' => 'Producto eliminado del carrito exitosamente.',
-            // ];
-
-            // if ($carrito->getDetallescarrito()->isEmpty()) {
-            //     $response['estado'] = 'El carrito está vacío';
-            //     $response['carrito'] = [
-            //         'id' => $carrito->getId(),
-            //         'cImportetotal' => $carrito->getCImportetotal()
-            //     ];
-
-            // } else {
-            //     $response['carrito'] = $carritoVisualizado['carrito'];
-            //     $response['detallescarrito'] = $carritoVisualizado['detallescarrito'];
-            // }
-
             return $this->visualizarCarrito();
         }
 
@@ -427,7 +472,26 @@ class CarritoFunciones
         ];
     }
     
-    public function DevolverEstadoCarrito(){
-        
+    private function ObtenerDescuentoProducto(Producto $producto){
+
+        try{
+            $descuento = $producto->getDescuento();
+            if($descuento !== null){
+                $descuentoestado = $descuento->isDsEstado();
+                if($descuentoestado === true){
+                    $descuentovalor = $descuento->getDsValor();
+                    $preciopr = $producto->getPrPrecio();
+                    $descuentofinal = $descuentovalor * $preciopr;
+                    return $descuentofinal;
+                }
+                return 0;
+            }else{
+                return 0;
+            }
+            
+            
+        }catch (\Exception $e) {
+            return $e->getMessage();
+        }
     }
 }

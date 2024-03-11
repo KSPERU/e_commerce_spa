@@ -46,12 +46,12 @@
             <div class="clearfix"></div>
             <div class="text-secondary">
               <p class="float-start d-inline m-0">Descuentos</p>
-              <p class="float-end d-inline m-0">S/. 0.00</p>
+              <p class="float-end d-inline m-0">S/. {{carritos.cDescuentos}}</p>
             </div>
             <div class="clearfix"></div>
             <div class="resume-total">
               <p class="float-start d-inline m-0">TOTAL</p>
-              <p class="float-end d-inline m-0">S/. {{carritos.cImportetotal}}</p>
+              <p class="float-end d-inline m-0">S/. {{carritos.cImportetotalFinal}}</p>
             </div>
             <div class="clearfix"></div>
             <div class="mt-3">
