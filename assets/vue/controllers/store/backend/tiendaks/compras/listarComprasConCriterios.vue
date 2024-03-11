@@ -16,16 +16,21 @@
                             <strong>Importe Total:</strong> {{ compra.cm_importetotal }}<br>
                             <strong>Fecha Compra:</strong> {{ new Date(compra.cm_fechacompra).toLocaleDateString() }}
                         </p>
-                        <button
-                            class="btn btn-primary w-100"
-                            data-bs-toggle="collapse"
-                            :data-bs-target="'#detallesCompra' + compra.id"
-                            role="button"
-                            aria-expanded="false"
-                            aria-controls="detallesCompra"
-                        >
-                            Ver Detalles
-                        </button>
+                        <div class="d-flex">
+                            <button
+                                class="btn btn-primary w-100"
+                                data-bs-toggle="collapse"
+                                :data-bs-target="'#detallesCompra' + compra.id"
+                                role="button"
+                                aria-expanded="false"
+                                aria-controls="detallesCompra"
+                            >
+                                Ver Detalles
+                            </button>
+                            <button class="btn btn-primary w-100" @click="generarFactura(compra.id)">
+                                Factura
+                            </button>
+                        </div>
                     </div>
                 </div>
 
@@ -56,6 +61,7 @@
     import { onMounted, computed } from "vue";
     import { useComprasContenedor } from '../compras/comprasContenedor';
     import { useUsuarioContenedor } from '../usuario/usuarioContenedor';
+    import axios from 'axios';
     import { ref } from 'vue';
 
     const currentURL = window.location.href;
@@ -69,6 +75,24 @@
     const compras = computed(() => {
         return comprasContenedor.COMPRAS
     })
+
+    const generarFactura = async (compraId) => {
+        try {
+            console.log("compraid", compraId)
+            const response = await axios.post('/api/compras/mostrar/compras/factura', { id_compra: compraId });
+            if (response.status === 200) {
+                console.log('Factura generada correctamente', response.data);
+                const blob = new Blob([response.data], { type: 'application/pdf' });
+                console.log('blob', blob);
+                const url = URL.createObjectURL(blob);
+                window.open(url, '_blank');
+            } else {
+                console.error('Error al obtener la factura:', response.statusText);
+            }
+        } catch (error) {
+            console.error('Error al generar la factura:', error);
+        }
+    };
     
     onMounted(async () => {
         await usuarioContenedor.obtenerIdUsuarioLogueado();

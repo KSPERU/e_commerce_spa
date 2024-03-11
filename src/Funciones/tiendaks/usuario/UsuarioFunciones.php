@@ -89,4 +89,13 @@ class UsuarioFunciones
             echo 'Error al buscar el usuario en la base de datos: ' . $e->getMessage();
         }
     }
+
+    public function obtenerIdUsuarioLogueado(){
+        $usuarioactual = $this->obtenerUsuario();
+        $idusuario = $usuarioactual->getId();
+        return [
+            'success' => true,
+            'idusuario' => $idusuario,
+        ];
+    }
 }

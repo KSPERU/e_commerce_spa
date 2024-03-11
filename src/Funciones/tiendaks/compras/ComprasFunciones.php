@@ -2,9 +2,13 @@
 
 namespace App\Funciones\tiendaks\compras;
 
+use Fpdf\Fpdf;
+use Dompdf\Dompdf;
+use Dompdf\Options;
 use App\Entity\Compras\compras;
 use App\Entity\Compras\detallecompra;
 use Doctrine\ORM\EntityManagerInterface;
+use SebastianBergmann\Environment\Console;
 use App\Repository\Compras\comprasRepository;
 use App\Repository\Usuario\usuarioRepository;
 use App\Repository\Compras\detallecompraRepository;
@@ -19,11 +23,18 @@ class ComprasFunciones
     private $productoFunciones;
     private $entityManager;
     private $usuario;
+    private $dompdf;
+    private $fpdf;
 
     public function __construct(UsuarioFunciones $usuarioFunciones,EntityManagerInterface $entityManager)
     {
         $this->usuario = $usuarioFunciones->obtenerUsuario();
         $this->entityManager = $entityManager;
+        $options = new Options();
+        $options->set('isHtml5ParserEnabled', true);
+        $options->set('isRemoteEnabled', true);
+        $this->dompdf = new Dompdf($options);
+        $this->fpdf = new Fpdf();
     }
 
     public function setUsuarioRepository(usuarioRepository $usuarioRepository){
@@ -140,5 +151,34 @@ class ComprasFunciones
             'success' => true,
             'message' => 'Compra realizada con exito.',
         ];
+    }
+
+    public function crearFactura(int $idCompra): string
+    {
+        $compra = $this->comprasRepository->findOneBy([
+            'id' => $idCompra,
+        ]);
+        if (!$compra) {
+            throw new \Exception("Compra no encontrada.");
+        }
+        $contenidoPdf = $this->generarContenidoPdf($compra);
+        echo ($contenidoPdf);
+        $this->dompdf->loadHtml('Hello world');
+        $this->dompdf->render();
+
+        // $this->fpdf->AddPage();
+        // $this->fpdf->SetFont('Arial','',10);
+        // $this->fpdf->Cell(0,10,'Hello FPDF',1,0,'C');
+        // $prueba = $this->fpdf->output('S');
+        return $this->dompdf->output();;
+    }
+
+    private function generarContenidoPdf(Compras $compra): string
+    {
+        $contenido = "Número de compra: " . $compra->getId() . "\n";
+        $contenido .= "Fecha de compra: " . $compra->getCmFechacompra()->format('Y-m-d') . "\n";
+        $contenido .= "Importe Total: " . $compra->getCmImportetotal(). "\n";
+        $contenido .= "Importe Total Final: " . $compra->getCmImportetotalfinal(). "\n";
+        return $contenido;
     }
 }
