@@ -79,13 +79,11 @@
     const generarFactura = async (compraId) => {
         try {
             console.log("compraid", compraId)
-            const response = await axios.post('/api/compras/mostrar/compras/factura', { id_compra: compraId });
+            const response = await axios.post('/api/compras/mostrar/compras/factura', { id_compra: compraId }, { responseType: 'blob' });
             if (response.status === 200) {
-                console.log('Factura generada correctamente', response.data);
-                const blob = new Blob([response.data], { type: 'application/pdf' });
-                console.log('blob', blob);
-                const url = URL.createObjectURL(blob);
+                const url = URL.createObjectURL(response.data);
                 window.open(url, '_blank');
+                console.log('Factura generada correctamente', response.data);
             } else {
                 console.error('Error al obtener la factura:', response.statusText);
             }
