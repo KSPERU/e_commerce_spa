@@ -97,8 +97,8 @@
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <div class="row">
-              <div class="col-7 p-3">
+            <div class="row d-flex d-lg-flex flex-column-reverse flex-lg-row">
+              <div class="col-12 col-lg-7 p-3">
                 <div class="row">
                   <div class="col-8">
                     <div class="card p-3 h-100">
@@ -123,7 +123,7 @@
                   <p class="m-0">+51 999 888 777</p>
                 </div>
               </div>
-              <div class="col-5 p-3">
+              <div class="col-12 col-lg-5 p-3">
                 <div class="card p-3 px-4">
                   <div class="text-end my-2">
                       <span
@@ -174,7 +174,7 @@
             </div>
             <div class="row mt-3 ps-3">
               <h6 class="fw-bold">Otros productos del vendedor</h6>
-              <div class="row row-cols-4">
+              <div class="row row-cols-2 row-lg-cols-4">
                 
                 <div class="px-2" v-for="i in 4" :key="i">
                     <div class="card h-100 px-2 card-default">
