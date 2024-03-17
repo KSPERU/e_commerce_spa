@@ -6,6 +6,8 @@ use Fpdf\Fpdf;
 use App\Entity\Compras\compras;
 use App\Entity\Factura\factura;
 use App\Entity\Compras\detallecompra;
+use App\Entity\Factura\detallefactura;
+use App\Entity\Usuario\usuario;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\Compras\comprasRepository;
 use App\Repository\Factura\facturaRepository;
@@ -157,31 +159,48 @@ class ComprasFunciones
         ];
     }
 
+    private function crearnuevafactura(compras $compra)
+    {
+        $factura = new factura;
+        $factura->setCompra($compra);
+        $factura->setCliente($compra->getCliente());
+        $factura->setFNumfactura($compra->getId());
+        $factura->setFCantidadtotal($compra->getCmCantidadtotal());
+        $factura->setFImportetotal($compra->getCmImportetotal());
+        $factura->setFDescuentototal($compra->getCmDescuentototal());
+        $factura->setFImportetotalfinal($compra->getCmImportetotalfinal());
+        $factura->setFFechacreacion(new DateTime());
+        $this->entityManager->persist($factura);
+        $detallesCompra = $compra->getDetallecompras();
+        foreach ($detallesCompra as $detalleCompra) {
+            $detalleFactura = new detallefactura();
+            $detalleFactura->setFactura($factura);
+            $detalleFactura->setProducto($detalleCompra->getProducto());
+            $detalleFactura->setDfCantidad($detalleCompra->getDcmCantidad());
+            $detalleFactura->setDfImporte($detalleCompra->getDcmImporte());
+            $detalleFactura->setDfDescuento($detalleCompra->getDcmDescuento());
+            $detalleFactura->setDfImportefinal($detalleCompra->getDcmImportefinal());
+            $this->entityManager->persist($detalleFactura);
+        }
+        $this->entityManager->flush();
+        return $factura;
+    }
+    
     public function crearFactura(int $idCompra): string
     {
+        $usuario = $this->usuario;
         $compra = $this->comprasRepository->findOneBy([
             'id' => $idCompra,
         ]);
         $factura = $compra->getFactura();
-
         if (!$factura) {
-            $factura = new factura;
-            $factura->setCompra($compra);
-            $factura->setCliente($compra->getCliente());
-            $factura->setFNumfactura($compra->getId());
-            $factura->setFCantidadtotal($compra->getCmCantidadtotal());
-            $factura->setFImportetotal($compra->getCmImportetotal());
-            $factura->setFDescuentototal($compra->getCmDescuentototal());
-            $factura->setFImportetotalfinal($compra->getCmImportetotalfinal());
-            $factura->setFFechacreacion(new DateTime());
-            $this->entityManager->persist($factura);
-            $this->entityManager->flush();
+            $factura = $this->crearnuevafactura($compra);
         }
-        $contenidoPdf = $this->generarContenidoPdf($factura);
+        $contenidoPdf = $this->generarContenidoPdf($usuario, $factura);
         return $contenidoPdf;
     }
 
-    private function generarContenidoPdf(factura $factura): string //compras $compras       factura $factura
+    private function generarContenidoPdf(usuario $usuario, factura $factura): string
     {
         $pdf = new FPDF($orientation='P',$unit='mm');
         $pdf->AddPage();
@@ -189,87 +208,76 @@ class ComprasFunciones
         $textypos = 5;
         $pdf->setY(12);
         $pdf->setX(10);
-        // Agregamos los datos de la empresa
-        $pdf->Cell(5,$textypos,"NOMBRE DE LA EMPRESA");
+        // Agregamos los datos del cliente
+        $pdf->Cell(5,$textypos,"TIENDA KS");
         $pdf->SetFont('Arial','B',10);    
         $pdf->setY(30);$pdf->setX(10);
-        $pdf->Cell(5,$textypos,"DE:");
+        $pdf->Cell(5,$textypos,"CLIENTE:");
         $pdf->SetFont('Arial','',10);    
         $pdf->setY(35);$pdf->setX(10);
-        $pdf->Cell(5,$textypos,"Tienda Ks");
+        $pdf->Cell(5,$textypos,"Nombre:");
         $pdf->setY(40);$pdf->setX(10);
-        $pdf->Cell(5,$textypos,"Av Alcanfores");
+        $pdf->Cell(5,$textypos,"DNI:");
         $pdf->setY(45);$pdf->setX(10);
-        $pdf->Cell(5,$textypos,"12345678");
+        $pdf->Cell(5,$textypos,"Telefono:");
         $pdf->setY(50);$pdf->setX(10);
-        $pdf->Cell(5,$textypos,"ks@gmail.com");
-
-        // Agregamos los datos del cliente
-        $pdf->SetFont('Arial','B',10);    
-        $pdf->setY(30);$pdf->setX(75);
-        $pdf->Cell(5,$textypos,"PARA:");
+        $pdf->Cell(5,$textypos,"Email:");
+        // Espaciado para los datos del cliente
         $pdf->SetFont('Arial','',10);    
-        $pdf->setY(35);$pdf->setX(75);
-        $pdf->Cell(5,$textypos,"Nombre del cliente");
-        $pdf->setY(40);$pdf->setX(75);
-        $pdf->Cell(5,$textypos,"Direccion del cliente");
-        $pdf->setY(45);$pdf->setX(75);
-        $pdf->Cell(5,$textypos,"Telefono del cliente");
-        $pdf->setY(50);$pdf->setX(75);
-        $pdf->Cell(5,$textypos,"Email del cliente");
+        $pdf->setY(35);$pdf->setX(28);
+        $pdf->Cell(5,$textypos,$usuario->getUNombres());
+        $pdf->setY(40);$pdf->setX(28);
+        $pdf->Cell(5,$textypos,$usuario->getUDni());
+        $pdf->setY(45);$pdf->setX(28);
+        $pdf->Cell(5,$textypos,$usuario->getUTelefono());
+        $pdf->setY(50);$pdf->setX(28);
+        $pdf->Cell(5,$textypos,$usuario->getUCorreo());
 
         // Agregamos los datos del cliente
         $pdf->SetFont('Arial','B',10);    
-        $pdf->setY(30);$pdf->setX(135);
+        $pdf->setY(30);$pdf->setX(110);
         $pdf->Cell(5,$textypos,"FACTURA #");
+        $pdf->setY(30);$pdf->setX(131);
+        $pdf->Cell(5,$textypos,$factura->getFNumfactura());
         $pdf->SetFont('Arial','',10);    
-        $pdf->setY(35);$pdf->setX(135);
-        $pdf->Cell(5,$textypos, $factura->getFFechacreacion()->format('Y-m-d'), 0, 1);
-        $pdf->setY(40);$pdf->setX(135);
-        $pdf->Cell(5,$textypos,"Vencimiento: 11/MAR/2024");
-        $pdf->setY(45);$pdf->setX(135);
-        $pdf->Cell(5,$textypos,"");
-        $pdf->setY(50);$pdf->setX(135);
-        $pdf->Cell(5,$textypos,"");
+        $pdf->setY(35);$pdf->setX(110);
+        $pdf->Cell(5,$textypos, "FECHA DE FACTURACION:");
+        $pdf->setY(40);$pdf->setX(110);
+        $pdf->Cell(5,$textypos,$factura->getFFechacreacion()->format('Y-m-d'), 0, 1);
 
-        /// Apartir de aqui empezamos con la tabla de productos
+       /// Apartir de aqui empezamos con la tabla de productos
         $pdf->setY(60);$pdf->setX(135);
-            $pdf->Ln();
+        $pdf->Ln();
         /////////////////////////////
         //// Array de Cabecera
-        $header = array("Cod.", "Descripcion","Cant.","Precio","Total");
-        //// Arrar de Productos
-        $products = array(
-            array("0010", "Producto 1",2,120,0),
-            array("0024", "Producto 2",5,80,0),
-            array("0001", "Producto 3",1,40,0),
-            array("0001", "Producto 3",5,80,0),
-            array("0001", "Producto 3",4,30,0),
-            array("0001", "Producto 3",7,80,0),
-        );
-            // Column widths
-            $w = array(20, 95, 20, 25, 25);
-            // Header
-            for($i=0;$i<count($header);$i++)
-                $pdf->Cell($w[$i],7,$header[$i],1,0,'C');
+        $header = array("Producto", "Cantidad", "Importe", "Descuento", "Importe Final");
+
+        //// Array de Productos
+        $detalleFacturas = $factura->getDetallefacturas();
+
+        // Column widths
+        $w = array(95, 20, 25, 25, 25);
+
+        // Header
+        for ($i = 0; $i < count($header); $i++) {
+            $pdf->Cell($w[$i], 7, $header[$i], 1, 0, 'C');
+        }
+        $pdf->Ln();
+
+        // Data
+        $total = 0;
+        foreach ($detalleFacturas as $detalleFactura) {
+            $pdf->Cell($w[0], 6, $detalleFactura->getProducto()->getPrNombre(), 1);
+            $pdf->Cell($w[1], 6, number_format($detalleFactura->getDfCantidad()), 1, 0, 'R');
+            $pdf->Cell($w[2], 6, "$ " . number_format($detalleFactura->getDfImporte(), 2, ".", ","), 1, 0, 'R');
+            $pdf->Cell($w[3], 6, "$ " . number_format($detalleFactura->getDfDescuento(), 2, ".", ","), 1, 0, 'R');
+            $pdf->Cell($w[4], 6, "$ " . number_format($detalleFactura->getDfImportefinal(), 2, ".", ","), 1, 0, 'R');
             $pdf->Ln();
-            // Data
-            $total = 0;
-            foreach($products as $row)
-            {
-                $pdf->Cell($w[0],6,$row[0],1);
-                $pdf->Cell($w[1],6,$row[1],1);
-                $pdf->Cell($w[2],6,number_format($row[2]),'1',0,'R');
-                $pdf->Cell($w[3],6,"$ ".number_format($row[3],2,".",","),'1',0,'R');
-                $pdf->Cell($w[4],6,"$ ".number_format($row[3]*$row[2],2,".",","),'1',0,'R');
-
-                $pdf->Ln();
-                $total+=$row[3]*$row[2];
-
-            }
+            $total += $detalleFactura->getDfImportefinal(); // Actualizar el total
+        }
         /////////////////////////////
         //// Apartir de aqui esta la tabla con los subtotales y totales
-        $yposdinamic = 60 + (count($products)*10);
+        $yposdinamic = 60 + (count($detalleFacturas)*10);
 
         $pdf->setY($yposdinamic);
         $pdf->setX(235);
@@ -278,8 +286,7 @@ class ComprasFunciones
         $header = array("", "");
         $data2 = array(
             array("Subtotal",$factura->getFImportetotal()),
-            array("Descuento", 0),
-            array("Impuesto", 0),
+            array("Descuento", $factura->getFDescuentototal()),
             array("Total", $factura->getFImportetotalfinal()),
         );
             // Column widths
