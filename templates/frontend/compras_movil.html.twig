@@ -1,0 +1,282 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Perfil de Usuario Settings
+{% endblock %}
+
+{% block css %}
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+	<style>
+		/* Estilos segunda opcion */
+		.estado_entregado {
+			background-color: #06a629;
+		}
+		.estado_encamino {
+			background-color: #0000ff;
+		}
+		.estado_enproceso {
+			background-color: #ff0000;
+		}
+
+		.img {
+			max-width: 50%;
+			/* max-height: 200px; */
+			aspect-ratio: 1 / 1;
+		}
+	</style>
+{% endblock %}
+
+{% block body %}
+	<div class="d-flex justify-content-start d-lg-none d-md-none d-block">
+		<div class="container " style="background-color:#17172B">
+			<div class="row p-2">
+				<div class="col-2 d-flex justify-content-center">
+					<a href="http://127.0.0.1:8000/perfil-usuario-settings">
+						<i class="fas fa-long-arrow-alt-left fa-2x" style="color: #ffffff;"></i>
+					</a>
+				</div>
+				<div class="col-8 d-flex justify-content-center align-items-center">
+					<span class="fs-6 fw-semibold text-white">Historial de Compras</span>
+				</div>
+				<div class="col-2"></div>
+
+			</div>
+
+		</div>
+	</div>
+
+
+	<div class="container mt-4 mb-4 d-lg-none d-md-none d-block">
+		<div class="col-12">
+			<div class="table-responsive">
+				<table class="table mb-0 text-center">
+					<thead>
+						<tr class="table-secondary">
+							<td>Codigo</td>
+							<td>Fecha de compra</td>
+
+							<td>Estado</td>
+							<td>Ver más</td>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>CO0012</td>
+							<td>11:44 11/01/2024</td>
+
+							<td>
+								<span class="badge estado_entregado p-2">Entregado</span>
+							</td>
+							<td>
+								<i class="fas fa-eye detalle_compra_venta" data-bs-target="#exampleModalToggle" data-bs-toggle="modal"></i>
+							</td>
+						</tr>
+						<tr>
+							<td>CO0451</td>
+							<td>20:24 14/06/2024</td>
+
+							<td>
+								<span class="badge estado_encamino p-2">En camino</span>
+							</td>
+							<td>
+								<i class="fas fa-eye detalle_compra_venta" data-bs-target="#exampleModalToggle" data-bs-toggle="modal"></i>
+							</td>
+						</tr>
+						<tr>
+							<td>CO0012</td>
+							<td>11:44 11/01/2024</td>
+
+							<td>
+								<span class="badge estado_enproceso p-2">En Proceso</span>
+							</td>
+							<td>
+								<i class="fas fa-eye detalle_compra_venta" data-bs-target="#exampleModalToggle" data-bs-toggle="modal"></i>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</div>
+
+
+	<div class="modal fade" id="exampleModalToggle" aria-hidden="true" aria-labelledby="exampleModalToggleLabel" tabindex="-1">
+		<div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+			<div class="modal-content">
+				<div class="modal-header border border-bottom-0">
+					<h1 class="modal-title size-22 fw-semibold" id="exampleModalToggleLabel">
+						Compra #Codigo Producto
+					</h1>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<div class="modal-body">
+
+					<div class="container">
+						<div class="row d-flex text-center">
+							<div class="col-6">
+								<div class="row">
+									<div class="col-12 p-1 fw-bolder">Codigo</div>
+									<div class="col-12 p-1">CO0012</div>
+								</div>
+							</div>
+
+							<div class="col-6">
+								<div class="row">
+									<div class="col-12 p-1 fw-bolder">Fecha de compra</div>
+									<div class="col-12 p-1">11:44 11/01/2024</div>
+								</div>
+							</div>
+
+							<div class="col-6">
+								<div class="row">
+									<div class="col-12 p-1 fw-bolder">Total</div>
+									<div class="col-12 p-1">S/. 14 067.00</div>
+								</div>
+							</div>
+
+
+							<div class="col-6">
+								<div class="row">
+									<div class="col-12 p-1 fw-bolder">Metodo de pago</div>
+									<div class="col-12 p-1">Tarjeta</div>
+								</div>
+							</div>
+
+							<div class="col-12">
+								<div class="col-12 p-1 fw-bolder">Metodo de pago</div>
+								<span class="badge estado_enproceso p-2">En Proceso</span>
+								<span class="badge estado_encamino p-2">En camino</span>
+								<span class="badge estado_entregado p-2">Entregado</span>
+							</div>
+						</div>
+					</div>
+
+
+					<p class="fw-semibold mt-5 mb-3">Detalles</p>
+
+					<div class="container mb-5">
+						<div class="row">
+							<div class="col-12 p-0">
+								<table class="table border mb-0 h-100">
+									<tbody>
+										<tr>
+											<th scope="row">Codigo</th>
+											<td>PR00510</td>
+										</tr>
+										<tr>
+											<th scope="row">Nombre</th>
+											<td>
+												Shark Matrix Self-Empty Robot Vacuum & Mop with No Spots
+																																																																																																																																				                        Missed, Bagless 30-Day Capacity.
+											</td>
+										</tr>
+										<tr>
+											<th scope="row">Categoria</th>
+											<td>Electrodoméstricos</td>
+										</tr>
+										<tr>
+											<th scope="row">Cantidad</th>
+											<td>1 unidades</td>
+										</tr>
+										<tr>
+											<th scope="row">Total</th>
+											<td>S/. 13 555.00</td>
+										</tr>
+										<tr>
+											<th scope="row">Imagen</th>
+											<td rowspan="4" class="d-flex justify-content-center">
+												<img src="img/tiendaks/producto/meme.jpg" class="img" alt=""/>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+
+						</div>
+					</div>
+
+					<div class="container mb-5">
+						<div class="row">
+							<div class="col-12 p-0">
+								<table class="table border mb-0 h-100">
+									<tbody>
+										<tr>
+											<th scope="row">Codigo</th>
+											<td>PR00510</td>
+										</tr>
+										<tr>
+											<th scope="row">Nombre</th>
+											<td>
+												Shark Matrix Self-Empty Robot Vacuum & Mop with No Spots
+																																																																																																																																				                        Missed, Bagless 30-Day Capacity.
+											</td>
+										</tr>
+										<tr>
+											<th scope="row">Categoria</th>
+											<td>Electrodoméstricos</td>
+										</tr>
+										<tr>
+											<th scope="row">Cantidad</th>
+											<td>1 unidades</td>
+										</tr>
+										<tr>
+											<th scope="row">Total</th>
+											<td>S/. 13 555.00</td>
+										</tr>
+										<tr>
+											<th scope="row">Imagen</th>
+											<td class="d-flex justify-content-center">
+												<img src="img/tiendaks/producto/meme.jpg" class="img" alt=""/>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+
+					<div class="container mb-5">
+						<div class="row">
+							<div class="col-12 p-0">
+								<table class="table border mb-0 h-100">
+									<tbody>
+										<tr>
+											<th scope="row">Codigo</th>
+											<td>PR00510</td>
+										</tr>
+										<tr>
+											<th scope="row">Nombre</th>
+											<td>
+												Shark Matrix Self-Empty Robot Vacuum & Mop with No Spots
+																																																																																																																																				                        Missed, Bagless 30-Day Capacity.
+											</td>
+										</tr>
+										<tr>
+											<th scope="row">Categoria</th>
+											<td>Electrodoméstricos</td>
+										</tr>
+										<tr>
+											<th scope="row">Cantidad</th>
+											<td>1 unidades</td>
+										</tr>
+										<tr>
+											<th scope="row">Total</th>
+											<td>S/. 13 555.00</td>
+										</tr>
+										<tr>
+											<th scope="row">Imagen</th>
+											<td class="d-flex justify-content-center">
+												<img src="img/tiendaks/producto/meme.jpg" class="img" alt=""/>
+											</td>
+										</tr>
+									</tbody>
+								</table>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+
+{% endblock %}
