@@ -26,19 +26,19 @@
             </div>
         </div>
         <div class="modal-body">
-            <div class="row">
-                <div class="col">
+            <div class="row px-3 px-lg-0">
+                <div class="col-12 col-lg-4">
                     <div class="form-group">
                         <label class="form-label">Nombre</label>
                         <input class="form-control" type="text" placeholder="">
                     </div>
                     <div class="form-group mt-3">
                         <label class="form-label">Descripción</label>
-                        <textarea class="form-control" type="text" placeholder="" style="height: 295px;"></textarea>
+                        <textarea class="form-control height-descripcion-add-product" type="text" placeholder=""></textarea>
                     </div>
                 </div>
-                <div class="col">
-                    <div class="form-group">
+                <div class="col-12 col-lg-4">
+                    <div class="form-group mt-2 mt-lg-0">
                         <label class="form-label">Categoría</label>
                         <select class="form-select" >
                             <option value="" selected>Laptops</option>
@@ -67,8 +67,8 @@
                         <input class="form-control" type="text" placeholder="">
                     </div>
                 </div>
-                <div class="col">
-                    <div class="row">
+                <div class="col-12 col-lg-4">
+                    <div class="row mt-2 mt-lg-0">
                         <label for="" class="form-label">Imagen</label>
                         <div class="col px-2">
                         <div class="square-img overflow-hidden">
@@ -251,4 +251,15 @@ export default {
         background-color: #3483FA;
         color: #fff;
     }
+
+.height-descripcion-add-product{
+  height: 295px;
+}
+
+@media (max-width: 991.98px) { 
+  .height-descripcion-add-product{
+  height: auto;
+}
+
+ }
 </style>
