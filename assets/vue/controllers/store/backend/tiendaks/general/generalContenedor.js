@@ -15,6 +15,11 @@ export const useGeneralContenedor = defineStore('generalContenedor', {
         try {
             const response = await axios.post('/api/general/acceder/general', datos);
             this.datos_de_acceso = response.data;
+            if(this.datos_de_acceso.urlRedireccion){
+              window.location.href = this.datos_de_acceso.urlRedireccion
+            }else{
+              window.location.reload();
+            }
         } catch (error) {
             console.log("Un error" + error.response.data)
         }

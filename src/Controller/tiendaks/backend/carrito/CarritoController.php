@@ -48,8 +48,7 @@ class CarritoController extends AbstractController
             $session = $request->getSession();
             if(empty($this->getUser())){           
                 $session->set('pasarcarrito',true);
-                
-                $url = $this->generateUrl('app_login');
+                $url = 'app_login';
             }else{
                 $url = $this->generateUrl('app_carrito_mostrar_productos_global');
             }
@@ -61,7 +60,6 @@ class CarritoController extends AbstractController
         $session->remove('iniciarsesion');
         return $this->render('backend/tiendaks/carrito/carrito.html.twig', [
             'controller_name' => 'CarritoController',
-            
         ]);
     }
 }

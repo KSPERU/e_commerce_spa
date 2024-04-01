@@ -1,9 +1,11 @@
 <template>
     <h1 class="modal-title fs-5 fw-semibold size-22 text-center mt-3 mb-2" id="exampleModalLabel">Ingresa a tu cuenta</h1>
+   
     <div v-if="datos_de_acceso && Object.keys(datos_de_acceso).length > 0" class="mb-3 px-3">
         <div class="alert alert-success" role="alert">
             <p class="mb-0">Bienvenido {{ datos_de_acceso.user }}!</p>
         </div>
+        
     </div>
     <div v-else-if="Object.keys(datos_de_acceso).length === 0 && formularioEnviado === true" class="mb-3 px-3">
         <div class="alert alert-danger" role="alert">
@@ -47,6 +49,12 @@
                 "password": formData.password
         });
         formularioEnviado.value = true;
-        window.location.reload();
+        // if (datos_de_acceso.urlRedireccion) {
+        //     window.location.href = datos_de_acceso.urlRedireccion;
+        // }else{
+        //window.location.reload();
+        // }
+
+        //window.location.href = datos_de_acceso.urlRedireccion;
     };
 </script>

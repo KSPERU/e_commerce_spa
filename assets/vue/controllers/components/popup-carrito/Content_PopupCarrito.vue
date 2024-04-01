@@ -24,7 +24,6 @@
                 <button id="increment" @click="stepper('increment', producto.id, producto.prStock,(producto.dcCantidad))"><font-awesome-icon icon="angle-up" color="#D9D9D9"/></button>
                 <input type="number" class="input-cantidad" :value="producto.dcCantidad" :min="min" :max="max">
                 <button id="decrement" @click="stepper('decrement', producto.id,producto.prStock, (producto.dcCantidad))"><font-awesome-icon icon="angle-down" color="#D9D9D9"/></button>
-
               </div>
               <div class="col-3 h-100 px-0 text-center">
                 <span class="m-0 size-12-10">S/. {{producto.dcImporte}}</span>
@@ -69,6 +68,7 @@
 </template>
 
   <script setup>
+  import * as bootstrap from 'bootstrap';
   import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
   import { onMounted, computed, ref } from "vue";
     import { carritoStore  } from "../../components/carritoContenedor" 
@@ -110,6 +110,8 @@
 
     const realizarCompra = async () => {
         try {
+          //abrir modal
+        
         const response = await axios.post('/tiendaks/carrito',fd);
         console.log(response.data);
 
@@ -117,7 +119,13 @@
         const url = response.data.url;
 
         // Redirigir a la nueva URL
-        window.location.href = url;
+        if(url === 'app_login'){
+          const modal = new bootstrap.Modal(document.getElementById('exampleModal'));
+          modal.show();
+        }else{
+          window.location.href = url;
+        }
+        //window.location.href = url;
         } catch (error) {
         // Manejar errores aquí
         console.error('Error al realizar la compra', error);
