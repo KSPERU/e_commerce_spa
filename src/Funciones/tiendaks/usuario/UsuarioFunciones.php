@@ -98,6 +98,4 @@ class UsuarioFunciones
             'idusuario' => $idusuario,
         ];
     }
-
-
 }

@@ -2,12 +2,14 @@
 
 namespace App\Controller\tiendaks\api\compras;
 
-use App\Funciones\tiendaks\compras\ComprasFunciones;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use Fpdf\Fpdf;
+use App\Repository\Compras\comprasRepository;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use App\Funciones\tiendaks\compras\ComprasFunciones;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 #[Route('/api/compras', name: 'app_api_compras_')]
 class ComprasController extends AbstractController
@@ -40,7 +42,17 @@ class ComprasController extends AbstractController
                 return new JsonResponse(['message' => $respuesta['message']]);
             }
         }
-       
-        
+    }
+
+    #[Route('/mostrar/compras/factura', name: 'mostar_compras_factura', methods: ['POST'])]
+    public function mostrarFactura(Request $request, ComprasFunciones $comprasFunciones)
+    {
+        $data = json_decode($request->getContent(), true);
+        $idCompra = $data['id_compra'];
+        $pdfContent = $comprasFunciones->crearFactura($idCompra);
+        $response = new Response($pdfContent);
+        $response->headers->set('Content-Type', 'application/pdf');
+        $response->headers->set('Content-Disposition', 'inline; filename="factura.pdf"');
+        return $response;
     }
 }
