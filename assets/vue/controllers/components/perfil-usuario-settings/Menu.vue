@@ -1,11 +1,13 @@
 <template>
+  <!-- VISTA ESCRITORIO - TABLET -->
+
   <div class="container">
     <div class="row">
-      <div class="col-3 ps-0">
+      <div class="col-3 ps-0 d-md-block d-lg-block d-none">
         <div class="container p-2 bg-white h-100">
           <div class="list-group border border-0" id="list-tab" role="tablist">
             <a
-              class="list-group-item list-group-item-action active"
+              class="list-group-item list-group-item-action active p-2"
               id="list-home-list"
               data-bs-toggle="list"
               href="#list-home"
@@ -14,7 +16,7 @@
               ><i class="fas fa-user pe-2"></i>Mi Perfil</a
             >
             <a
-              class="list-group-item list-group-item-action"
+              class="list-group-item list-group-item-action p-2"
               id="list-profile-list"
               data-bs-toggle="list"
               href="#list-profile"
@@ -23,7 +25,7 @@
               ><i class="fas fa-shopping-bag pe-2"></i>Compras</a
             >
             <a
-              class="list-group-item list-group-item-action"
+              class="list-group-item list-group-item-action p-2"
               id="list-messages-list"
               data-bs-toggle="list"
               href="#list-messages"
@@ -32,7 +34,7 @@
               ><i class="fas fa-money-bill-wave pe-2"></i>Ventas</a
             >
             <a
-              class="list-group-item list-group-item-action"
+              class="list-group-item list-group-item-action p-2"
               id="list-settings-list"
               data-bs-toggle="list"
               href="#list-settings"
@@ -43,7 +45,7 @@
           </div>
         </div>
       </div>
-      <div class="col-9">
+      <div class="col-12 col-md-9 col-lg-9 d-md-block d-lg-block d-none">
         <div class="container tab-content p-4 bg-white" id="nav-tabContent">
           <!-- INICIO CONTENIDO PRIMERA OPCION -->
           <div
@@ -404,6 +406,8 @@
     </div>
   </div>
 
+  <!-- POPUP LG MD -->
+
   <div
     class="modal fade"
     id="exampleModalToggle"
@@ -619,6 +623,156 @@
       </div>
     </div>
   </div>
+
+  <!-- VISTA MOVIL -->
+
+  <div class="container d-md-none d-lg-none d-block">
+    <div class="row">
+      <div class="col-12 ps-0 pe-0">
+        <div
+          class="container col-11 p-2 bg-white mb-4 rounded container-shadow"
+        >
+          <div class="container p-2">
+            <div class="row align-items-center">
+              <div class="col-3 m-0 d-flex justify-content-center">
+                <div class="d-flex justify-content-center align-items-center">
+                  <img
+                    class="img-fluid rounded-pill"
+                    src="../../img/usuario-ejemplo.png"
+                    alt=""
+                  />
+                </div>
+              </div>
+              <div class="col-9 m-0 d-flex align-items-center">
+                <div class="container">
+                  <div class="row">
+                    <div class="col-12 m-0 p-0">
+                      <p class="m-0 size-18">Josue Chambilla</p>
+                    </div>
+                    <div class="col-12 m-0 p-0">
+                      <p class="m-0 fw-light text-truncate">
+                        josuechambilla565@gmail.com
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="container p-2 bg-white">
+          <a
+            class="btn custom-btn btn-lg d-block mb-2 text-start"
+            href="http://127.0.0.1:8000/mi-perfil-movil"
+          >
+            <div class="container">
+              <div class="row">
+                <div class="col-2 m-0 d-flex justify-content-center">
+                  <i
+                    class="fas fa-user pe-2 fa-2x d-flex justify-content-center align-items-center"
+                  ></i>
+                </div>
+                <div class="col-10 m-0 d-flex">
+                  <div class="row align-items-center">
+                    <div class="col-12 m-0">
+                      <p class="m-0 size-16">Mi Perfil</p>
+                    </div>
+                    <div class="col-12 m-0">
+                      <p class="m-0 size-14 fw-light">
+                        Gestiona tus datos personales.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </a>
+
+          <a
+            class="btn custom-btn btn-lg d-block mb-2 text-start"
+           href="http://127.0.0.1:8000/compras-movil"
+          >
+            <div class="container">
+              <div class="row">
+                <div class="col-2 m-0 d-flex justify-content-center">
+                  <i
+                    class="fas fa-shopping-bag pe-2 fa-2x d-flex justify-content-center align-items-center"
+                  ></i>
+                </div>
+                <div class="col-10 m-0 d-flex">
+                  <div class="row align-items-center">
+                    <div class="col-12 m-0">
+                      <p class="m-0 size-16">Compras</p>
+                    </div>
+                    <div class="col-12 m-0">
+                      <p class="m-0 size-14 fw-light">
+                        Historial de compras realizadas.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </a>
+
+          <a
+            class="btn custom-btn btn-lg d-block mb-2 text-start"
+             href="http://127.0.0.1:8000/ventas-movil"
+          >
+            <div class="container">
+              <div class="row">
+                <div class="col-2 m-0 d-flex justify-content-center">
+                  <i
+                    class="fas fa-money-bill-wave pe-2 fa-2x d-flex justify-content-center align-items-center"
+                  ></i>
+                </div>
+                <div class="col-10 m-0 d-flex">
+                  <div class="row align-items-center">
+                    <div class="col-12 m-0">
+                      <p class="m-0 size-16">Ventas</p>
+                    </div>
+                    <div class="col-12 m-0">
+                      <p class="m-0 size-14 fw-light">
+                        Historial de ventas realizadas.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </a>
+
+          <a
+            class="btn custom-btn btn-lg d-block mb-2 text-start"
+             href="http://127.0.0.1:8000/configuracion-movil"
+          >
+            <div class="container">
+              <div class="row">
+                <div class="col-2 m-0 d-flex justify-content-center">
+                  <i
+                    class="fas fa-cog pe-2 fa-2x d-flex justify-content-center align-items-center"
+                  ></i>
+                </div>
+                <div class="col-10 m-0 d-flex">
+                  <div class="row align-items-center">
+                    <div class="col-12 m-0">
+                      <p class="m-0 size-16">Configuración</p>
+                    </div>
+                    <div class="col-12 m-0">
+                      <p class="m-0 size-14 fw-light">
+                        Valida o Elimina tu cuenta.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -676,4 +830,31 @@ i.active {
 .estado_enproceso {
   background-color: #ff0000;
 }
+
+/* ESTILOS PARA MOVIL */
+
+.container-shadow {
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.custom-btn {
+  background-color: transparent;
+  color: #000;
+  border-color: transparent;
+}
+
+.custom-btn:hover {
+  background-color: #17172b !important;
+  border-color: #17172b !important;
+  color: #fff;
+}
+
+.custom-btn:active,
+.custom-btn.active {
+  background-color: #17172b !important;
+  border-color: #17172b !important;
+  color: #fff;
+}
+
+
 </style>

@@ -1,0 +1,111 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Perfil de Usuario Settings
+{% endblock %}
+
+{% block css %}
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+{% endblock %}
+
+{% block body %}
+	<div class="d-flex justify-content-start d-lg-none d-md-none d-block">
+		<div class="container " style="background-color:#17172B">
+			<div class="row p-2">
+				<div class="col-2 d-flex justify-content-center">
+					<a href="http://127.0.0.1:8000/perfil-usuario-settings">
+						<i class="fas fa-long-arrow-alt-left fa-2x" style="color: #ffffff;"></i>
+					</a>
+				</div>
+				<div class="col-8 d-flex justify-content-center align-items-center">
+					<span class="fs-6 fw-semibold text-white">Mi Perfil</span>
+				</div>
+				<div class="col-2"></div>
+
+			</div>
+
+		</div>
+	</div>
+
+
+	<div class="container mt-4 mb-4 ">
+		<div class="col-12">
+			<div
+				class="container tab-content p-4 bg-white" id="nav-tabContent">
+				<!-- INICIO CONTENIDO PRIMERA OPCION -->
+				<div class="d-flex justify-content-start align-items-baseline">
+					<span class="fs-6 fw-semibold mb-2">Datos de Cuenta</span>
+				</div>
+
+				<table class="table border">
+					<tbody>
+						<tr>
+							<td class="nombre_datos">
+								<p class="p-0 m-0">Correo</p>
+							</td>
+							<td>
+								<input class="form-control form-control-sm" type="email" placeholder="Ingrese su Correo Electronico" aria-label="Ingrese su Correo Electronico"/>
+							</td>
+						</tr>
+						<tr>
+							<td class="nombre_datos">
+								<p class="p-0 m-0">Contraseña</p>
+							</td>
+							<td>
+								<input class="form-control form-control-sm" type="password" placeholder="Contraseña" aria-label="Contraseña"/>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+
+				<div class="d-flex justify-content-start align-items-baseline">
+					<span class="fs-6 fw-semibold mb-2 mt-5">Datos personales</span>
+				</div>
+
+				<table class="table border">
+					<tbody>
+						<tr>
+							<td class="nombre_datos">
+								<p class="p-0 m-0">Nombres</p>
+							</td>
+							<td>
+								<input class="form-control form-control-sm" type="text" placeholder="Nombres" aria-label="Nombres"/>
+							</td>
+						</tr>
+						<tr>
+							<td class="nombre_datos">
+								<p class="p-0 m-0">Apellidos</p>
+							</td>
+							<td>
+								<input class="form-control form-control-sm" type="text" placeholder="Apellidos" aria-label="Apellidos"/>
+							</td>
+						</tr>
+						<tr>
+							<td class="nombre_datos">
+								<p class="p-0 m-0">DNI</p>
+							</td>
+							<td>
+								<input class="form-control form-control-sm" type="text" placeholder="DNI" aria-label="DNI"/>
+							</td>
+						</tr>
+						<tr>
+							<td class="nombre_datos">
+								<p class="p-0 m-0">Teléfono</p>
+							</td>
+							<td>
+								<input class="form-control form-control-sm" type="text" placeholder="Teléfono" aria-label="Teléfono"/>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+
+				<div class="d-flex justify-content-end align-items-baseline mt-4">
+					<button type="button" class="btn btn-secondary btn-sm">
+						<i class="fas fa-edit"></i>
+						Modificar datos
+					</button>
+				</div>
+			</div>
+		</div>
+	</div>
+
+{% endblock %}

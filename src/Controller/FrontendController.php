@@ -50,6 +50,31 @@ class FrontendController extends AbstractController
     {
         return $this->render('frontend/perfil_usuario_settings.html.twig', []);
     }
+
+    #[Route('/mi-perfil-movil', name: 'app_frontend_mi_perfil_movil')]
+    public function mi_perfil_movil(): Response
+    {
+        return $this->render('frontend/mi_perfil_movil.html.twig', []);
+    }
+
+    #[Route('/compras-movil', name: 'app_frontend_compras_movil')]
+    public function compras_movil(): Response
+    {
+        return $this->render('frontend/compras_movil.html.twig', []);
+    }
+
+    #[Route('/ventas-movil', name: 'app_frontend_ventas_movil')]
+    public function ventas_movil(): Response
+    {
+        return $this->render('frontend/ventas_movil.html.twig', []);
+    }
+
+    #[Route('/configuracion-movil', name: 'app_frontend_configuracion_movil')]
+    public function configuracion_movil(): Response
+    {
+        return $this->render('frontend/configuracion_movil.html.twig', []);
+    }
+
 }
 
 
