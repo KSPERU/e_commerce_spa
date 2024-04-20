@@ -21,8 +21,12 @@
             <h5 class="size-16 m-0">{{ usuario.valor.unombres }} {{ usuario.valor.uapepat }} {{ usuario.valor.uapemat }}</h5>
             <span class="size-12 m-0">{{ usuario.valor.ucorreo }}</span>
           </div>
+          <div class="ms-3">
+                <a href="{{ path('app_logout') }}" class="btn btn-danger">Logout</a>
+            </div>
         </div>
       </div>
+      
     {% else %}
       <div class="d-none d-lg-block">
         <button type="button" class="btn mx-1 fw-semibold" id="ingresar" data-bs-toggle="modal" data-bs-target="#exampleModal">

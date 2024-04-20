@@ -292,7 +292,7 @@
               </div>
             </div>
 
-            <div class="mt-3">
+            <div class="mt-3 d-none">
               <a href="#" class="btn w-100 shadow-0 mb-2" style="background-color: #17172B; color: white;">Realizar compra</a>
             </div>
 
